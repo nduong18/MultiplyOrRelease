@@ -8,6 +8,48 @@ using UnityEngine.UI;
 
 public class SimulationControlsTests
 {
+    SimulationConfig frameTestConfig;
+    [TearDown] public void CleanupFrameConfig()
+    {
+        if (frameTestConfig != null) Object.Destroy(frameTestConfig);
+    }
+    [UnityTest] public IEnumerator FrameFiringOncePerFrameAtHighSimulationSpeed()
+    {
+        yield return VerifyFrameFiring(1, 8);
+    }
+    [UnityTest] public IEnumerator FrameFiringEveryTwoFramesAtLowSimulationSpeed()
+    {
+        yield return VerifyFrameFiring(2, .1f);
+    }
+    IEnumerator VerifyFrameFiring(int interval, float speed)
+    {
+        SceneManager.LoadScene("MultiplyOrRelease");
+        for (int frame = 0; frame < 8; frame++) yield return null;
+        var controller = Object.FindFirstObjectByType<SimulationController>();
+        frameTestConfig = Object.Instantiate(controller.config);
+        frameTestConfig.cannon.firingMode = FiringMode.FramesBetweenShots;
+        frameTestConfig.cannon.framesBetweenShots = interval;
+        frameTestConfig.cannon.destroyOnEnemyHit = false;
+        frameTestConfig.matchTimeLimit = 0;
+        controller.config = frameTestConfig; controller.Rebuild(); controller.SetSpeed(speed);
+        foreach (var team in controller.Model.teams)
+        {
+            team.queued = 100;
+            foreach (var ball in team.balls) ball.delay = 999;
+        }
+        for (int frame = 0; frame < 12; frame++)
+        {
+            yield return null;
+            foreach (var team in controller.Model.teams)
+                Assert.AreEqual(1 + frame / interval, team.fired, "Unexpected shot count at render frame " + frame);
+        }
+        controller.TogglePause(); long frozen = controller.Model.totalFired;
+        yield return new WaitForSecondsRealtime(.1f);
+        Assert.AreEqual(frozen, controller.Model.totalFired, "Pause must freeze frame firing.");
+        controller.Step(); Assert.AreEqual(frozen + 4, controller.Model.totalFired, "Step counts as one active firing frame.");
+        yield return null;
+        Assert.AreEqual(frozen + 4, controller.Model.totalFired);
+    }
     [UnityTest]
     public IEnumerator LoadedSceneUsesInspectorControlsWithoutScreenUi()
     {

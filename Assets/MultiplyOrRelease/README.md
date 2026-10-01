@@ -36,6 +36,7 @@ Thứ tự `Teams`: trên trái, trên phải, dưới trái, dưới phải. G�
 
 ## Điều khiển trong Inspector
 
+- `Cannon > Firing Mode`: chọn `Shots Per Second` (tốc độ theo giây mô phỏng, chịu ảnh hưởng Speed) hoặc `Frames Between Shots` (theo frame thực tế). Preset hiện dùng `Shots Per Second = 10`; tốc độ quay nòng của cả 4 đội là `Sweep Speed = 90` độ/giây. Chế độ frame: `Frames Between Shots = 1` bắn tối đa 1 viên/cannon/frame; `2` bắn cách một frame. Ở chế độ frame, FPS giảm sẽ giảm tốc độ bắn, không bắn bù thành chùm; Speed không thay đổi khoảng frame. Pause đóng băng bộ đếm, mỗi lần Step tính một frame; Restart đặt lại bộ đếm. Đạn chưa bắn vẫn giữ trong hàng đợi khi chạm giới hạn đạn. `Max Spawns Per Tick` là giới hạn chung cho cả 4 cannon, tính theo frame trong chế độ này. Trong Play mode, bấm Apply / Restart sau khi đổi chế độ hoặc khoảng bắn. Tái hiện cùng kết quả ở chế độ frame cần cả seed và cùng lịch frame/tick.
 - `Board > Grid Line Thickness`: độ dày đường lưới theo tỷ lệ kích thước ô; 0 tắt đường lưới, 0.06 = 6%. `Border Thickness` vẫn chỉnh riêng đường biên lãnh thổ. Giá trị `Gap` cũ được giữ khi đổi tên.
 - `Presentation > Ammo Text Sorting Order`: thứ tự render số đạn, mặc định 20 để nằm trên chốt/bi/trail Plinko. Giá trị lớn hơn render ở phía trên; không thay đổi vị trí hay độ trong suốt của chữ.
 - Start / Pause / Resume; Step chạy đúng 1 tick rồi pause.

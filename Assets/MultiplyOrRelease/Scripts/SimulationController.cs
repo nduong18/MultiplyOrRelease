@@ -38,6 +38,8 @@ namespace MultiplyOrRelease
                 {
                     Model.Tick(tick); accumulator -= tick; count++;
                 }
+                // Only once per rendered frame, irrespective of catch-up ticks or speed.
+                Model.AdvanceFiringFrame();
                 // Limit debt after a long editor stall. Simulation remains stable;
                 // the Inspector reports that it is behind the requested speed.
                 bool behind = accumulator > tick * sessionConfig.maxTicksPerFrame;
@@ -121,7 +123,8 @@ namespace MultiplyOrRelease
         {
             if (Model == null || Model.phase == MatchPhase.Finished) return;
             if (Model.phase == MatchPhase.Ready) Model.Start();
-            Paused = true; Model.Tick(1f / sessionConfig.ticksPerSecond); view.Render(); hud?.Render();
+            Paused = true; Model.Tick(1f / sessionConfig.ticksPerSecond);
+            Model.AdvanceFiringFrame(); view.Render(); hud?.Render();
         }
         public void RestartSameSeed() { Rebuild(); }
         public void RestartNewSeed() { restartIndex++; Rebuild(); }

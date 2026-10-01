@@ -7,6 +7,7 @@ namespace MultiplyOrRelease
     public enum TerritoryStyle { Color, Flag }
     public enum FlagMapping { EntireArena, RepeatStartingQuadrant }
     public enum SweepMode { PingPong, Continuous }
+    public enum FiringMode { ShotsPerSecond, FramesBetweenShots }
     public enum CameraFocus { Simulation, TerritoryGrid }
 
     [CreateAssetMenu(menuName = "Multiply or Release/Simulation Config")]
@@ -58,6 +59,7 @@ namespace MultiplyOrRelease
             cannon.maxStoredAmmo = Math.Max(Math.Max(cannon.initialAmmo, cannon.ammoAfterRelease), cannon.maxStoredAmmo);
             cannon.multiplier = Mathf.Clamp(cannon.multiplier, 2, 10);
             cannon.shotsPerSecond = Mathf.Clamp(cannon.shotsPerSecond, 1, 3000);
+            cannon.framesBetweenShots = Mathf.Max(1, cannon.framesBetweenShots);
             cannon.hitRadius = Mathf.Clamp(cannon.hitRadius, .05f, .7f);
             cannon.cornerInset = Mathf.Clamp(cannon.cornerInset, .4f, board.size * .24f);
             cannon.muzzleLength = Mathf.Clamp(cannon.muzzleLength, .1f, .8f);
@@ -164,7 +166,12 @@ namespace MultiplyOrRelease
         [Tooltip("Explicit storage ceiling. Further ×2 events saturate at this value and show MAX in the HUD.")]
         public long maxStoredAmmo = 1073741824;
         public int multiplier = 2;
+        [Tooltip("Shots Per Second uses simulation time. Frames Between Shots fires at most one shot per cannon on an eligible rendered frame, without catch-up bursts.")]
+        public FiringMode firingMode = FiringMode.ShotsPerSecond;
+        [Tooltip("Used only in Shots Per Second mode. Simulation Speed scales this rate.")]
         public float shotsPerSecond = 180;
+        [Tooltip("Used only in Frames Between Shots mode. 1 = one shot per rendered frame per cannon; 2 = one shot every two frames. Pause freezes the counter; Simulation Speed does not scale it.")]
+        [Min(1)] public int framesBetweenShots = 1;
         public float cornerInset = .65f;
         public float hitRadius = .23f;
         public float marbleDiameter = .54f;
@@ -180,6 +187,7 @@ namespace MultiplyOrRelease
         public float radius = .055f;
         public float lifeTime = 25;
         [Range(32, 5000)] public int maxActive = 1600;
+        [Tooltip("Shared spawn budget for all cannons: per simulation tick in Shots Per Second mode, per rendered frame in Frames Between Shots mode.")]
         public int maxSpawnsPerTick = 32;
         public float spreadDegrees = 3;
         [Tooltip("Remove a projectile immediately after it captures enemy territory. Takes priority over Bounce On Capture.")]

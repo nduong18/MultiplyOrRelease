@@ -33,7 +33,8 @@ namespace MultiplyOrRelease
     }
 
     // All randomness and motion use a local fixed clock: pausing/speed changes never
-    // alter Unity's global time scale or physics settings. Rendering is independent.
+    // alter Unity's global time scale or physics settings. Optional frame-based
+    // firing additionally requires one AdvanceFiringFrame call per active render frame.
     public sealed class SimulationModel
     {
         public readonly SimulationConfig config;
@@ -49,6 +50,7 @@ namespace MultiplyOrRelease
         public long totalFired { get; private set; }
         readonly System.Random random;
         readonly Stack<ShotState> shotPool = new Stack<ShotState>();
+        readonly int[] firingFrameCooldown = new int[4];
         int nextShotId, fireCursor;
         float finishTimer;
         public float CellWidth => config.board.size / config.board.columns;
@@ -132,7 +134,7 @@ namespace MultiplyOrRelease
                     UpdateCannon(t);
                     StepPlinko(t, dt);
                 }
-                FireQueued(dt);
+                if (config.cannon.firingMode == FiringMode.ShotsPerSecond) FireQueued(dt);
             }
             StepShots(dt);
             if (phase == MatchPhase.Running && AliveCount <= 1)
@@ -288,19 +290,42 @@ namespace MultiplyOrRelease
                     int t = fireCursor++ % 4;
                     var s = teams[t];
                     if (!s.alive || s.queued == 0 || s.fireCredit < 1) continue;
-                    float radians = (s.angle + Range(-config.projectile.spreadDegrees, config.projectile.spreadDegrees)) * Mathf.Deg2Rad;
-                    var direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
-                    var shot = shotPool.Count > 0 ? shotPool.Pop() : new ShotState();
-                    shot.id = ++nextShotId; shot.team = t; shot.age = 0;
-                    shot.position = s.cannonPosition + direction * config.cannon.muzzleLength;
-                    shot.velocity = direction * config.projectile.speed;
-                    shots.Add(shot);
-                    s.queued--; s.fireCredit--; s.fired++; totalFired++;
+                    SpawnQueuedShot(t); s.fireCredit--;
                     budget--; fired = true;
                     if (budget == 0 || shots.Count >= config.projectile.maxActive) break;
                 }
                 if (!fired) break;
             }
+        }
+        // Called once after the controller's fixed ticks, before rendering. Never
+        // accumulates missed shots: capacity limits defer the queue, not a burst.
+        public void AdvanceFiringFrame()
+        {
+            if (config.cannon.firingMode != FiringMode.FramesBetweenShots || phase != MatchPhase.Running) return;
+            for (int t = 0; t < 4; t++)
+                if (firingFrameCooldown[t] > 0) firingFrameCooldown[t]--;
+            int budget = config.projectile.maxSpawnsPerTick;
+            for (int i = 0; i < 4 && budget > 0 && shots.Count < config.projectile.maxActive; i++)
+            {
+                int t = fireCursor++ % 4;
+                var s = teams[t];
+                if (!s.alive || s.queued == 0 || firingFrameCooldown[t] > 0) continue;
+                SpawnQueuedShot(t);
+                firingFrameCooldown[t] = config.cannon.framesBetweenShots;
+                budget--;
+            }
+        }
+        void SpawnQueuedShot(int t)
+        {
+            var s = teams[t];
+            float radians = (s.angle + Range(-config.projectile.spreadDegrees, config.projectile.spreadDegrees)) * Mathf.Deg2Rad;
+            var direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
+            var shot = shotPool.Count > 0 ? shotPool.Pop() : new ShotState();
+            shot.id = ++nextShotId; shot.team = t; shot.age = 0;
+            shot.position = s.cannonPosition + direction * config.cannon.muzzleLength;
+            shot.velocity = direction * config.projectile.speed;
+            shots.Add(shot);
+            s.queued--; s.fired++; totalFired++;
         }
         void RemoveShot(int index)
         {

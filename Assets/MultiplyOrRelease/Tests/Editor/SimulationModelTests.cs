@@ -37,6 +37,74 @@ public class SimulationModelTests
         Assert.AreEqual(32, m.shots.Count); Assert.AreEqual(224, m.teams[0].queued);
         Assert.AreEqual(256, m.teams[0].queued + m.teams[0].fired);
     }
+    [TestCase(1)] [TestCase(2)] [TestCase(5)]
+    public void FrameFiringUsesPerCannonIntervalsAndNeverCatchesUp(int interval)
+    {
+        config.cannon.firingMode = FiringMode.FramesBetweenShots;
+        config.cannon.framesBetweenShots = interval;
+        var m = NewModel();
+        foreach (var team in m.teams)
+        {
+            team.queued = 100;
+            foreach (var ball in team.balls) ball.delay = 999;
+        }
+        for (int frame = 0; frame < 12; frame++)
+        {
+            long previous = m.totalFired;
+            // Many catch-up simulation ticks must not fire in frame mode.
+            for (int tick = 0; tick < 8; tick++) m.Tick(1f / 120);
+            Assert.AreEqual(previous, m.totalFired);
+            m.AdvanceFiringFrame();
+            long expected = 1 + frame / interval;
+            foreach (var team in m.teams)
+            {
+                Assert.AreEqual(expected, team.fired);
+                Assert.AreEqual(100, team.fired + team.queued);
+            }
+        }
+    }
+    [Test] public void FrameFiringSharedBudgetIsFairAndDoesNotDiscardQueuedAmmo()
+    {
+        config.cannon.firingMode = FiringMode.FramesBetweenShots;
+        config.projectile.maxSpawnsPerTick = 1;
+        var m = NewModel();
+        foreach (var team in m.teams) team.queued = 10;
+        for (int frame = 0; frame < 8; frame++) m.AdvanceFiringFrame();
+        foreach (var team in m.teams)
+        {
+            Assert.AreEqual(2, team.fired); Assert.AreEqual(8, team.queued);
+        }
+    }
+    [Test] public void FrameFiringCapacityBlockDoesNotAccumulateBurstCredit()
+    {
+        config.cannon.firingMode = FiringMode.FramesBetweenShots;
+        config.projectile.maxActive = 32;
+        var m = NewModel(); m.teams[0].queued = 100;
+        for (int frame = 0; frame < 100; frame++) m.AdvanceFiringFrame();
+        Assert.AreEqual(32, m.totalFired); Assert.AreEqual(68, m.teams[0].queued);
+        m.shots.Clear(); m.AdvanceFiringFrame();
+        Assert.AreEqual(33, m.totalFired); Assert.AreEqual(1, m.shots.Count);
+        m.Eliminate(0); m.AdvanceFiringFrame(); Assert.AreEqual(33, m.totalFired);
+    }
+    [Test] public void SecondsFiringIgnoresRenderFrameCalls()
+    {
+        config.cannon.firingMode = FiringMode.ShotsPerSecond;
+        config.cannon.shotsPerSecond = 10;
+        var m = NewModel(); m.teams[0].queued = 100;
+        foreach (var team in m.teams) foreach (var ball in team.balls) ball.delay = 999;
+        for (int frame = 0; frame < 8; frame++) m.AdvanceFiringFrame();
+        Assert.AreEqual(0, m.totalFired);
+        m.Tick(.1f); Assert.AreEqual(1, m.totalFired);
+    }
+    [Test] public void FrameIntervalIsValidatedAndReadyMatchesDoNotFire()
+    {
+        config.cannon.firingMode = FiringMode.FramesBetweenShots;
+        config.cannon.framesBetweenShots = 0; config.Validate();
+        Assert.AreEqual(1, config.cannon.framesBetweenShots);
+        var m = new SimulationModel(config, 1234); m.teams[0].queued = 10;
+        m.AdvanceFiringFrame(); Assert.AreEqual(0, m.totalFired);
+        m.Start(); m.AdvanceFiringFrame(); Assert.AreEqual(1, m.totalFired);
+    }
     [Test] public void StorageCeilingAndOverflowDoNotLoseOrWrapAmmo()
     {
         config.cannon.maxStoredAmmo = long.MaxValue; var m = NewModel();
@@ -162,7 +230,12 @@ public class SimulationModelTests
         try
         {
             var m = new SimulationModel(copy, copy.randomSeed); m.Start();
-            for (int i = 0; i < 144000 && m.phase != MatchPhase.Finished; i++) m.Tick(1f / copy.ticksPerSecond);
+            for (int i = 0; i < 144000 && m.phase != MatchPhase.Finished; i++)
+            {
+                m.Tick(1f / copy.ticksPerSecond);
+                // Emulate a 60 FPS player at the default 120 fixed ticks/second.
+                if (i % 2 == 1) m.AdvanceFiringFrame();
+            }
             Assert.AreEqual(MatchPhase.Finished, m.phase, "Default seed should finish within 20 simulated minutes.");
             Assert.LessOrEqual(m.AliveCount, 1); Assert.Greater(m.totalFired, 0);
             int cells = 0; foreach (int count in m.territoryCounts) { Assert.GreaterOrEqual(count, 0); cells += count; }
