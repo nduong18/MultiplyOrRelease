@@ -144,6 +144,15 @@ namespace MultiplyOrRelease
             if (settings.countdownStartDelay > 0f)
                 yield return WaitCountdown(settings.countdownStartDelay);
 
+            // Start the voice first, then let the visual 3/2/1/GO sequence catch up.
+            // This keeps a longer spoken countdown from getting ahead of the animation.
+            bool voiceStartedBeforeAnimation = settings.countdownAnimationDelay > 0f;
+            if (voiceStartedBeforeAnimation)
+            {
+                PlayCountdownTick(0);
+                yield return WaitCountdown(settings.countdownAnimationDelay);
+            }
+
             string[] countdownValues = { "3", "2", "1", "GO!" };
             Color[] countdownColors = { settings.threeColor, settings.twoColor, settings.oneColor, settings.goColor };
             for (int i = 0; i < countdownValues.Length; i++)
@@ -153,7 +162,8 @@ namespace MultiplyOrRelease
                     countdownText.text = countdownValues[i];
                     countdownText.color = countdownColors[i];
                 }
-                PlayCountdownTick(i);
+                if (!(voiceStartedBeforeAnimation && i == 0))
+                    PlayCountdownTick(i);
                 PlayCountdownPop();
                 yield return WaitCountdown(settings.countdownStepDuration);
             }

@@ -9,6 +9,8 @@ namespace MultiplyOrRelease
         [Header("321 GO — TerritoryBattle")]
         public bool enableStartCountdown = true;
         [Min(0)] public float countdownStartDelay = 1;
+        [Tooltip("Delay the 3/2/1/GO animation after the countdown voice starts.")]
+        [Min(0)] public float countdownAnimationDelay = 1;
         [Min(.1f)] public float countdownStepDuration = 1;
         [Min(24)] public int countdownFontSize = 200;
         public Font countdownFont;
@@ -55,6 +57,7 @@ namespace MultiplyOrRelease
         public void Validate()
         {
             countdownStartDelay = Mathf.Max(0, countdownStartDelay);
+            countdownAnimationDelay = Mathf.Max(0, countdownAnimationDelay);
             countdownStepDuration = Mathf.Max(.1f, countdownStepDuration);
             countdownFontSize = Mathf.Max(24, countdownFontSize);
             countdownPopDuration = Mathf.Max(.05f, countdownPopDuration);

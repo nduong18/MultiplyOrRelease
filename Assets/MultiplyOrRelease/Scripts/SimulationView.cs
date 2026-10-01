@@ -147,6 +147,11 @@ namespace MultiplyOrRelease
             var cannonParent = new GameObject(team.name + " Cannon").transform;
             cannonParent.SetParent(root, false); cannonParent.localPosition = s.cannonPosition;
             var barrel = new GameObject("Sweep Pivot").transform; barrel.SetParent(cannonParent, false); barrels[t] = barrel;
+            float outline = c.cannon.barrelOutlineWidth;
+            if (outline > 0)
+                Square("Barrel Outline", new Vector2(c.cannon.muzzleLength * .5f, 0),
+                    new Vector2(c.cannon.muzzleLength + outline * 2, c.cannon.barrelWidth + outline * 2),
+                    c.cannon.barrelOutlineColor, 9, barrel);
             Square("Barrel", new Vector2(c.cannon.muzzleLength * .5f, 0), new Vector2(c.cannon.muzzleLength, c.cannon.barrelWidth), team.barrelColor, 10, barrel);
             Sprite("Cannon Rim", Vector2.zero, Vector2.one * (c.cannon.marbleDiameter + c.cannon.rimWidth), c.presentation.circleSprite, c.presentation.frameColor, 11, cannonParent);
             cannons[t] = Sprite("Cannon Marble", Vector2.zero, Vector2.one * c.cannon.marbleDiameter,

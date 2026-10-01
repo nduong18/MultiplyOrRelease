@@ -41,7 +41,7 @@ MonoBehaviour:
     multiplyTextOffset: {x: 0, y: -0.05}
     releaseTextOffset: {x: 0, y: -0.05}
     statusTextOffset: {x: 0, y: 0}
-    ballCount: 5
+    ballCount: 6
     fitTo16By9: 1
     width: 3.732222
     height: 4.875
@@ -75,7 +75,7 @@ MonoBehaviour:
     multiplyColor: {r: 0.56, g: 1, b: 0.05, a: 1}
     releaseColor: {r: 1, g: 0.20367281, b: 0.058823526, a: 1}
     gateTextColor: {r: 0, g: 0, b: 0, a: 1}
-    ammoTextOpacity: 0.32
+    ammoTextOpacity: 1
     trailTime: 0.15
     trailWidth: 0.18
     taperTrail: 0
@@ -92,6 +92,8 @@ MonoBehaviour:
     marbleDiameter: 0.54
     muzzleLength: 0.46
     barrelWidth: 0.16
+    barrelOutlineWidth: 0.01
+    barrelOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     rimWidth: 0.085
     enableFirePop: 1
     firePopScale: 1.2

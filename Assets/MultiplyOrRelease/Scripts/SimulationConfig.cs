@@ -81,6 +81,7 @@ namespace MultiplyOrRelease
             plinko.gateHeight = Mathf.Clamp(plinko.gateHeight, .15f, .6f);
             cannon.marbleDiameter = Mathf.Clamp(cannon.marbleDiameter, .15f, 1.5f);
             cannon.barrelWidth = Mathf.Clamp(cannon.barrelWidth, .03f, .5f);
+            cannon.barrelOutlineWidth = Mathf.Clamp(cannon.barrelOutlineWidth, 0, .25f);
             presentation.ammoTextSize = Mathf.Clamp(presentation.ammoTextSize, .3f, 3);
             presentation.ammoTextSortingOrder = Mathf.Clamp(presentation.ammoTextSortingOrder, -32768, 32767);
             plinko.trailTime = Mathf.Clamp(plinko.trailTime, .01f, 3);
@@ -203,6 +204,9 @@ namespace MultiplyOrRelease
         public float marbleDiameter = .54f;
         public float muzzleLength = .46f;
         public float barrelWidth = .16f;
+        [Tooltip("Outline thickness around each cannon barrel. Set to 0 to hide it.")]
+        [Min(0)] public float barrelOutlineWidth = .035f;
+        public Color barrelOutlineColor = Color.black;
         public float rimWidth = .085f;
         [Header("Flag Firing Pop")]
         [Tooltip("Visual-only scale pop on the cannon flag when a projectile actually spawns. Does not change the barrel or hit radius.")]
