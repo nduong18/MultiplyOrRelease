@@ -114,48 +114,9 @@ public static class SimulationSceneBuilder
     {
         string[] names = { "Indonesia", "Mexico", "France", "China" };
         string path = Root + "/Art/Flag" + names[team] + ".png";
-        var existing = AssetDatabase.LoadAssetAtPath<Texture2D>(path); if (existing != null) return existing;
-        const int w = 384, h = 256; var tex = new Texture2D(w, h, TextureFormat.RGBA32, false); var pixels = new Color[w * h];
-        Color red = new Color(.9f, .04f, .07f), green = new Color(0, .42f, .27f), blue = new Color(.02f, .14f, .56f);
-        for (int y = 0; y < h; y++) for (int x = 0; x < w; x++)
-        {
-            float u = (x + .5f) / w, v = (y + .5f) / h; Color color;
-            if (team == 0) color = v >= .5f ? red : Color.white;
-            else if (team == 1) color = u < 1f / 3 ? green : u > 2f / 3 ? red : Color.white;
-            else if (team == 2) color = u < 1f / 3 ? blue : u > 2f / 3 ? red : Color.white;
-            else color = red;
-            if (team == 1)
-            {
-                // Placeholder emblem; use a supplied flag texture for exact artwork.
-                float ellipse = Mathf.Pow((u - .5f) / .07f, 2) + Mathf.Pow((v - .49f) / .14f, 2);
-                if (ellipse > .68f && ellipse < 1 && v < .5f) color = green;
-                if (Mathf.Abs(u - .5f) < .025f && v > .42f && v < .59f) color = new Color(.42f, .27f, .08f);
-            }
-            if (team == 3)
-            {
-                if (InStar(u, v, .17f, .76f, .095f, 0) || InStar(u, v, .32f, .89f, .029f, 35) ||
-                    InStar(u, v, .37f, .8f, .029f, 5) || InStar(u, v, .37f, .66f, .029f, 15) || InStar(u, v, .32f, .56f, .029f, 45)) color = new Color(1, .87f, .06f);
-            }
-            pixels[y * w + x] = color;
-        }
-        tex.SetPixels(pixels); tex.Apply(); File.WriteAllBytes(path, tex.EncodeToPNG()); UnityEngine.Object.DestroyImmediate(tex);
-        AssetDatabase.ImportAsset(path); var importer = (TextureImporter)AssetImporter.GetAtPath(path);
-        importer.isReadable = true; importer.mipmapEnabled = false; importer.wrapMode = TextureWrapMode.Clamp;
-        importer.textureCompression = TextureImporterCompression.Uncompressed; importer.SaveAndReimport();
-        return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-    }
-    static bool InStar(float u, float v, float cx, float cy, float radius, float rotation)
-    {
-        var pt = new Vector2((u - cx) * 1.5f, v - cy);
-        bool inside = false; Vector2 previous = Vector2.zero;
-        for (int i = 0; i <= 10; i++)
-        {
-            int k = i % 10; float a = (90 + rotation + k * 36) * Mathf.Deg2Rad;
-            float r = k % 2 == 0 ? radius : radius * .4f; Vector2 vertex = new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * r;
-            if (i > 0 && ((vertex.y > pt.y) != (previous.y > pt.y)) && pt.x < (previous.x - vertex.x) * (pt.y - vertex.y) / (previous.y - vertex.y) + vertex.x) inside = !inside;
-            previous = vertex;
-        }
-        return inside;
+        var existing = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+        if (existing != null) return existing;
+        throw new InvalidOperationException("Missing flag-icons texture: " + path + ". Run npm ci --ignore-scripts then npm run generate in Tools/FlagAssets, and refresh Unity.");
     }
 }
 

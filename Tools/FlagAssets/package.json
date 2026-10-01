@@ -1,0 +1,13 @@
+{
+  "name": "multiply-or-release-flag-assets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Convert flag-icons SVGs into readable PNG textures for Unity.",
+  "scripts": {
+    "generate": "node generate-flags.cjs"
+  },
+  "dependencies": {
+    "flag-icons": "7.5.0",
+    "sharp": "0.35.5"
+  }
+}

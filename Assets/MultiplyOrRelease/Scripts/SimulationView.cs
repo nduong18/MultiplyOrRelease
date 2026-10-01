@@ -28,6 +28,7 @@ namespace MultiplyOrRelease
         readonly Material gridMaterial;
         readonly Vector2[] gridUV;
         readonly Color[] gridColors;
+        readonly int[] flagMinX = new int[4], flagMinY = new int[4], flagMaxX = new int[4], flagMaxY = new int[4];
         int lastBoardVersion = -1;
         TerritoryStyle lastStyle;
         FlagMapping lastMapping;
@@ -188,6 +189,8 @@ namespace MultiplyOrRelease
         void UpdateGrid()
         {
             bool flag = c.board.style == TerritoryStyle.Flag;
+            bool fitTerritory = flag && c.board.flagMapping == FlagMapping.FitOwnedTerritory;
+            if (fitTerritory) UpdateFlagBounds();
             for (int y = 0; y < c.board.rows; y++) for (int x = 0; x < c.board.columns; x++)
             {
                 int index = y * c.board.columns + x, owner = model.owners[index], v = index * 4;
@@ -201,7 +204,14 @@ namespace MultiplyOrRelease
                 {
                     float u = x / (float)c.board.columns, uy = y / (float)c.board.rows;
                     float du = 1f / c.board.columns, dv = 1f / c.board.rows;
-                    if (c.board.flagMapping == FlagMapping.RepeatStartingQuadrant)
+                    if (fitTerritory)
+                    {
+                        float width = flagMaxX[owner] - flagMinX[owner] + 1;
+                        float height = flagMaxY[owner] - flagMinY[owner] + 1;
+                        u = (x - flagMinX[owner]) / width; uy = (y - flagMinY[owner]) / height;
+                        du = 1f / width; dv = 1f / height;
+                    }
+                    else if (c.board.flagMapping == FlagMapping.RepeatStartingQuadrant)
                     { u = Mathf.Repeat(u * 2, 1); uy = Mathf.Repeat(uy * 2, 1); du *= 2; dv *= 2; }
                     Vector2 origin = new Vector2(owner % 2, owner / 2) * .5f;
                     // Half-texel inset avoids sampling another team's atlas quadrant.
@@ -215,6 +225,22 @@ namespace MultiplyOrRelease
             gridMaterial.mainTexture = flag ? atlas : Texture2D.whiteTexture;
             gridMesh.colors = gridColors; gridMesh.uv = gridUV;
             UpdateBorders(); lastBoardVersion = model.boardVersion; lastStyle = c.board.style; lastMapping = c.board.flagMapping;
+        }
+        void UpdateFlagBounds()
+        {
+            for (int t = 0; t < 4; t++)
+            {
+                flagMinX[t] = c.board.columns; flagMinY[t] = c.board.rows;
+                flagMaxX[t] = flagMaxY[t] = -1;
+            }
+            // A single mapping per team, even if its territory is disconnected.
+            // Teams without any cells produce no vertices, so no zero-size UV division.
+            for (int y = 0; y < c.board.rows; y++) for (int x = 0; x < c.board.columns; x++)
+            {
+                int owner = model.owners[y * c.board.columns + x];
+                flagMinX[owner] = Mathf.Min(flagMinX[owner], x); flagMaxX[owner] = Mathf.Max(flagMaxX[owner], x);
+                flagMinY[owner] = Mathf.Min(flagMinY[owner], y); flagMaxY[owner] = Mathf.Max(flagMaxY[owner], y);
+            }
         }
         static Vector2 AtlasUV(Vector2 origin, float u, float v)
             => origin + new Vector2(Mathf.Clamp(u, .002f, .998f), Mathf.Clamp(v, .002f, .998f)) * .5f;

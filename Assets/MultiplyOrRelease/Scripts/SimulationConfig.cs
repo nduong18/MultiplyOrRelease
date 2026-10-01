@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace MultiplyOrRelease
 {
     public enum TerritoryStyle { Color, Flag }
-    public enum FlagMapping { EntireArena, RepeatStartingQuadrant }
+    public enum FlagMapping { EntireArena = 0, RepeatStartingQuadrant = 1, FitOwnedTerritory = 2 }
     public enum SweepMode { PingPong, Continuous }
     public enum FiringMode { ShotsPerSecond, FramesBetweenShots }
     public enum CameraFocus { Simulation, TerritoryGrid }
@@ -106,7 +106,8 @@ namespace MultiplyOrRelease
         [Tooltip("Grid line width as a fraction of each cell. 0 hides the lines; 0.06 is 6% of the cell width/height. Does not change ownership border thickness.")]
         [Range(0, .35f)] public float gridLineThickness = .06f;
         public TerritoryStyle style = TerritoryStyle.Color;
-        public FlagMapping flagMapping = FlagMapping.RepeatStartingQuadrant;
+        [Tooltip("Fit Owned Territory stretches one flag across the bounding rectangle of all cells owned by that team, clipped to its territory, without repeating. The bounds update on captures.")]
+        public FlagMapping flagMapping = FlagMapping.FitOwnedTerritory;
         [Range(0, 1)] public float flagOpacity = 1;
         [Range(.1f, 1)] public float colorBrightness = .72f;
         [Range(0, .3f)] public float checkerVariation = .08f;

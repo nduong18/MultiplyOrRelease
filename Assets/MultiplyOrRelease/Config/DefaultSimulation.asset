@@ -24,14 +24,14 @@ MonoBehaviour:
     rows: 56
     size: 10
     gridLineThickness: 0
-    style: 0
-    flagMapping: 1
+    style: 1
+    flagMapping: 2
     flagOpacity: 1
     colorBrightness: 0.72
     checkerVariation: 0.08
     gridColor: {r: 0.065, g: 0.075, b: 0.09, a: 1}
     showOwnershipBorders: 1
-    borderColor: {r: 0.88, g: 0.92, b: 1, a: 0.8}
+    borderColor: {r: 1, g: 1, b: 1, a: 0.8}
     borderThickness: 0.0264
     quadrantOwners: 00000000010000000200000003000000
   plinko:
