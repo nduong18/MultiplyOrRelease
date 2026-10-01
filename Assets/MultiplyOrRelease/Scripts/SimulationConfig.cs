@@ -68,6 +68,7 @@ namespace MultiplyOrRelease
             projectile.maxActive = Mathf.Clamp(projectile.maxActive, 32, 5000);
             projectile.maxSpawnsPerTick = Mathf.Clamp(projectile.maxSpawnsPerTick, 1, 128);
             projectile.radius = Mathf.Clamp(projectile.radius, .01f, .2f);
+            projectile.visualScale = Mathf.Clamp(projectile.visualScale, .1f, 10);
             projectile.captureRadiusCells = Mathf.Clamp(projectile.captureRadiusCells, 0, 4);
             plinko.gateHeight = Mathf.Clamp(plinko.gateHeight, .15f, .6f);
             cannon.marbleDiameter = Mathf.Clamp(cannon.marbleDiameter, .15f, 1.5f);
@@ -161,6 +162,8 @@ namespace MultiplyOrRelease
         [Range(0, 1)] public float ammoTextOpacity = .32f;
         public float trailTime = .28f;
         public float trailWidth = .18f;
+        [Tooltip("Narrow the Plinko trail to a point. Disable for a constant-width, non-pointed tail.")]
+        public bool taperTrail = false;
     }
     [Serializable] public sealed class CannonSettings
     {
@@ -186,8 +189,12 @@ namespace MultiplyOrRelease
     }
     [Serializable] public sealed class ProjectileSettings
     {
+        [Tooltip("Use each team's Projectile Sprite (falls back to its Cannon Sprite). Disable to use the original colored circle bullets.")]
+        public bool useTeamFlagSprite = true;
         public float speed = 6.5f;
         public float radius = .055f;
+        [Tooltip("Visual-only size multiplier for bullets. 2 doubles their width and height without changing collision/capture radius. Matched trails scale with this size.")]
+        [Range(.1f, 10)] public float visualScale = 1;
         public float lifeTime = 25;
         [Range(32, 5000)] public int maxActive = 1600;
         [Tooltip("Shared spawn budget for all cannons: per simulation tick in Shots Per Second mode, per rendered frame in Frames Between Shots mode.")]
@@ -199,7 +206,12 @@ namespace MultiplyOrRelease
         public bool bounceAtArenaEdge = true;
         [Range(0, 4)] public int captureRadiusCells = 0;
         public float trailTime = .17f;
+        [Tooltip("Automatically match trail width to the bullet's visible diameter, including Visual Scale. Disable to use Trail Width.")]
+        public bool matchTrailToSize = true;
+        [Tooltip("Custom trail width, used only when Match Trail To Size is disabled.")]
         public float trailWidth = .095f;
+        [Tooltip("Narrow the projectile trail to a point. Disable for a constant-width, non-pointed tail.")]
+        public bool taperTrail = false;
     }
     [Serializable] public sealed class PresentationSettings
     {
@@ -248,6 +260,10 @@ namespace MultiplyOrRelease
         public string name = "Team";
         public Sprite cannonSprite;
         public Sprite plinkoSprite;
+        [Tooltip("Flag sprite for fired bullets. If empty, use this team's Cannon Sprite; if both are empty, use a colored circle.")]
+        public Sprite projectileSprite;
+        [Tooltip("Tint for flag bullets. Keep white to preserve the flag's original colors. Projectile Color is used for plain-circle bullets.")]
+        public Color projectileSpriteTint = Color.white;
         public Texture2D territoryFlag;
         public Color territoryColor = Color.white;
         public Color ammoTextColor = Color.white;

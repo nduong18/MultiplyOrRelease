@@ -52,7 +52,7 @@ MonoBehaviour:
     columns: 3
     pegRadius: 0.14
     ballRadius: 0.13
-    gravity: 8
+    gravity: 6
     restitution: 0.68
     damping: 0.025
     spawnSpread: 0.9
@@ -70,8 +70,9 @@ MonoBehaviour:
     releaseColor: {r: 1, g: 0.06, b: 0.43, a: 1}
     gateTextColor: {r: 0, g: 0, b: 0, a: 1}
     ammoTextOpacity: 0.32
-    trailTime: 0.28
+    trailTime: 0.15
     trailWidth: 0.18
+    taperTrail: 0
   cannon:
     initialAmmo: 1
     ammoAfterRelease: 1
@@ -89,8 +90,10 @@ MonoBehaviour:
     eliminatedTint: {r: 0.2, g: 0.2, b: 0.2, a: 0.35}
     destroyOnEnemyHit: 1
   projectile:
-    speed: 6.5
+    useTeamFlagSprite: 1
+    speed: 8
     radius: 0.055
+    visualScale: 2
     lifeTime: 25
     maxActive: 1600
     maxSpawnsPerTick: 32
@@ -99,8 +102,10 @@ MonoBehaviour:
     bounceOnCapture: 0
     bounceAtArenaEdge: 1
     captureRadiusCells: 0
-    trailTime: 0.17
+    trailTime: 0.15
+    matchTrailToSize: 1
     trailWidth: 0.095
+    taperTrail: 0
   presentation:
     backgroundColor: {r: 0.018, g: 0.026, b: 0.045, a: 1}
     frameColor: {r: 0.14, g: 0.18, b: 0.24, a: 1}
@@ -141,6 +146,8 @@ MonoBehaviour:
   - name: Indonesia
     cannonSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
     plinkoSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
+    projectileSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
     territoryFlag: {fileID: 2800000, guid: 7fc984cf3b0d4b042b5a7f52f086cf7a, type: 3}
     territoryColor: {r: 0.62, g: 0.64, b: 0.66, a: 1}
     ammoTextColor: {r: 1, g: 1, b: 1, a: 1}
@@ -160,6 +167,8 @@ MonoBehaviour:
   - name: Mexico
     cannonSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
     plinkoSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
+    projectileSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
     territoryFlag: {fileID: 2800000, guid: ff0911fe970459640a03958ff04ff178, type: 3}
     territoryColor: {r: 0, g: 0.69, b: 0.43, a: 1}
     ammoTextColor: {r: 0, g: 1, b: 0.74, a: 1}
@@ -179,6 +188,8 @@ MonoBehaviour:
   - name: France
     cannonSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
     plinkoSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
+    projectileSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
     territoryFlag: {fileID: 2800000, guid: da91c59697c2634458eac0ff4c424107, type: 3}
     territoryColor: {r: 0.08, g: 0.19, b: 0.85, a: 1}
     ammoTextColor: {r: 0.02, g: 0.78, b: 1, a: 1}
@@ -198,6 +209,8 @@ MonoBehaviour:
   - name: China
     cannonSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
     plinkoSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
+    projectileSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
     territoryFlag: {fileID: 2800000, guid: 438eb57e2454ebc44b0565cb2f2b1b93, type: 3}
     territoryColor: {r: 0.78, g: 0.08, b: 0.025, a: 1}
     ammoTextColor: {r: 1, g: 0.84, b: 0.02, a: 1}

@@ -77,12 +77,18 @@ namespace MultiplyOrRelease
             var go = new GameObject("Graphic", typeof(SpriteRenderer)); go.transform.SetParent(pivot, false);
             var r = go.GetComponent<SpriteRenderer>(); r.sprite = sprite;
             r.sharedMaterial = c.presentation.spriteMaterial; r.color = color; r.sortingOrder = order;
+            SetSpriteSize(r, sprite, size);
+            return r;
+        }
+        static void SetSpriteSize(SpriteRenderer renderer, Sprite sprite, Vector2 size)
+        {
+            renderer.sprite = sprite;
+            var go = renderer.gameObject;
             Vector2 spriteSize = sprite.bounds.size;
             go.transform.localScale = new Vector3(size.x / spriteSize.x, size.y / spriteSize.y, 1);
             // Imported MarbleFlag sprites have an off-centre pivot. Align the graphic,
             // not the asset, so arbitrary user sprites remain centred on the cannon.
             go.transform.localPosition = -Vector3.Scale(sprite.bounds.center, go.transform.localScale);
-            return r;
         }
         SpriteRenderer Square(string name, Vector2 pos, Vector2 size, Color color, int order, Transform parent = null)
             => Sprite(name, pos, size, c.presentation.squareSprite, color, order, parent);
@@ -95,11 +101,11 @@ namespace MultiplyOrRelease
             var mr = go.GetComponent<MeshRenderer>(); mr.sharedMaterial = tm.font.material; mr.sortingOrder = order;
             return tm;
         }
-        TrailRenderer Trail(Transform parent, Color color, float time, float width, int order)
+        TrailRenderer Trail(Transform parent, Color color, float time, float width, int order, bool taper)
         {
             var go = new GameObject("Trail", typeof(TrailRenderer)); go.transform.SetParent(parent, false);
             var tr = go.GetComponent<TrailRenderer>(); tr.sharedMaterial = c.presentation.trailMaterial;
-            tr.time = time; tr.startWidth = width; tr.endWidth = 0;
+            tr.time = time; tr.startWidth = width; tr.endWidth = taper ? 0 : width;
             tr.startColor = color; tr.endColor = new Color(color.r, color.g, color.b, 0);
             tr.minVertexDistance = c.presentation.trailMinVertexDistance; tr.sortingOrder = order; tr.numCapVertices = c.presentation.trailCapVertices;
             tr.emitting = !preview && c.presentation.showTrails; tr.autodestruct = false;
@@ -148,7 +154,7 @@ namespace MultiplyOrRelease
                 balls[t][b] = Sprite("Plinko Marble " + (b + 1), center + s.balls[b].position, Vector2.one * p.ballRadius * 2,
                     team.plinkoSprite != null ? team.plinkoSprite : c.presentation.circleSprite,
                     team.plinkoBallColor, 8);
-                ballTrails[t][b] = Trail(balls[t][b].transform.parent, team.plinkoTrailColor, p.trailTime, p.trailWidth, 7);
+                ballTrails[t][b] = Trail(balls[t][b].transform.parent, team.plinkoTrailColor, p.trailTime, p.trailWidth, 7, p.taperTrail);
             }
             defaultParent = null;
         }
@@ -312,17 +318,27 @@ namespace MultiplyOrRelease
                 if (!shotViews.TryGetValue(s.id, out var visual))
                 {
                     var team = c.teams[s.team];
+                    var flagSprite = c.projectile.useTeamFlagSprite
+                        ? (team.projectileSprite != null ? team.projectileSprite : team.cannonSprite) : null;
+                    var projectileSprite = flagSprite != null ? flagSprite : c.presentation.circleSprite;
+                    float diameter = c.projectile.radius * 2 * c.projectile.visualScale;
+                    float trailWidth = c.projectile.matchTrailToSize ? diameter : c.projectile.trailWidth;
                     if (freeShots.Count > 0) visual = freeShots.Pop();
                     else
                     {
                         visual = new ShotVisual();
-                        visual.renderer = Sprite("Pooled Projectile", s.position, Vector2.one * c.projectile.radius * 2,
-                            c.presentation.circleSprite, team.projectileColor, 15);
-                        visual.trail = Trail(visual.renderer.transform.parent, team.projectileTrailColor, c.projectile.trailTime, c.projectile.trailWidth, 14);
+                        visual.renderer = Sprite("Pooled Projectile", s.position, Vector2.one * diameter,
+                            projectileSprite, team.projectileColor, 15);
+                        visual.trail = Trail(visual.renderer.transform.parent, team.projectileTrailColor, c.projectile.trailTime, trailWidth, 14, c.projectile.taperTrail);
                     }
                     visual.renderer.transform.parent.gameObject.SetActive(true);
-                    visual.renderer.color = team.projectileColor;
+                    // Pool entries can move between teams with different sprite bounds/pivots.
+                    SetSpriteSize(visual.renderer, projectileSprite, Vector2.one * diameter);
+                    visual.renderer.color = flagSprite != null ? team.projectileSpriteTint : team.projectileColor;
                     visual.trail.startColor = team.projectileTrailColor;
+                    // Reapply on pool reuse, including custom width and taper settings.
+                    visual.trail.startWidth = trailWidth;
+                    visual.trail.endWidth = c.projectile.taperTrail ? 0 : trailWidth;
                     var color = team.projectileTrailColor; color.a = 0; visual.trail.endColor = color;
                     visual.trail.emitting = false;
                     visual.renderer.transform.parent.localPosition = s.position;

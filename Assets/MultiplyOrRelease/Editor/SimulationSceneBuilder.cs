@@ -51,7 +51,7 @@ public static class SimulationSceneBuilder
                 var sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/MarbleFlag/" + files[t] + "_round.png");
                 config.teams[t] = new TeamSettings
                 {
-                    name = names[t], cannonSprite = sprite, plinkoSprite = sprite,
+                    name = names[t], cannonSprite = sprite, plinkoSprite = sprite, projectileSprite = sprite,
                     territoryFlag = GenerateFlag(t), territoryColor = territory[t],
                     ammoTextColor = projectiles[t], projectileColor = projectiles[t],
                     projectileTrailColor = projectiles[t], plinkoTrailColor = projectiles[t],
