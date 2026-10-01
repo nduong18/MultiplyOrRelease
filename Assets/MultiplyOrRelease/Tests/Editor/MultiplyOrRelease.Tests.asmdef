@@ -1,0 +1,6 @@
+{
+    "name": "MultiplyOrRelease.Tests",
+    "references": ["MultiplyOrRelease.Runtime"],
+    "includePlatforms": ["Editor"],
+    "optionalUnityReferences": ["TestAssemblies"]
+}

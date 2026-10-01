@@ -1,0 +1,5 @@
+{
+    "name": "MultiplyOrRelease.PlayModeTests",
+    "references": ["MultiplyOrRelease.Runtime", "Unity.ugui"],
+    "optionalUnityReferences": ["TestAssemblies"]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "MultiplyOrRelease.Runtime",
+    "rootNamespace": "MultiplyOrRelease",
+    "references": ["Unity.ugui", "Unity.InputSystem"],
+    "autoReferenced": true
+}

@@ -1,0 +1,173 @@
+using System;
+using MultiplyOrRelease;
+using NUnit.Framework;
+using UnityEngine;
+
+public class SimulationModelTests
+{
+    SimulationConfig config;
+    [SetUp] public void SetUp()
+    {
+        config = ScriptableObject.CreateInstance<SimulationConfig>(); config.Validate();
+        config.teams[0].aimDegrees = -45; config.teams[1].aimDegrees = -135;
+        config.teams[2].aimDegrees = 45; config.teams[3].aimDegrees = 135;
+    }
+    [TearDown] public void TearDown() { UnityEngine.Object.DestroyImmediate(config); }
+    SimulationModel NewModel() { var m = new SimulationModel(config, 1234); m.Start(); return m; }
+    [Test] public void FourQuadrantsAndFiveMarblesStartWithOneAmmo()
+    {
+        var m = NewModel();
+        for (int i = 0; i < 4; i++)
+        {
+            Assert.AreEqual(1, m.teams[i].ammo); Assert.AreEqual(5, m.teams[i].balls.Length);
+            Assert.AreEqual(m.owners.Length / 4, m.territoryCounts[i]);
+        }
+    }
+    [Test] public void MultiplyThenReleaseQueuesWholeVolleyAndResetsStock()
+    {
+        var m = NewModel(); for (int i = 0; i < 5; i++) m.Multiply(0);
+        Assert.AreEqual(32, m.teams[0].ammo); m.Release(0);
+        Assert.AreEqual(32, m.teams[0].queued); Assert.AreEqual(1, m.teams[0].ammo);
+    }
+    [Test] public void ActiveShotBudgetDefersEveryRemainingShot()
+    {
+        config.projectile.maxActive = 32; config.cannon.shotsPerSecond = 3000;
+        var m = NewModel(); m.teams[0].ammo = 256; m.Release(0);
+        for (int i = 0; i < 10; i++) m.Tick(1f / 120);
+        Assert.AreEqual(32, m.shots.Count); Assert.AreEqual(224, m.teams[0].queued);
+        Assert.AreEqual(256, m.teams[0].queued + m.teams[0].fired);
+    }
+    [Test] public void StorageCeilingAndOverflowDoNotLoseOrWrapAmmo()
+    {
+        config.cannon.maxStoredAmmo = long.MaxValue; var m = NewModel();
+        m.teams[0].ammo = long.MaxValue / 2 + 1; m.Multiply(0);
+        Assert.AreEqual(long.MaxValue, m.teams[0].ammo);
+        m.teams[0].queued = 1; m.Release(0);
+        Assert.AreEqual(long.MaxValue, m.teams[0].ammo); Assert.AreEqual(1, m.teams[0].queued);
+    }
+    [Test] public void CaptureTransfersOwnershipAndPreservesTotalCellCount()
+    {
+        var m = NewModel(); int previous = m.owners[0]; m.Capture(0, 0, 0);
+        Assert.AreEqual(0, m.owners[0]); Assert.AreEqual(1, m.teams[0].captures);
+        Assert.AreEqual(m.owners.Length / 4 - 1, m.territoryCounts[previous]);
+        int count = 0; foreach (int cells in m.territoryCounts) count += cells; Assert.AreEqual(m.owners.Length, count);
+    }
+    [TestCase(false)]
+    [TestCase(true)]
+    public void ProjectileDisappearsOnFirstEnemyCapture(bool bounceEnabled)
+    {
+        config.projectile.despawnOnCapture = true;
+        config.projectile.bounceOnCapture = bounceEnabled;
+        var m = NewModel();
+        foreach (var team in m.teams) foreach (var ball in team.balls) ball.delay = 999;
+        int x = config.board.columns / 2;
+        int y = Mathf.FloorToInt((2 + config.board.size * .5f) / m.CellHeight);
+        int index = y * config.board.columns + x;
+        Assert.AreEqual(1, m.owners[index]);
+        m.shots.Add(new ShotState { id = 999, team = 0, position = new Vector2(-.03f, 2), velocity = Vector2.right * config.projectile.speed });
+        // Enough travel to cross several cells: the first capture must consume the shot.
+        m.Tick(.1f);
+        Assert.AreEqual(0, m.owners[index]);
+        Assert.AreEqual(1, m.teams[0].captures);
+        Assert.AreEqual(0, m.shots.Count);
+        int count = 0; foreach (int cells in m.territoryCounts) count += cells;
+        Assert.AreEqual(m.owners.Length, count);
+    }
+    [Test] public void ProjectileContinuesAcrossFriendlyTerritory()
+    {
+        var m = NewModel();
+        foreach (var team in m.teams) foreach (var ball in team.balls) ball.delay = 999;
+        m.shots.Add(new ShotState { id = 999, team = 0, position = new Vector2(-2, 2), velocity = Vector2.right * config.projectile.speed });
+        m.Tick(.1f);
+        Assert.AreEqual(1, m.shots.Count);
+        Assert.Greater(m.shots[0].position.x, -2);
+        Assert.AreEqual(0, m.teams[0].captures);
+    }
+    [Test] public void EliminatedTeamsStopPlinkoAndQueuedFireButKeepAirborneShots()
+    {
+        var m = NewModel(); m.Release(0); m.Tick(.02f); Assert.Greater(m.shots.Count, 0);
+        int shots = m.shots.Count; m.teams[0].queued = 50; m.Eliminate(0);
+        Assert.AreEqual(shots, m.shots.Count); Assert.AreEqual(0, m.teams[0].queued);
+        long ammo = m.teams[0].ammo; m.Multiply(0); m.Release(0); Assert.AreEqual(ammo, m.teams[0].ammo);
+    }
+    [Test] public void SweptProjectileHitEliminatesEnemyCannon()
+    {
+        var m = NewModel(); var pos = m.teams[1].cannonPosition;
+        m.shots.Add(new ShotState { id = 999, team = 0, position = pos + Vector2.left * .3f, velocity = Vector2.right * 35 });
+        m.Tick(1f / 120); Assert.IsFalse(m.teams[1].alive); Assert.AreEqual(0, m.shots.Count);
+    }
+    [Test] public void LastSurvivorWaitsForAirborneShotsBeforeWinning()
+    {
+        config.resultDelay = 0; var m = NewModel();
+        m.shots.Add(new ShotState { id = 999, team = 1, position = new Vector2(2, 2), velocity = Vector2.right });
+        m.Eliminate(1); m.Eliminate(2); m.Eliminate(3); m.Tick(.01f);
+        Assert.AreEqual(MatchPhase.Settling, m.phase); Assert.AreEqual(-1, m.winner);
+        m.shots.Clear(); m.Tick(.01f); Assert.AreEqual(MatchPhase.Finished, m.phase); Assert.AreEqual(0, m.winner);
+    }
+    [Test] public void FinalAirborneShotCanDestroyLastCannonAndCauseDraw()
+    {
+        config.resultDelay = 0; var m = NewModel(); m.Eliminate(1); m.Eliminate(2); m.Eliminate(3);
+        var pos = m.teams[0].cannonPosition;
+        m.shots.Add(new ShotState { id = 999, team = 1, position = pos + Vector2.right * .3f, velocity = Vector2.left * 35 });
+        m.Tick(1f / 120); Assert.AreEqual(MatchPhase.Finished, m.phase); Assert.AreEqual(-1, m.winner);
+    }
+    [Test] public void SameSeedReplaysSameGateEventsAndTerritory()
+    {
+        var a = NewModel(); var b = NewModel();
+        for (int i = 0; i < 3600; i++) { a.Tick(1f / 120); b.Tick(1f / 120); }
+        CollectionAssert.AreEqual(a.owners, b.owners); Assert.AreEqual(a.totalFired, b.totalFired);
+        for (int t = 0; t < 4; t++)
+        {
+            Assert.AreEqual(a.teams[t].ammo, b.teams[t].ammo);
+            Assert.Greater(a.teams[t].multiplies + a.teams[t].releases, 0);
+            foreach (var ball in a.teams[t].balls)
+            {
+                Assert.IsFalse(float.IsNaN(ball.position.x)); Assert.IsFalse(float.IsNaN(ball.position.y));
+                Assert.Greater(ball.cycles, 0);
+            }
+        }
+    }
+    [Test] public void TimeoutCanFinishTiedMatchAsDraw()
+    {
+        config.matchTimeLimit = .1f; var m = NewModel(); m.Tick(.1f);
+        Assert.AreEqual(MatchPhase.Finished, m.phase); Assert.AreEqual(-1, m.winner);
+    }
+    [Test] public void CannonSweepRespectsAngleSpeedAndDirection()
+    {
+        config.teams[0].aimDegrees = 45; config.teams[0].sweepDegrees = 120; config.teams[0].sweepSpeed = 30;
+        config.teams[1].aimDegrees = 45; config.teams[1].sweepDegrees = 120; config.teams[1].sweepSpeed = 30; config.teams[1].clockwise = true;
+        var m = NewModel(); foreach (var team in m.teams) foreach (var ball in team.balls) ball.delay = 999;
+        m.Tick(1); Assert.AreEqual(15, m.teams[0].angle, .001f); Assert.AreEqual(75, m.teams[1].angle, .001f);
+        m.Tick(3); Assert.AreEqual(105, m.teams[0].angle, .001f);
+        m.Tick(1); Assert.AreEqual(75, m.teams[0].angle, .001f);
+    }
+    [Test] public void GateContactsRecycleBallAndAwardCorrectMirroredAction()
+    {
+        var m = NewModel();
+        foreach (var team in m.teams) foreach (var ball in team.balls) ball.delay = 999;
+        var left = m.teams[0].balls[0]; left.active = true;
+        left.position = new Vector2(-config.plinko.width * .25f, -config.plinko.height * .5f + .3f); left.velocity = Vector2.down;
+        var right = m.teams[1].balls[0]; right.active = true;
+        right.position = new Vector2(config.plinko.width * .25f, -config.plinko.height * .5f + .3f); right.velocity = Vector2.down;
+        m.Tick(1f / 120);
+        Assert.AreEqual(2, m.teams[0].ammo); Assert.AreEqual(2, m.teams[1].ammo);
+        Assert.AreEqual(1, left.cycles); Assert.AreEqual(1, right.cycles);
+        Assert.IsFalse(left.active); Assert.Greater(left.position.y, 0);
+    }
+    [Test] public void DefaultScenePresetCanCompleteAnEntireMatch()
+    {
+        var preset = UnityEditor.AssetDatabase.LoadAssetAtPath<SimulationConfig>("Assets/MultiplyOrRelease/Config/DefaultSimulation.asset");
+        Assert.IsNotNull(preset, "Create the simulation scene before running integration tests.");
+        var copy = UnityEngine.Object.Instantiate(preset);
+        try
+        {
+            var m = new SimulationModel(copy, copy.randomSeed); m.Start();
+            for (int i = 0; i < 144000 && m.phase != MatchPhase.Finished; i++) m.Tick(1f / copy.ticksPerSecond);
+            Assert.AreEqual(MatchPhase.Finished, m.phase, "Default seed should finish within 20 simulated minutes.");
+            Assert.LessOrEqual(m.AliveCount, 1); Assert.Greater(m.totalFired, 0);
+            int cells = 0; foreach (int count in m.territoryCounts) { Assert.GreaterOrEqual(count, 0); cells += count; }
+            Assert.AreEqual(m.owners.Length, cells);
+        }
+        finally { UnityEngine.Object.DestroyImmediate(copy); }
+    }
+}

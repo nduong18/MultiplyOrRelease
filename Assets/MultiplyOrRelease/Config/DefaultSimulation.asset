@@ -1,0 +1,212 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a403e4613194da45a9d47636f7a516d, type: 3}
+  m_Name: DefaultSimulation
+  m_EditorClassIdentifier: MultiplyOrRelease.Runtime::MultiplyOrRelease.SimulationConfig
+  autoStart: 1
+  randomSeed: 1207
+  simulationSpeed: 1
+  ticksPerSecond: 120
+  maxTicksPerFrame: 128
+  matchTimeLimit: 0
+  resultDelay: 1.5
+  board:
+    columns: 56
+    rows: 56
+    size: 10
+    gridLineThickness: 0
+    style: 0
+    flagMapping: 1
+    flagOpacity: 1
+    colorBrightness: 0.72
+    checkerVariation: 0.08
+    gridColor: {r: 0.065, g: 0.075, b: 0.09, a: 1}
+    showOwnershipBorders: 1
+    borderColor: {r: 0.88, g: 0.92, b: 1, a: 0.8}
+    borderThickness: 0.0264
+    quadrantOwners: 00000000010000000200000003000000
+  plinko:
+    ballCount: 5
+    fitTo16By9: 1
+    width: 3.732222
+    height: 4.875
+    boardGap: 0.25
+    gateHeight: 0.34
+    gateTextSize: 0.22
+    eventTextSize: 0.16
+    teamLabelInset: 0.22
+    spawnTopInset: 0.4
+    pegTopInset: 0.65
+    pegBottomInset: 0.85
+    wallInset: 0.08
+    rows: 6
+    columns: 3
+    pegRadius: 0.14
+    ballRadius: 0.13
+    gravity: 8
+    restitution: 0.68
+    damping: 0.025
+    spawnSpread: 0.9
+    horizontalKick: 0.8
+    initialStagger: 0.45
+    recycleDelay: 0.15
+    maxFallTime: 9
+    multiplyRegion: 0.5
+    mirrorRightBoards: 1
+    collideBalls: 1
+    backgroundColor: {r: 0.025, g: 0.035, b: 0.052, a: 1}
+    pegColor: {r: 0.27, g: 0.32, b: 0.39, a: 1}
+    multiplyColor: {r: 0.56, g: 1, b: 0.05, a: 1}
+    releaseColor: {r: 1, g: 0.06, b: 0.43, a: 1}
+    gateTextColor: {r: 0, g: 0, b: 0, a: 1}
+    ammoTextOpacity: 0.32
+    trailTime: 0.28
+    trailWidth: 0.18
+  cannon:
+    initialAmmo: 1
+    ammoAfterRelease: 1
+    maxStoredAmmo: 1073741824
+    multiplier: 2
+    shotsPerSecond: 180
+    cornerInset: 0.65
+    hitRadius: 0.23
+    marbleDiameter: 0.54
+    muzzleLength: 0.46
+    barrelWidth: 0.16
+    rimWidth: 0.085
+    eliminatedTint: {r: 0.2, g: 0.2, b: 0.2, a: 0.35}
+    destroyOnEnemyHit: 1
+  projectile:
+    speed: 6.5
+    radius: 0.055
+    lifeTime: 25
+    maxActive: 1600
+    maxSpawnsPerTick: 32
+    spreadDegrees: 3
+    despawnOnCapture: 1
+    bounceOnCapture: 0
+    bounceAtArenaEdge: 1
+    captureRadiusCells: 0
+    trailTime: 0.17
+    trailWidth: 0.095
+  presentation:
+    backgroundColor: {r: 0.018, g: 0.026, b: 0.045, a: 1}
+    frameColor: {r: 0.14, g: 0.18, b: 0.24, a: 1}
+    textColor: {r: 0.9, g: 0.93, b: 1, a: 1}
+    secondaryTextColor: {r: 0.45, g: 0.54, b: 0.67, a: 1}
+    frameThickness: 0.12
+    labelSize: 0.19
+    ammoTextSize: 1.25
+    ammoTextSortingOrder: 20
+    hudMargin: 0.55
+    autoFrameCamera: 1
+    cameraFocus: 0
+    cameraPadding: 0
+    cameraOffset: {x: 0, y: 0}
+    font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    circleSprite: {fileID: 21300000, guid: 562a609be34b1a1488aac67788f6c6d3, type: 3}
+    squareSprite: {fileID: 21300000, guid: 2de879680eca07549b26ff38fee38ed3, type: 3}
+    spriteMaterial: {fileID: 2100000, guid: 2b27efb1ec2bb1b4caa48d3cc447aed8, type: 2}
+    trailMaterial: {fileID: 2100000, guid: 821a016652231cf4a943f2c33cfbbf06, type: 2}
+    showHud: 0
+    showTeamNames: 1
+    showPlinkoStatus: 0
+    showTrails: 1
+    compactAmmoNumbers: 1
+    trailMinVertexDistance: 0.025
+    trailCapVertices: 3
+    title: MULTIPLY / RELEASE
+    subtitle: FOUR TEAMS  /  ONE SURVIVOR
+    panelColor: {r: 0.026, g: 0.04, b: 0.064, a: 0.97}
+    buttonColor: {r: 0.09, g: 0.13, b: 0.19, a: 1}
+    buttonHighlightColor: {r: 0.6, g: 0.85, b: 1, a: 1}
+    buttonPressedColor: {r: 0.35, g: 0.62, b: 0.8, a: 1}
+    titleFontSize: 28
+    hudFontSize: 17
+    resultFontSize: 42
+  teams:
+  - name: Indonesia
+    cannonSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
+    plinkoSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
+    territoryFlag: {fileID: 2800000, guid: 7fc984cf3b0d4b042b5a7f52f086cf7a, type: 3}
+    territoryColor: {r: 0.62, g: 0.64, b: 0.66, a: 1}
+    ammoTextColor: {r: 1, g: 1, b: 1, a: 1}
+    projectileColor: {r: 1, g: 1, b: 1, a: 1}
+    projectileTrailColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 1, b: 1, a: 1}
+    barrelColor: {r: 1, g: 1, b: 1, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: -45
+    sweepDegrees: 120
+    sweepSpeed: 38
+    clockwise: 0
+    sweepPhase: 0
+    sweepMode: 0
+    hitPoints: 1
+  - name: Mexico
+    cannonSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
+    plinkoSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
+    territoryFlag: {fileID: 2800000, guid: ff0911fe970459640a03958ff04ff178, type: 3}
+    territoryColor: {r: 0, g: 0.69, b: 0.43, a: 1}
+    ammoTextColor: {r: 0, g: 1, b: 0.74, a: 1}
+    projectileColor: {r: 0, g: 1, b: 0.74, a: 1}
+    projectileTrailColor: {r: 0, g: 1, b: 0.74, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 0, g: 1, b: 0.74, a: 1}
+    barrelColor: {r: 0, g: 1, b: 0.74, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: -135
+    sweepDegrees: 120
+    sweepSpeed: 38
+    clockwise: 1
+    sweepPhase: 0.22
+    sweepMode: 0
+    hitPoints: 1
+  - name: France
+    cannonSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
+    plinkoSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
+    territoryFlag: {fileID: 2800000, guid: da91c59697c2634458eac0ff4c424107, type: 3}
+    territoryColor: {r: 0.08, g: 0.19, b: 0.85, a: 1}
+    ammoTextColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    projectileColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    projectileTrailColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    barrelColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: 45
+    sweepDegrees: 120
+    sweepSpeed: 38
+    clockwise: 0
+    sweepPhase: 0.44
+    sweepMode: 0
+    hitPoints: 1
+  - name: China
+    cannonSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
+    plinkoSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
+    territoryFlag: {fileID: 2800000, guid: 438eb57e2454ebc44b0565cb2f2b1b93, type: 3}
+    territoryColor: {r: 0.78, g: 0.08, b: 0.025, a: 1}
+    ammoTextColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    projectileColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    projectileTrailColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    barrelColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: 135
+    sweepDegrees: 120
+    sweepSpeed: 38
+    clockwise: 1
+    sweepPhase: 0.65999997
+    sweepMode: 0
+    hitPoints: 1
