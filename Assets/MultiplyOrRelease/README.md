@@ -59,6 +59,16 @@ Thứ tự `Teams`: trên trái, trên phải, dưới trái, dưới phải. G�
 - `Presentation > Camera Focus`: Simulation ôm toàn bộ grid và 4 bảng Plinko; Territory Grid chỉ lấy grid trung tâm. Camera Padding chỉnh khoảng trống; Camera Offset chỉnh tâm. Tắt Auto Frame Camera để chỉnh Camera trực tiếp bằng Inspector.
 - `Plinko > Fit To 16 By 9` mặc định bật: Width/Height tự tính từ kích thước grid, Board Gap và Frame Thickness. Mép trên/dưới hai cột Plinko thẳng hàng với grid và có khung chung thành một hình chữ nhật 16:9. Tắt tùy chọn để chỉnh Width/Height thủ công. Camera Padding mặc định 0 để khung vừa đủ Game view 16:9; Game view tỷ lệ khác sẽ có khoảng trống đối xứng để giữ nguyên hình và không cắt board.
 
+## Team presets / map positions
+
+Mở `Tools > Multiply or Release > Team Manager` hoặc nút `Team Manager — Save / Load / Arrange` trên Controller/Config Inspector. Chọn Simulation Config, kéo 4 dòng (hoặc Move Up/Down) để đổi vị trí: Upper Left, Upper Right, Lower Left, Lower Right. Cannon, Plinko, cờ và màu đi cùng team; Aim Degrees tự xoay sang góc mới và giữ offset so với hướng vào tâm. `Match starting grid to slots` bật sẽ đưa Quadrant Owners về 0,1,2,3; tắt nếu muốn giữ mapping riêng.
+
+`Save Selected Team As New Preset...` lưu mọi Team Settings vào asset dùng lại; chọn asset ở Team Preset rồi `Load Team Into Selected Position`. `Save Full Lineup As New Preset...` lưu cả 4 team, thứ tự và Quadrant Owners; `Load Full Lineup` khôi phục đúng đội hình. Preset là bản sao: chỉnh config không đổi preset. Save luôn tạo asset mới, không ghi đè preset cũ. Có Undo/Redo; preview cập nhật trong Edit Mode. Trong Play Mode dùng `Apply / Restart Scene` để áp dụng. `Save Config To Disk` lưu thay đổi config. Cửa sổ có scrollbar ở cả hai chiều; mở Selected Team Settings để chỉnh chi tiết.
+
+## MarbleFlag team library
+
+Thư viện đầy đủ cho `Assets/MarbleFlag` nằm trong `TeamPresets`: mỗi cờ có một Team Preset với sprite cho cannon/bi/đạn và texture chữ nhật readable cho grid. `Art/TeamFlags/MarbleFlagCatalog.json` ghi nguồn và ánh xạ. Sinh lại bằng `npm run generate:teams` trong `Tools/FlagAssets`, refresh Unity rồi menu `Tools > Multiply or Release > Generate Missing MarbleFlag Team Presets`; menu chỉ thêm preset thiếu, không ghi đè preset đã chỉnh. Ba cờ vùng Arab League/Saba/Sint Eustatius dùng artwork gốc trên nền chữ nhật kín thay vì giả nhận là cờ chữ nhật chuẩn của flag-icons.
+
 ## Cannon firing pop
 
 `DefaultSimulation > Cannon > Flag Firing Pop`: Enable Fire Pop bật/tắt scale pop của lá cờ cannon khi đạn thực sự được bắn ra; Fire Pop Scale = 1.2 phóng lớn 20%, Fire Pop Duration là thời gian về kích thước gốc (giây ở Speed 1). Pop chỉ thay đổi hình ảnh, không đổi nòng, vị trí cannon, collider hay nhịp bắn. Khi bắn nhanh, các phát trong một pop dùng chung nhịp hiện tại để không cộng dồn hoặc giữ cờ mãi ở kích thước lớn. Pause/Speed/Step áp dụng cho animation; Apply / Restart sau khi đổi config.

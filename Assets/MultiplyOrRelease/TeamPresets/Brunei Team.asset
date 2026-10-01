@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a69433b3d7579d498f53912b10d6680, type: 3}
+  m_Name: Brunei Team
+  m_EditorClassIdentifier: MultiplyOrRelease.Runtime::MultiplyOrRelease.TeamPreset
+  savedSlot: 0
+  team:
+    name: Brunei
+    cannonSprite: {fileID: 6747120309520797676, guid: 0ec2ce1f0906d4d43acb49b45dfab9d7, type: 3}
+    plinkoSprite: {fileID: 6747120309520797676, guid: 0ec2ce1f0906d4d43acb49b45dfab9d7, type: 3}
+    projectileSprite: {fileID: 6747120309520797676, guid: 0ec2ce1f0906d4d43acb49b45dfab9d7, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: 99943fb2a701879438ff3e667243a9c5, type: 3}
+    territoryColor: {r: 0.96924657, g: 0.87979376, b: 0.09047408, a: 1}
+    ammoTextColor: {r: 1, g: 0.9077089, b: 0.09334475, a: 1}
+    projectileColor: {r: 1, g: 0.9077089, b: 0.09334475, a: 1}
+    projectileTrailColor: {r: 1, g: 0.9077089, b: 0.09334475, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 0.9077089, b: 0.09334475, a: 1}
+    barrelColor: {r: 1, g: 0.9077089, b: 0.09334475, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: -45
+    sweepDegrees: 120
+    sweepSpeed: 90
+    clockwise: 1
+    sweepPhase: 0.22
+    sweepMode: 0
+    hitPoints: 1

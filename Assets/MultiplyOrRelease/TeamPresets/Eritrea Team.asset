@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a69433b3d7579d498f53912b10d6680, type: 3}
+  m_Name: Eritrea Team
+  m_EditorClassIdentifier: MultiplyOrRelease.Runtime::MultiplyOrRelease.TeamPreset
+  savedSlot: 0
+  team:
+    name: Eritrea
+    cannonSprite: {fileID: -8133068637858968987, guid: 661aa1c666c2d674d99eed5bb4ddd2e5, type: 3}
+    plinkoSprite: {fileID: -8133068637858968987, guid: 661aa1c666c2d674d99eed5bb4ddd2e5, type: 3}
+    projectileSprite: {fileID: -8133068637858968987, guid: 661aa1c666c2d674d99eed5bb4ddd2e5, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: 783ce2b3c20cfbf4bb18a6dd8c6a4e89, type: 3}
+    territoryColor: {r: 0.7442505, g: 0.0021220746, b: 0.151284, a: 1}
+    ammoTextColor: {r: 1, g: 0.0028513074, b: 0.20327033, a: 1}
+    projectileColor: {r: 1, g: 0.0028513074, b: 0.20327033, a: 1}
+    projectileTrailColor: {r: 1, g: 0.0028513074, b: 0.20327033, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 0.0028513074, b: 0.20327033, a: 1}
+    barrelColor: {r: 1, g: 0.0028513074, b: 0.20327033, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: -45
+    sweepDegrees: 120
+    sweepSpeed: 90
+    clockwise: 1
+    sweepPhase: 0.22
+    sweepMode: 0
+    hitPoints: 1

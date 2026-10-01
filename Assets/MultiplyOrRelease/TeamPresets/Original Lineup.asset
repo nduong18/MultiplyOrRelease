@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e56140a613c38ec43a53cafd9a0a2747, type: 3}
+  m_Name: Original Lineup
+  m_EditorClassIdentifier: MultiplyOrRelease.Runtime::MultiplyOrRelease.TeamLineupPreset
+  teams:
+  - name: Indonesia
+    cannonSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
+    plinkoSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
+    projectileSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: 7fc984cf3b0d4b042b5a7f52f086cf7a, type: 3}
+    territoryColor: {r: 0.62, g: 0.64, b: 0.66, a: 1}
+    ammoTextColor: {r: 1, g: 1, b: 1, a: 1}
+    projectileColor: {r: 1, g: 1, b: 1, a: 1}
+    projectileTrailColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 1, b: 1, a: 1}
+    barrelColor: {r: 1, g: 1, b: 1, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: -45
+    sweepDegrees: 120
+    sweepSpeed: 90
+    clockwise: 0
+    sweepPhase: 0
+    sweepMode: 0
+    hitPoints: 1
+  - name: Mexico
+    cannonSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
+    plinkoSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
+    projectileSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: ff0911fe970459640a03958ff04ff178, type: 3}
+    territoryColor: {r: 0, g: 0.69, b: 0.43, a: 1}
+    ammoTextColor: {r: 0, g: 1, b: 0.74, a: 1}
+    projectileColor: {r: 0, g: 1, b: 0.74, a: 1}
+    projectileTrailColor: {r: 0, g: 1, b: 0.74, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 0, g: 1, b: 0.74, a: 1}
+    barrelColor: {r: 0, g: 1, b: 0.74, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: -135
+    sweepDegrees: 120
+    sweepSpeed: 90
+    clockwise: 1
+    sweepPhase: 0.22
+    sweepMode: 0
+    hitPoints: 1
+  - name: France
+    cannonSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
+    plinkoSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
+    projectileSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: da91c59697c2634458eac0ff4c424107, type: 3}
+    territoryColor: {r: 0.08, g: 0.19, b: 0.85, a: 1}
+    ammoTextColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    projectileColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    projectileTrailColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    barrelColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: 45
+    sweepDegrees: 120
+    sweepSpeed: 90
+    clockwise: 0
+    sweepPhase: 0.44
+    sweepMode: 0
+    hitPoints: 1
+  - name: China
+    cannonSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
+    plinkoSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
+    projectileSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: 438eb57e2454ebc44b0565cb2f2b1b93, type: 3}
+    territoryColor: {r: 0.78, g: 0.08, b: 0.025, a: 1}
+    ammoTextColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    projectileColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    projectileTrailColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    barrelColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: 135
+    sweepDegrees: 120
+    sweepSpeed: 90
+    clockwise: 1
+    sweepPhase: 0.65999997
+    sweepMode: 0
+    hitPoints: 1
+  quadrantOwners: 00000000010000000200000003000000

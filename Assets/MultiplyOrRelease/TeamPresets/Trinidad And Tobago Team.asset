@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a69433b3d7579d498f53912b10d6680, type: 3}
+  m_Name: Trinidad And Tobago Team
+  m_EditorClassIdentifier: MultiplyOrRelease.Runtime::MultiplyOrRelease.TeamPreset
+  savedSlot: 0
+  team:
+    name: Trinidad And Tobago
+    cannonSprite: {fileID: -3636748478415157925, guid: e3bc6282d3abd3a449f83791626577c2, type: 3}
+    plinkoSprite: {fileID: -3636748478415157925, guid: e3bc6282d3abd3a449f83791626577c2, type: 3}
+    projectileSprite: {fileID: -3636748478415157925, guid: e3bc6282d3abd3a449f83791626577c2, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: 1559ab5bee6a6254d996e6f7dc470ec9, type: 3}
+    territoryColor: {r: 0.87854224, g: 0.001623347, b: 0.001623347, a: 1}
+    ammoTextColor: {r: 1, g: 0.001847744, b: 0.001847744, a: 1}
+    projectileColor: {r: 1, g: 0.001847744, b: 0.001847744, a: 1}
+    projectileTrailColor: {r: 1, g: 0.001847744, b: 0.001847744, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 0.001847744, b: 0.001847744, a: 1}
+    barrelColor: {r: 1, g: 0.001847744, b: 0.001847744, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: -45
+    sweepDegrees: 120
+    sweepSpeed: 90
+    clockwise: 1
+    sweepPhase: 0.22
+    sweepMode: 0
+    hitPoints: 1

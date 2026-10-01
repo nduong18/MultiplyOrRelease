@@ -199,40 +199,40 @@ MonoBehaviour:
     countdownGoClip: {fileID: 0}
     winnerClip: {fileID: 8300000, guid: 5a7fd32218495b94c9096ec8cd744daa, type: 3}
   teams:
-  - name: Indonesia
-    cannonSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
-    plinkoSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
-    projectileSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}
+  - name: Brazil
+    cannonSprite: {fileID: -4064824765295086984, guid: ca4544e9b7b38624c8dedbc69f80c6d6, type: 3}
+    plinkoSprite: {fileID: -4064824765295086984, guid: ca4544e9b7b38624c8dedbc69f80c6d6, type: 3}
+    projectileSprite: {fileID: -4064824765295086984, guid: ca4544e9b7b38624c8dedbc69f80c6d6, type: 3}
     projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
-    territoryFlag: {fileID: 2800000, guid: 7fc984cf3b0d4b042b5a7f52f086cf7a, type: 3}
-    territoryColor: {r: 0.62, g: 0.64, b: 0.66, a: 1}
-    ammoTextColor: {r: 1, g: 1, b: 1, a: 1}
-    projectileColor: {r: 1, g: 1, b: 1, a: 1}
-    projectileTrailColor: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: f657b58818d89bd41b3f3d0483ef3de1, type: 3}
+    territoryColor: {r: 0.13386163, g: 0.61976194, b: 0.2704748, a: 1}
+    ammoTextColor: {r: 1, g: 0.84, b: 0.05, a: 1}
+    projectileColor: {r: 1, g: 0.84, b: 0.05, a: 1}
+    projectileTrailColor: {r: 1, g: 0.84, b: 0.05, a: 1}
     plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
-    plinkoTrailColor: {r: 1, g: 1, b: 1, a: 1}
-    barrelColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 0.84, b: 0.05, a: 1}
+    barrelColor: {r: 1, g: 0.84, b: 0.05, a: 1}
     cannonTint: {r: 1, g: 1, b: 1, a: 1}
     aimDegrees: -45
     sweepDegrees: 120
     sweepSpeed: 90
     clockwise: 0
-    sweepPhase: 0
+    sweepPhase: 0.44
     sweepMode: 0
     hitPoints: 1
-  - name: Mexico
-    cannonSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
-    plinkoSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
-    projectileSprite: {fileID: -238448293926150736, guid: e94f61ad62660f049ba00082253862df, type: 3}
+  - name: Argentina
+    cannonSprite: {fileID: 7505976628678910234, guid: ffcc29b49f22f334489d5c77bd352b7e, type: 3}
+    plinkoSprite: {fileID: 7505976628678910234, guid: ffcc29b49f22f334489d5c77bd352b7e, type: 3}
+    projectileSprite: {fileID: 7505976628678910234, guid: ffcc29b49f22f334489d5c77bd352b7e, type: 3}
     projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
-    territoryFlag: {fileID: 2800000, guid: ff0911fe970459640a03958ff04ff178, type: 3}
-    territoryColor: {r: 0, g: 0.69, b: 0.43, a: 1}
-    ammoTextColor: {r: 0, g: 1, b: 0.74, a: 1}
-    projectileColor: {r: 0, g: 1, b: 0.74, a: 1}
-    projectileTrailColor: {r: 0, g: 1, b: 0.74, a: 1}
+    territoryFlag: {fileID: 2800000, guid: e52b299b717db3e428a41289adf4bd0b, type: 3}
+    territoryColor: {r: 0.454155, g: 0.67413634, b: 0.87432307, a: 1}
+    ammoTextColor: {r: 0.35000002, g: 0.69031125, b: 1, a: 1}
+    projectileColor: {r: 0.35000002, g: 0.69031125, b: 1, a: 1}
+    projectileTrailColor: {r: 0.35000002, g: 0.69031125, b: 1, a: 1}
     plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
-    plinkoTrailColor: {r: 0, g: 1, b: 0.74, a: 1}
-    barrelColor: {r: 0, g: 1, b: 0.74, a: 1}
+    plinkoTrailColor: {r: 0.35000002, g: 0.69031125, b: 1, a: 1}
+    barrelColor: {r: 0.35000002, g: 0.69031125, b: 1, a: 1}
     cannonTint: {r: 1, g: 1, b: 1, a: 1}
     aimDegrees: -135
     sweepDegrees: 120
@@ -241,45 +241,45 @@ MonoBehaviour:
     sweepPhase: 0.22
     sweepMode: 0
     hitPoints: 1
-  - name: France
-    cannonSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
-    plinkoSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
-    projectileSprite: {fileID: 9147202266928976888, guid: 5c7521beed55aac49b686441b8d0dd54, type: 3}
+  - name: Portugal
+    cannonSprite: {fileID: 5883381608892591418, guid: cb4cff723e8594c418be8fd25cb4b90b, type: 3}
+    plinkoSprite: {fileID: 5883381608892591418, guid: cb4cff723e8594c418be8fd25cb4b90b, type: 3}
+    projectileSprite: {fileID: 5883381608892591418, guid: cb4cff723e8594c418be8fd25cb4b90b, type: 3}
     projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
-    territoryFlag: {fileID: 2800000, guid: da91c59697c2634458eac0ff4c424107, type: 3}
-    territoryColor: {r: 0.08, g: 0.19, b: 0.85, a: 1}
-    ammoTextColor: {r: 0.02, g: 0.78, b: 1, a: 1}
-    projectileColor: {r: 0.02, g: 0.78, b: 1, a: 1}
-    projectileTrailColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: e2dfc2065515376458ff7c0c6329c947, type: 3}
+    territoryColor: {r: 0.99853766, g: 0.001233927, b: 0.0006870533, a: 1}
+    ammoTextColor: {r: 1, g: 0.0012357506, b: 0.000688076, a: 1}
+    projectileColor: {r: 1, g: 0.0012357506, b: 0.000688076, a: 1}
+    projectileTrailColor: {r: 1, g: 0.0012357506, b: 0.000688076, a: 1}
     plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
-    plinkoTrailColor: {r: 0.02, g: 0.78, b: 1, a: 1}
-    barrelColor: {r: 0.02, g: 0.78, b: 1, a: 1}
+    plinkoTrailColor: {r: 1, g: 0.0012357506, b: 0.000688076, a: 1}
+    barrelColor: {r: 1, g: 0.0012357506, b: 0.000688076, a: 1}
     cannonTint: {r: 1, g: 1, b: 1, a: 1}
     aimDegrees: 45
     sweepDegrees: 120
     sweepSpeed: 90
-    clockwise: 0
-    sweepPhase: 0.44
+    clockwise: 1
+    sweepPhase: 0.22
     sweepMode: 0
     hitPoints: 1
-  - name: China
-    cannonSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
-    plinkoSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
-    projectileSprite: {fileID: 6536598537911743159, guid: 1cd3aa4030177954a89c0d142dadf128, type: 3}
+  - name: Bangladesh
+    cannonSprite: {fileID: 2621721739777919382, guid: 0cd10d3d3a6ac964995c16aea203f932, type: 3}
+    plinkoSprite: {fileID: 2621721739777919382, guid: 0cd10d3d3a6ac964995c16aea203f932, type: 3}
+    projectileSprite: {fileID: 2621721739777919382, guid: 0cd10d3d3a6ac964995c16aea203f932, type: 3}
     projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
-    territoryFlag: {fileID: 2800000, guid: 438eb57e2454ebc44b0565cb2f2b1b93, type: 3}
-    territoryColor: {r: 0.78, g: 0.08, b: 0.025, a: 1}
-    ammoTextColor: {r: 1, g: 0.84, b: 0.02, a: 1}
-    projectileColor: {r: 1, g: 0.84, b: 0.02, a: 1}
-    projectileTrailColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    territoryFlag: {fileID: 2800000, guid: c180f600e71c95347bfec15c1aadd162, type: 3}
+    territoryColor: {r: 0.0012169479, g: 0.41576117, b: 0.30592966, a: 1}
+    ammoTextColor: {r: 0.002927065, g: 1, b: 0.73583025, a: 1}
+    projectileColor: {r: 0.002927065, g: 1, b: 0.73583025, a: 1}
+    projectileTrailColor: {r: 0.002927065, g: 1, b: 0.73583025, a: 1}
     plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
-    plinkoTrailColor: {r: 1, g: 0.84, b: 0.02, a: 1}
-    barrelColor: {r: 1, g: 0.84, b: 0.02, a: 1}
+    plinkoTrailColor: {r: 0.002927065, g: 1, b: 0.73583025, a: 1}
+    barrelColor: {r: 0.002927065, g: 1, b: 0.73583025, a: 1}
     cannonTint: {r: 1, g: 1, b: 1, a: 1}
     aimDegrees: 135
     sweepDegrees: 120
     sweepSpeed: 90
     clockwise: 1
-    sweepPhase: 0.65999997
+    sweepPhase: 0.22
     sweepMode: 0
     hitPoints: 1

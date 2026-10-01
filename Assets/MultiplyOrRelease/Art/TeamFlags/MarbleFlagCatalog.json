@@ -1,0 +1,2852 @@
+{
+  "schemaVersion": 1,
+  "flags": [
+    {
+      "slug": "afghanistan",
+      "displayName": "Afghanistan",
+      "spriteAsset": "Assets/MarbleFlag/afghanistan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/afghanistan.png",
+      "source": "flag-icons:af",
+      "territoryColor": {
+        "r": 0.00018715912912517727,
+        "g": 0.6005527043031977,
+        "b": 0.00001754616835548537,
+        "a": 1
+      }
+    },
+    {
+      "slug": "albania",
+      "displayName": "Albania",
+      "spriteAsset": "Assets/MarbleFlag/albania_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/albania.png",
+      "source": "flag-icons:al",
+      "territoryColor": {
+        "r": 0.998529700285058,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "algeria",
+      "displayName": "Algeria",
+      "spriteAsset": "Assets/MarbleFlag/algeria_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/algeria.png",
+      "source": "flag-icons:dz",
+      "territoryColor": {
+        "r": 0.001986697762805563,
+        "g": 0.3854776712447094,
+        "b": 0.20104517577956293,
+        "a": 1
+      }
+    },
+    {
+      "slug": "andorra",
+      "displayName": "Andorra",
+      "spriteAsset": "Assets/MarbleFlag/andorra_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/andorra.png",
+      "source": "flag-icons:ad",
+      "territoryColor": {
+        "r": 0.0007843137254901962,
+        "g": 0.09176470588235293,
+        "b": 0.6607843137254902,
+        "a": 1
+      }
+    },
+    {
+      "slug": "angola",
+      "displayName": "Angola",
+      "spriteAsset": "Assets/MarbleFlag/angola_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/angola.png",
+      "source": "flag-icons:ao",
+      "territoryColor": {
+        "r": 0.9994178759723646,
+        "g": 0.0007934288348197177,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "antigua-and-barbuda",
+      "displayName": "Antigua And Barbuda",
+      "spriteAsset": "Assets/MarbleFlag/antigua-and-barbuda_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/antigua-and-barbuda.png",
+      "source": "flag-icons:ag",
+      "territoryColor": {
+        "r": 0.8085754054708303,
+        "g": 0.06671508109416606,
+        "b": 0.14908819494876138,
+        "a": 1
+      }
+    },
+    {
+      "slug": "arab-league",
+      "displayName": "Arab League",
+      "spriteAsset": "Assets/MarbleFlag/arab-league_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/arab-league.png",
+      "source": "marble-derived",
+      "territoryColor": {
+        "r": 0.027405327672396083,
+        "g": 0.3837875778949531,
+        "b": 0.18385719829258826,
+        "a": 1
+      }
+    },
+    {
+      "slug": "argentina",
+      "displayName": "Argentina",
+      "spriteAsset": "Assets/MarbleFlag/argentina_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/argentina.png",
+      "source": "flag-icons:ar",
+      "territoryColor": {
+        "r": 0.4541549953314659,
+        "g": 0.6741363211951447,
+        "b": 0.8743230625583567,
+        "a": 1
+      }
+    },
+    {
+      "slug": "armenia",
+      "displayName": "Armenia",
+      "spriteAsset": "Assets/MarbleFlag/armenia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/armenia.png",
+      "source": "flag-icons:am",
+      "territoryColor": {
+        "r": 0.950326797385621,
+        "g": 0.6593837535014005,
+        "b": 0.00018674136321195143,
+        "a": 1
+      }
+    },
+    {
+      "slug": "aruba",
+      "displayName": "Aruba",
+      "spriteAsset": "Assets/MarbleFlag/aruba_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/aruba.png",
+      "source": "flag-icons:aw",
+      "territoryColor": {
+        "r": 0.19711554043104845,
+        "g": 0.5983939213885738,
+        "b": 0.8023515007472226,
+        "a": 1
+      }
+    },
+    {
+      "slug": "australia",
+      "displayName": "Australia",
+      "spriteAsset": "Assets/MarbleFlag/australia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/australia.png",
+      "source": "flag-icons:au",
+      "territoryColor": {
+        "r": 0.0035917792006595786,
+        "g": 0.0031848616014734142,
+        "b": 0.5448214416319258,
+        "a": 1
+      }
+    },
+    {
+      "slug": "austria",
+      "displayName": "Austria",
+      "spriteAsset": "Assets/MarbleFlag/austria_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/austria.png",
+      "source": "flag-icons:at",
+      "territoryColor": {
+        "r": 0.7839402427637722,
+        "g": 0.06143790849673202,
+        "b": 0.1792717086834734,
+        "a": 1
+      }
+    },
+    {
+      "slug": "azerbaijan",
+      "displayName": "Azerbaijan",
+      "spriteAsset": "Assets/MarbleFlag/azerbaijan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/azerbaijan.png",
+      "source": "flag-icons:az",
+      "territoryColor": {
+        "r": 0.0004949552636588616,
+        "g": 0.7261081579756622,
+        "b": 0.8949054752595585,
+        "a": 1
+      }
+    },
+    {
+      "slug": "bahamas",
+      "displayName": "Bahamas",
+      "spriteAsset": "Assets/MarbleFlag/bahamas_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/bahamas.png",
+      "source": "flag-icons:bs",
+      "territoryColor": {
+        "r": 0.030747143390957184,
+        "g": 0.8075796015497473,
+        "b": 0.8388793832477826,
+        "a": 1
+      }
+    },
+    {
+      "slug": "bahrain",
+      "displayName": "Bahrain",
+      "spriteAsset": "Assets/MarbleFlag/bahrain_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/bahrain.png",
+      "source": "flag-icons:bh",
+      "territoryColor": {
+        "r": 0.8078965539704255,
+        "g": 0.06681258549931601,
+        "b": 0.14917334375610708,
+        "a": 1
+      }
+    },
+    {
+      "slug": "bangladesh",
+      "displayName": "Bangladesh",
+      "spriteAsset": "Assets/MarbleFlag/bangladesh_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/bangladesh.png",
+      "source": "flag-icons:bd",
+      "territoryColor": {
+        "r": 0.0012169479051674288,
+        "g": 0.4157611838301004,
+        "b": 0.30592966409083744,
+        "a": 1
+      }
+    },
+    {
+      "slug": "barbados",
+      "displayName": "Barbados",
+      "spriteAsset": "Assets/MarbleFlag/barbados_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/barbados.png",
+      "source": "flag-icons:bb",
+      "territoryColor": {
+        "r": 0.0003921568627450981,
+        "g": 0.1492156862745098,
+        "b": 0.497843137254902,
+        "a": 1
+      }
+    },
+    {
+      "slug": "belarus",
+      "displayName": "Belarus",
+      "spriteAsset": "Assets/MarbleFlag/belarus_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/belarus.png",
+      "source": "flag-icons:by",
+      "territoryColor": {
+        "r": 0.8076519309083221,
+        "g": 0.09061158453067115,
+        "b": 0.12582480718494618,
+        "a": 1
+      }
+    },
+    {
+      "slug": "belgium",
+      "displayName": "Belgium",
+      "spriteAsset": "Assets/MarbleFlag/belgium_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/belgium.png",
+      "source": "flag-icons:be",
+      "territoryColor": {
+        "r": 0.9529411764705882,
+        "g": 0.09299719887955182,
+        "b": 0.18860877684407096,
+        "a": 1
+      }
+    },
+    {
+      "slug": "belize",
+      "displayName": "Belize",
+      "spriteAsset": "Assets/MarbleFlag/belize_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/belize.png",
+      "source": "flag-icons:bz",
+      "territoryColor": {
+        "r": 0.0008047906472850221,
+        "g": 0.24539685941164566,
+        "b": 0.5283450599426169,
+        "a": 1
+      }
+    },
+    {
+      "slug": "benin",
+      "displayName": "Benin",
+      "spriteAsset": "Assets/MarbleFlag/benin_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/benin.png",
+      "source": "flag-icons:bj",
+      "territoryColor": {
+        "r": 0.19027450980392158,
+        "g": 0.5806274509803921,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "bhutan",
+      "displayName": "Bhutan",
+      "spriteAsset": "Assets/MarbleFlag/bhutan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/bhutan.png",
+      "source": "flag-icons:bt",
+      "territoryColor": {
+        "r": 0.9989043034762132,
+        "g": 0.8352965579511207,
+        "b": 0.12789877618751297,
+        "a": 1
+      }
+    },
+    {
+      "slug": "bolivien",
+      "displayName": "Bolivia",
+      "spriteAsset": "Assets/MarbleFlag/bolivien_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/bolivien.png",
+      "source": "flag-icons:bo",
+      "territoryColor": {
+        "r": 0.834604802038984,
+        "g": 0.1677267066353868,
+        "b": 0.1177368436296232,
+        "a": 1
+      }
+    },
+    {
+      "slug": "bonaire",
+      "displayName": "Bonaire",
+      "spriteAsset": "Assets/MarbleFlag/bonaire_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/bonaire.png",
+      "source": "flag-icons:bq",
+      "territoryColor": {
+        "r": 0.6819794584500467,
+        "g": 0.10868347338935574,
+        "b": 0.1557422969187675,
+        "a": 1
+      }
+    },
+    {
+      "slug": "bosnia-and-herzegovina",
+      "displayName": "Bosnia And Herzegovina",
+      "spriteAsset": "Assets/MarbleFlag/bosnia-and-herzegovina_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/bosnia-and-herzegovina.png",
+      "source": "flag-icons:ba",
+      "territoryColor": {
+        "r": 0.0030498970016021973,
+        "g": 0.002897306782635233,
+        "b": 0.5991187914854658,
+        "a": 1
+      }
+    },
+    {
+      "slug": "botswana",
+      "displayName": "Botswana",
+      "spriteAsset": "Assets/MarbleFlag/botswana_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/botswana.png",
+      "source": "flag-icons:bw",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.7957049486461251,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "slug": "brazil",
+      "displayName": "Brazil",
+      "spriteAsset": "Assets/MarbleFlag/brazil_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/brazil.png",
+      "source": "flag-icons:br",
+      "territoryColor": {
+        "r": 0.13386162755257544,
+        "g": 0.6197619289512005,
+        "b": 0.2704747874970368,
+        "a": 1
+      }
+    },
+    {
+      "slug": "brunei",
+      "displayName": "Brunei",
+      "spriteAsset": "Assets/MarbleFlag/brunei_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/brunei.png",
+      "source": "flag-icons:bn",
+      "territoryColor": {
+        "r": 0.9692465422569229,
+        "g": 0.8797937676830411,
+        "b": 0.09047407801733061,
+        "a": 1
+      }
+    },
+    {
+      "slug": "bulgaria",
+      "displayName": "Bulgaria",
+      "spriteAsset": "Assets/MarbleFlag/bulgaria_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/bulgaria.png",
+      "source": "flag-icons:bg",
+      "territoryColor": {
+        "r": 0.8403361344537815,
+        "g": 0.1484593837535014,
+        "b": 0.07021475256769374,
+        "a": 1
+      }
+    },
+    {
+      "slug": "burkina-faso",
+      "displayName": "Burkina Faso",
+      "spriteAsset": "Assets/MarbleFlag/burkina-faso_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/burkina-faso.png",
+      "source": "flag-icons:bf",
+      "territoryColor": {
+        "r": 0.8698364547612767,
+        "g": 0.001683812538468302,
+        "b": 0.0006814384946803834,
+        "a": 1
+      }
+    },
+    {
+      "slug": "burundi",
+      "displayName": "Burundi",
+      "spriteAsset": "Assets/MarbleFlag/burundi_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/burundi.png",
+      "source": "flag-icons:bi",
+      "territoryColor": {
+        "r": 0.8123151560386248,
+        "g": 0.03724712724106296,
+        "b": 0.1312372688964563,
+        "a": 1
+      }
+    },
+    {
+      "slug": "cambodia",
+      "displayName": "Cambodia",
+      "spriteAsset": "Assets/MarbleFlag/cambodia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/cambodia.png",
+      "source": "flag-icons:kh",
+      "territoryColor": {
+        "r": 0.011241830065359478,
+        "g": 0.18065359477124185,
+        "b": 0.6318954248366013,
+        "a": 1
+      }
+    },
+    {
+      "slug": "cameroon",
+      "displayName": "Cameroon",
+      "spriteAsset": "Assets/MarbleFlag/cameroon_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/cameroon.png",
+      "source": "flag-icons:cm",
+      "territoryColor": {
+        "r": 0.9886125878922998,
+        "g": 0.8209055050591665,
+        "b": 0.0864545818327331,
+        "a": 1
+      }
+    },
+    {
+      "slug": "canada",
+      "displayName": "Canada",
+      "spriteAsset": "Assets/MarbleFlag/canada_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/canada.png",
+      "source": "flag-icons:ca",
+      "territoryColor": {
+        "r": 0.8349525308907018,
+        "g": 0.1676389485234483,
+        "b": 0.11661084871904966,
+        "a": 1
+      }
+    },
+    {
+      "slug": "cape-verde",
+      "displayName": "Cape Verde",
+      "spriteAsset": "Assets/MarbleFlag/cape-verde_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/cape-verde.png",
+      "source": "flag-icons:cv",
+      "territoryColor": {
+        "r": 0.031118743663487203,
+        "g": 0.09288310470160628,
+        "b": 0.45081762567848105,
+        "a": 1
+      }
+    },
+    {
+      "slug": "central-african-republic",
+      "displayName": "Central African Republic",
+      "spriteAsset": "Assets/MarbleFlag/central-african-republic_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/central-african-republic.png",
+      "source": "flag-icons:cf",
+      "territoryColor": {
+        "r": 0.9968154315090305,
+        "g": 0.9963923388380874,
+        "b": 0.0010645557526955097,
+        "a": 1
+      }
+    },
+    {
+      "slug": "chad",
+      "displayName": "Chad",
+      "spriteAsset": "Assets/MarbleFlag/chad_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/chad.png",
+      "source": "flag-icons:td",
+      "territoryColor": {
+        "r": 0.7760971055088702,
+        "g": 0.0457516339869281,
+        "b": 0.18879551820728294,
+        "a": 1
+      }
+    },
+    {
+      "slug": "chile",
+      "displayName": "Chile",
+      "spriteAsset": "Assets/MarbleFlag/chile_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/chile.png",
+      "source": "flag-icons:cl",
+      "territoryColor": {
+        "r": 0.8353099304237824,
+        "g": 0.16846932321315625,
+        "b": 0.11739405439595192,
+        "a": 1
+      }
+    },
+    {
+      "slug": "china",
+      "displayName": "China",
+      "spriteAsset": "Assets/MarbleFlag/china_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/FlagChina.png",
+      "source": "flag-icons:cn",
+      "territoryColor": {
+        "r": 0.9332919367541043,
+        "g": 0.10917994386219987,
+        "b": 0.1452171805900527,
+        "a": 1
+      }
+    },
+    {
+      "slug": "colombia",
+      "displayName": "Colombia",
+      "spriteAsset": "Assets/MarbleFlag/colombia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/colombia.png",
+      "source": "flag-icons:co",
+      "territoryColor": {
+        "r": 0.9998734977862113,
+        "g": 0.9100569259962049,
+        "b": 0.0001265022137887413,
+        "a": 1
+      }
+    },
+    {
+      "slug": "comoros",
+      "displayName": "Comoros",
+      "spriteAsset": "Assets/MarbleFlag/comoros_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/comoros.png",
+      "source": "flag-icons:km",
+      "territoryColor": {
+        "r": 0.9993531433191833,
+        "g": 0.999730476382993,
+        "b": 0.0033196325494688136,
+        "a": 1
+      }
+    },
+    {
+      "slug": "congo-democratic-republic",
+      "displayName": "Democratic Republic of the Congo",
+      "spriteAsset": "Assets/MarbleFlag/congo-democratic-republic_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/congo-democratic-republic.png",
+      "source": "flag-icons:cd",
+      "territoryColor": {
+        "r": 0.00048447548033297825,
+        "g": 0.4971333885666943,
+        "b": 0.9995833826488342,
+        "a": 1
+      }
+    },
+    {
+      "slug": "congo-republic-of-the",
+      "displayName": "Republic of the Congo",
+      "spriteAsset": "Assets/MarbleFlag/congo-republic-of-the_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/congo-republic-of-the.png",
+      "source": "flag-icons:cg",
+      "territoryColor": {
+        "r": 0.9990761689291101,
+        "g": 0.9988418444300797,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "costa-rica",
+      "displayName": "Costa Rica",
+      "spriteAsset": "Assets/MarbleFlag/costa-rica_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/costa-rica.png",
+      "source": "flag-icons:cr",
+      "territoryColor": {
+        "r": 0.005788982259570495,
+        "g": 0.005788982259570495,
+        "b": 0.7071895424836602,
+        "a": 1
+      }
+    },
+    {
+      "slug": "cote-d-ivoire",
+      "displayName": "Cote D Ivoire",
+      "spriteAsset": "Assets/MarbleFlag/cote-d-ivoire_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/cote-d-ivoire.png",
+      "source": "flag-icons:ci",
+      "territoryColor": {
+        "r": 1,
+        "g": 0.603548085901027,
+        "b": 0.00018674136321195143,
+        "a": 1
+      }
+    },
+    {
+      "slug": "croatia",
+      "displayName": "Croatia",
+      "spriteAsset": "Assets/MarbleFlag/croatia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/croatia.png",
+      "source": "flag-icons:hr",
+      "territoryColor": {
+        "r": 0.08861949151245198,
+        "g": 0.08871133152714639,
+        "b": 0.5876352726883103,
+        "a": 1
+      }
+    },
+    {
+      "slug": "cuba",
+      "displayName": "Cuba",
+      "spriteAsset": "Assets/MarbleFlag/cuba_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/cuba.png",
+      "source": "flag-icons:cu",
+      "territoryColor": {
+        "r": 0.00179707319511616,
+        "g": 0.1642584886089554,
+        "b": 0.560816806008573,
+        "a": 1
+      }
+    },
+    {
+      "slug": "curacao",
+      "displayName": "Curacao",
+      "spriteAsset": "Assets/MarbleFlag/curacao_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/curacao.png",
+      "source": "flag-icons:cw",
+      "territoryColor": {
+        "r": 0.000770004971685644,
+        "g": 0.16889664956891848,
+        "b": 0.49754689754689757,
+        "a": 1
+      }
+    },
+    {
+      "slug": "cyprus",
+      "displayName": "Cyprus",
+      "spriteAsset": "Assets/MarbleFlag/cyprus_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/cyprus.png",
+      "source": "flag-icons:cy",
+      "territoryColor": {
+        "r": 0.8306455166336197,
+        "g": 0.46029962546816483,
+        "b": 0.005078211059704781,
+        "a": 1
+      }
+    },
+    {
+      "slug": "czech-republic-the",
+      "displayName": "Czech Republic",
+      "spriteAsset": "Assets/MarbleFlag/czech-republic-the_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/czech-republic-the.png",
+      "source": "flag-icons:cz",
+      "territoryColor": {
+        "r": 0.8429753680831764,
+        "g": 0.07823040960156305,
+        "b": 0.10180168864698905,
+        "a": 1
+      }
+    },
+    {
+      "slug": "denmark",
+      "displayName": "Denmark",
+      "spriteAsset": "Assets/MarbleFlag/denmark_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/denmark.png",
+      "source": "flag-icons:dk",
+      "territoryColor": {
+        "r": 0.7841525651356434,
+        "g": 0.06150953532097771,
+        "b": 0.1793177544990599,
+        "a": 1
+      }
+    },
+    {
+      "slug": "djibouti",
+      "displayName": "Djibouti",
+      "spriteAsset": "Assets/MarbleFlag/djibouti_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/djibouti.png",
+      "source": "flag-icons:dj",
+      "territoryColor": {
+        "r": 0.3999397103355668,
+        "g": 0.6001890903111768,
+        "b": 0.9993313328126499,
+        "a": 1
+      }
+    },
+    {
+      "slug": "dominica",
+      "displayName": "Dominica",
+      "spriteAsset": "Assets/MarbleFlag/dominica_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/dominica.png",
+      "source": "flag-icons:dm",
+      "territoryColor": {
+        "r": 0.06203436981199803,
+        "g": 0.5486929600215372,
+        "b": 0.0012724906896397002,
+        "a": 1
+      }
+    },
+    {
+      "slug": "dominican-republic",
+      "displayName": "Dominican Republic",
+      "spriteAsset": "Assets/MarbleFlag/dominican-republic_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/dominican-republic.png",
+      "source": "flag-icons:do",
+      "territoryColor": {
+        "r": 0.8080396692215822,
+        "g": 0.06745884167082407,
+        "b": 0.14951849668163333,
+        "a": 1
+      }
+    },
+    {
+      "slug": "east-timor",
+      "displayName": "East Timor",
+      "spriteAsset": "Assets/MarbleFlag/east-timor_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/east-timor.png",
+      "source": "flag-icons:tl",
+      "territoryColor": {
+        "r": 0.7961730952768918,
+        "g": 0.0014525477781140155,
+        "b": 0.05881577007534316,
+        "a": 1
+      }
+    },
+    {
+      "slug": "ecuador",
+      "displayName": "Ecuador",
+      "spriteAsset": "Assets/MarbleFlag/ecuador_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/ecuador.png",
+      "source": "flag-icons:ec",
+      "territoryColor": {
+        "r": 0.9992909542120046,
+        "g": 0.9114510894761242,
+        "b": 0.0005208759442580927,
+        "a": 1
+      }
+    },
+    {
+      "slug": "egypt",
+      "displayName": "Egypt",
+      "spriteAsset": "Assets/MarbleFlag/egypt_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/egypt.png",
+      "source": "flag-icons:eg",
+      "territoryColor": {
+        "r": 0.807843137254902,
+        "g": 0.0670184454437001,
+        "b": 0.14939891713315592,
+        "a": 1
+      }
+    },
+    {
+      "slug": "el-salvador",
+      "displayName": "El Salvador",
+      "spriteAsset": "Assets/MarbleFlag/el-salvador_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/el-salvador.png",
+      "source": "flag-icons:sv",
+      "territoryColor": {
+        "r": 0.05751633986928104,
+        "g": 0.27731092436974786,
+        "b": 0.6858995681605976,
+        "a": 1
+      }
+    },
+    {
+      "slug": "england",
+      "displayName": "England",
+      "spriteAsset": "Assets/MarbleFlag/england_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/england.png",
+      "source": "flag-icons:gb-eng",
+      "territoryColor": {
+        "r": 0.8083562396921385,
+        "g": 0.06972695620304196,
+        "b": 0.1442367601246106,
+        "a": 1
+      }
+    },
+    {
+      "slug": "equatorial-guinea",
+      "displayName": "Equatorial Guinea",
+      "spriteAsset": "Assets/MarbleFlag/equatorial-guinea_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/equatorial-guinea.png",
+      "source": "flag-icons:gq",
+      "territoryColor": {
+        "r": 0.24204629220109095,
+        "g": 0.6033810015234163,
+        "b": 0.0007174799744459186,
+        "a": 1
+      }
+    },
+    {
+      "slug": "eritrea",
+      "displayName": "Eritrea",
+      "spriteAsset": "Assets/MarbleFlag/eritrea_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/eritrea.png",
+      "source": "flag-icons:er",
+      "territoryColor": {
+        "r": 0.7442504743833017,
+        "g": 0.0021220746363061352,
+        "b": 0.15128399746995572,
+        "a": 1
+      }
+    },
+    {
+      "slug": "estonia",
+      "displayName": "Estonia",
+      "spriteAsset": "Assets/MarbleFlag/estonia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/estonia.png",
+      "source": "flag-icons:ee",
+      "territoryColor": {
+        "r": 0.0903828197945845,
+        "g": 0.56937441643324,
+        "b": 0.9996265172735761,
+        "a": 1
+      }
+    },
+    {
+      "slug": "ethiopia",
+      "displayName": "Ethiopia",
+      "spriteAsset": "Assets/MarbleFlag/ethiopia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/ethiopia.png",
+      "source": "flag-icons:et",
+      "territoryColor": {
+        "r": 0.16141976670638247,
+        "g": 0.5492078902078461,
+        "b": 0.03131076886868776,
+        "a": 1
+      }
+    },
+    {
+      "slug": "europe",
+      "displayName": "Europe",
+      "spriteAsset": "Assets/MarbleFlag/europe_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/europe.png",
+      "source": "flag-icons:eu",
+      "territoryColor": {
+        "r": 0.0010409353154858206,
+        "g": 0.20003357855856405,
+        "b": 0.6000030525962331,
+        "a": 1
+      }
+    },
+    {
+      "slug": "faroe-islands",
+      "displayName": "Faroe Islands",
+      "spriteAsset": "Assets/MarbleFlag/faroe-islands_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/faroe-islands.png",
+      "source": "flag-icons:fo",
+      "territoryColor": {
+        "r": 0.006356148407318317,
+        "g": 0.2203732050440994,
+        "b": 0.5984619870252934,
+        "a": 1
+      }
+    },
+    {
+      "slug": "fiji",
+      "displayName": "Fiji",
+      "spriteAsset": "Assets/MarbleFlag/fiji_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/fiji.png",
+      "source": "flag-icons:fj",
+      "territoryColor": {
+        "r": 0.4078122715531946,
+        "g": 0.7486995792517505,
+        "b": 0.8977208116055038,
+        "a": 1
+      }
+    },
+    {
+      "slug": "finland",
+      "displayName": "Finland",
+      "spriteAsset": "Assets/MarbleFlag/finland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/finland.png",
+      "source": "flag-icons:fi",
+      "territoryColor": {
+        "r": 0.001661764705882353,
+        "g": 0.179625,
+        "b": 0.4205637254901961,
+        "a": 1
+      }
+    },
+    {
+      "slug": "france",
+      "displayName": "France",
+      "spriteAsset": "Assets/MarbleFlag/france_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/FlagFrance.png",
+      "source": "flag-icons:fr",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.00037348272642390287,
+        "b": 0.5680672268907563,
+        "a": 1
+      }
+    },
+    {
+      "slug": "gabon",
+      "displayName": "Gabon",
+      "spriteAsset": "Assets/MarbleFlag/gabon_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/gabon.png",
+      "source": "flag-icons:ga",
+      "territoryColor": {
+        "r": 0.21196078431372548,
+        "g": 0.6315686274509804,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "gambia",
+      "displayName": "Gambia",
+      "spriteAsset": "Assets/MarbleFlag/gambia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/gambia.png",
+      "source": "flag-icons:gm",
+      "territoryColor": {
+        "r": 0.0017429193899782135,
+        "g": 0.0017429193899782135,
+        "b": 0.59760348583878,
+        "a": 1
+      }
+    },
+    {
+      "slug": "georgia",
+      "displayName": "Georgia",
+      "spriteAsset": "Assets/MarbleFlag/georgia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/georgia.png",
+      "source": "flag-icons:ge",
+      "territoryColor": {
+        "r": 1,
+        "g": 0.002618448157473106,
+        "b": 0.002618448157473106,
+        "a": 1
+      }
+    },
+    {
+      "slug": "germany",
+      "displayName": "Germany",
+      "spriteAsset": "Assets/MarbleFlag/germany_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/germany.png",
+      "source": "flag-icons:de",
+      "territoryColor": {
+        "r": 1,
+        "g": 0.8011204481792716,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "ghana",
+      "displayName": "Ghana",
+      "spriteAsset": "Assets/MarbleFlag/ghana_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/ghana.png",
+      "source": "flag-icons:gh",
+      "territoryColor": {
+        "r": 0.8074754901960784,
+        "g": 0.06555788982259571,
+        "b": 0.14902544351073763,
+        "a": 1
+      }
+    },
+    {
+      "slug": "greece",
+      "displayName": "Greece",
+      "spriteAsset": "Assets/MarbleFlag/greece_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/greece.png",
+      "source": "flag-icons:gr",
+      "territoryColor": {
+        "r": 0.041664386684906525,
+        "g": 0.36134746922024624,
+        "b": 0.6825832193342454,
+        "a": 1
+      }
+    },
+    {
+      "slug": "greenland",
+      "displayName": "Greenland",
+      "spriteAsset": "Assets/MarbleFlag/greenland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/greenland.png",
+      "source": "flag-icons:gl",
+      "territoryColor": {
+        "r": 0.8157020872865275,
+        "g": 0.04735531309297913,
+        "b": 0.20013440860215054,
+        "a": 1
+      }
+    },
+    {
+      "slug": "grenada",
+      "displayName": "Grenada",
+      "spriteAsset": "Assets/MarbleFlag/grenada_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/grenada.png",
+      "source": "flag-icons:gd",
+      "territoryColor": {
+        "r": 0.8095215790363922,
+        "g": 0.06264100862641009,
+        "b": 0.14873336195792186,
+        "a": 1
+      }
+    },
+    {
+      "slug": "guadeloupe",
+      "displayName": "Guadeloupe",
+      "spriteAsset": "Assets/MarbleFlag/guadeloupe_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/guadeloupe.png",
+      "source": "flag-icons:gp",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.00037348272642390287,
+        "b": 0.5680672268907563,
+        "a": 1
+      }
+    },
+    {
+      "slug": "guam",
+      "displayName": "Guam",
+      "spriteAsset": "Assets/MarbleFlag/guam_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/guam.png",
+      "source": "flag-icons:gu",
+      "territoryColor": {
+        "r": 0.23042559932411025,
+        "g": 0.35354842116379764,
+        "b": 0.6400975111768227,
+        "a": 1
+      }
+    },
+    {
+      "slug": "guatemala",
+      "displayName": "Guatemala",
+      "spriteAsset": "Assets/MarbleFlag/guatemala_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/guatemala.png",
+      "source": "flag-icons:gt",
+      "territoryColor": {
+        "r": 0.2853408029878618,
+        "g": 0.5915966386554622,
+        "b": 0.81531279178338,
+        "a": 1
+      }
+    },
+    {
+      "slug": "guinea-bissau",
+      "displayName": "Guinea Bissau",
+      "spriteAsset": "Assets/MarbleFlag/guinea-bissau_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/guinea-bissau.png",
+      "source": "flag-icons:gw",
+      "territoryColor": {
+        "r": 0.9866625816993464,
+        "g": 0.8186157796451914,
+        "b": 0.08661297852474324,
+        "a": 1
+      }
+    },
+    {
+      "slug": "guinea",
+      "displayName": "Guinea",
+      "spriteAsset": "Assets/MarbleFlag/guinea_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/guinea.png",
+      "source": "flag-icons:gn",
+      "territoryColor": {
+        "r": 1,
+        "g": 0.00018674136321195143,
+        "b": 0.00037348272642390287,
+        "a": 1
+      }
+    },
+    {
+      "slug": "guyana",
+      "displayName": "Guyana",
+      "spriteAsset": "Assets/MarbleFlag/guyana_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/guyana.png",
+      "source": "flag-icons:gy",
+      "territoryColor": {
+        "r": 0.22221324250995786,
+        "g": 0.5797206026669746,
+        "b": 0.03061248051723143,
+        "a": 1
+      }
+    },
+    {
+      "slug": "haiti",
+      "displayName": "Haiti",
+      "spriteAsset": "Assets/MarbleFlag/haiti_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/haiti.png",
+      "source": "flag-icons:ht",
+      "territoryColor": {
+        "r": 0.8228051766351872,
+        "g": 0.06257638417381643,
+        "b": 0.2041910993148571,
+        "a": 1
+      }
+    },
+    {
+      "slug": "honduras",
+      "displayName": "Honduras",
+      "spriteAsset": "Assets/MarbleFlag/honduras_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/honduras.png",
+      "source": "flag-icons:hn",
+      "territoryColor": {
+        "r": 0.09300010913456293,
+        "g": 0.7643377350940377,
+        "b": 0.8743235476008585,
+        "a": 1
+      }
+    },
+    {
+      "slug": "hong-kong",
+      "displayName": "Hong Kong",
+      "spriteAsset": "Assets/MarbleFlag/hong-kong_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/hong-kong.png",
+      "source": "flag-icons:hk",
+      "territoryColor": {
+        "r": 0.9254180472075612,
+        "g": 0.10516641414561861,
+        "b": 0.17972394732022445,
+        "a": 1
+      }
+    },
+    {
+      "slug": "hungary",
+      "displayName": "Hungary",
+      "spriteAsset": "Assets/MarbleFlag/hungary_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/hungary.png",
+      "source": "flag-icons:hu",
+      "territoryColor": {
+        "r": 0.8311858076563959,
+        "g": 0.2072829131652661,
+        "b": 0.08552754435107376,
+        "a": 1
+      }
+    },
+    {
+      "slug": "iceland",
+      "displayName": "Iceland",
+      "spriteAsset": "Assets/MarbleFlag/iceland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/iceland.png",
+      "source": "flag-icons:is",
+      "territoryColor": {
+        "r": 0.0007667169431875314,
+        "g": 0.21743338360985418,
+        "b": 0.5910759175465058,
+        "a": 1
+      }
+    },
+    {
+      "slug": "india",
+      "displayName": "India",
+      "spriteAsset": "Assets/MarbleFlag/india_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/india.png",
+      "source": "flag-icons:in",
+      "territoryColor": {
+        "r": 1,
+        "g": 0.5994397759103641,
+        "b": 0.1988795518207283,
+        "a": 1
+      }
+    },
+    {
+      "slug": "indonesia",
+      "displayName": "Indonesia",
+      "spriteAsset": "Assets/MarbleFlag/indonesia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/FlagIndonesia.png",
+      "source": "flag-icons:id",
+      "territoryColor": {
+        "r": 0.9060049019607843,
+        "g": 0.001838235294117647,
+        "b": 0.06789215686274509,
+        "a": 1
+      }
+    },
+    {
+      "slug": "iran",
+      "displayName": "Iran",
+      "spriteAsset": "Assets/MarbleFlag/iran_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/iran.png",
+      "source": "flag-icons:ir",
+      "territoryColor": {
+        "r": 0.855070667424125,
+        "g": 0.004035187384874933,
+        "b": 0.004035187384874933,
+        "a": 1
+      }
+    },
+    {
+      "slug": "iraq",
+      "displayName": "Iraq",
+      "spriteAsset": "Assets/MarbleFlag/iraq_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/iraq.png",
+      "source": "flag-icons:iq",
+      "territoryColor": {
+        "r": 0.807843137254902,
+        "g": 0.06705882352941177,
+        "b": 0.14941176470588236,
+        "a": 1
+      }
+    },
+    {
+      "slug": "ireland",
+      "displayName": "Ireland",
+      "spriteAsset": "Assets/MarbleFlag/ireland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/ireland.png",
+      "source": "flag-icons:ie",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.6033613445378151,
+        "b": 0.2853408029878618,
+        "a": 1
+      }
+    },
+    {
+      "slug": "israel",
+      "displayName": "Israel",
+      "spriteAsset": "Assets/MarbleFlag/israel_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/israel.png",
+      "source": "flag-icons:il",
+      "territoryColor": {
+        "r": 0.0027599190851008435,
+        "g": 0.2123615534058363,
+        "b": 0.7187646457970317,
+        "a": 1
+      }
+    },
+    {
+      "slug": "italy",
+      "displayName": "Italy",
+      "spriteAsset": "Assets/MarbleFlag/italy_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/italy.png",
+      "source": "flag-icons:it",
+      "territoryColor": {
+        "r": 0.8074696545284781,
+        "g": 0.16732026143790849,
+        "b": 0.21456582633053223,
+        "a": 1
+      }
+    },
+    {
+      "slug": "jamaica",
+      "displayName": "Jamaica",
+      "spriteAsset": "Assets/MarbleFlag/jamaica_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/jamaica.png",
+      "source": "flag-icons:jm",
+      "territoryColor": {
+        "r": 0.001429864253393665,
+        "g": 0.5993846153846154,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "japan",
+      "displayName": "Japan",
+      "spriteAsset": "Assets/MarbleFlag/japan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/japan.png",
+      "source": "flag-icons:jp",
+      "territoryColor": {
+        "r": 0.7368125854993159,
+        "g": 0.001741906064751482,
+        "b": 0.1751481988144095,
+        "a": 1
+      }
+    },
+    {
+      "slug": "jordan",
+      "displayName": "Jordan",
+      "spriteAsset": "Assets/MarbleFlag/jordan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/jordan.png",
+      "source": "flag-icons:jo",
+      "territoryColor": {
+        "r": 0.9979006820119352,
+        "g": 0.0020460358056265983,
+        "b": 0.0014546035805626599,
+        "a": 1
+      }
+    },
+    {
+      "slug": "kazakhstan",
+      "displayName": "Kazakhstan",
+      "spriteAsset": "Assets/MarbleFlag/kazakhstan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/kazakhstan.png",
+      "source": "flag-icons:kz",
+      "territoryColor": {
+        "r": 0.0007499715919851521,
+        "g": 0.6698054366627527,
+        "b": 0.7626832316957691,
+        "a": 1
+      }
+    },
+    {
+      "slug": "kenya",
+      "displayName": "Kenya",
+      "spriteAsset": "Assets/MarbleFlag/kenya_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/kenya.png",
+      "source": "flag-icons:ke",
+      "territoryColor": {
+        "r": 0.0007193000657052944,
+        "g": 0.40015561780267667,
+        "b": 0.0006708856382058996,
+        "a": 1
+      }
+    },
+    {
+      "slug": "kiribati",
+      "displayName": "Kiribati",
+      "spriteAsset": "Assets/MarbleFlag/kiribati_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/kiribati.png",
+      "source": "flag-icons:ki",
+      "territoryColor": {
+        "r": 0.9057191431485889,
+        "g": 0.2418451773773093,
+        "b": 0.17573387736597532,
+        "a": 1
+      }
+    },
+    {
+      "slug": "kosovo",
+      "displayName": "Kosovo",
+      "spriteAsset": "Assets/MarbleFlag/kosovo_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/kosovo.png",
+      "source": "flag-icons:xk",
+      "territoryColor": {
+        "r": 0.1418187865962413,
+        "g": 0.2907076372520345,
+        "b": 0.6472618412676565,
+        "a": 1
+      }
+    },
+    {
+      "slug": "kuwait",
+      "displayName": "Kuwait",
+      "spriteAsset": "Assets/MarbleFlag/kuwait_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/kuwait.png",
+      "source": "flag-icons:kw",
+      "territoryColor": {
+        "r": 0.9533177629315808,
+        "g": 0.09319790704832255,
+        "b": 0.18750746836130575,
+        "a": 1
+      }
+    },
+    {
+      "slug": "kyrgyzstan",
+      "displayName": "Kyrgyzstan",
+      "spriteAsset": "Assets/MarbleFlag/kyrgyzstan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/kyrgyzstan.png",
+      "source": "flag-icons:kg",
+      "territoryColor": {
+        "r": 1,
+        "g": 0.002771783269520826,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "laos",
+      "displayName": "Laos",
+      "spriteAsset": "Assets/MarbleFlag/laos_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/laos.png",
+      "source": "flag-icons:la",
+      "territoryColor": {
+        "r": 0.8091503267973856,
+        "g": 0.06640522875816994,
+        "b": 0.1484967320261438,
+        "a": 1
+      }
+    },
+    {
+      "slug": "latvia",
+      "displayName": "Latvia",
+      "spriteAsset": "Assets/MarbleFlag/latvia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/latvia.png",
+      "source": "flag-icons:lv",
+      "territoryColor": {
+        "r": 0.5949346405228758,
+        "g": 0.11519607843137254,
+        "b": 0.1937908496732026,
+        "a": 1
+      }
+    },
+    {
+      "slug": "lebanon",
+      "displayName": "Lebanon",
+      "spriteAsset": "Assets/MarbleFlag/lebanon_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/lebanon.png",
+      "source": "flag-icons:lb",
+      "territoryColor": {
+        "r": 0.9333108085278914,
+        "g": 0.08513700712910093,
+        "b": 0.12068790755819847,
+        "a": 1
+      }
+    },
+    {
+      "slug": "lesotho",
+      "displayName": "Lesotho",
+      "spriteAsset": "Assets/MarbleFlag/lesotho_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/lesotho.png",
+      "source": "flag-icons:ls",
+      "territoryColor": {
+        "r": 0.00020673837904189684,
+        "g": 0.5842588106082631,
+        "b": 0.2626901831572827,
+        "a": 1
+      }
+    },
+    {
+      "slug": "liberia",
+      "displayName": "Liberia",
+      "spriteAsset": "Assets/MarbleFlag/liberia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/liberia.png",
+      "source": "flag-icons:lr",
+      "territoryColor": {
+        "r": 0.7985250955728203,
+        "g": 0.005184363053397459,
+        "b": 0.005181896658034283,
+        "a": 1
+      }
+    },
+    {
+      "slug": "libya",
+      "displayName": "Libya",
+      "spriteAsset": "Assets/MarbleFlag/libya_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/libya.png",
+      "source": "flag-icons:ly",
+      "territoryColor": {
+        "r": 0.9066584967320261,
+        "g": 0,
+        "b": 0.07450980392156863,
+        "a": 1
+      }
+    },
+    {
+      "slug": "liechtenstein",
+      "displayName": "Liechtenstein",
+      "spriteAsset": "Assets/MarbleFlag/liechtenstein_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/liechtenstein.png",
+      "source": "flag-icons:li",
+      "territoryColor": {
+        "r": 0.8067401960784314,
+        "g": 0.06678921568627451,
+        "b": 0.14950980392156862,
+        "a": 1
+      }
+    },
+    {
+      "slug": "lithuania",
+      "displayName": "Lithuania",
+      "spriteAsset": "Assets/MarbleFlag/lithuania_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/lithuania.png",
+      "source": "flag-icons:lt",
+      "territoryColor": {
+        "r": 0.992530345471522,
+        "g": 0.7256769374416433,
+        "b": 0.07432306255835668,
+        "a": 1
+      }
+    },
+    {
+      "slug": "luxembourg",
+      "displayName": "Luxembourg",
+      "spriteAsset": "Assets/MarbleFlag/luxembourg_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/luxembourg.png",
+      "source": "flag-icons:lu",
+      "territoryColor": {
+        "r": 0.9292250233426704,
+        "g": 0.1596638655462185,
+        "b": 0.2224089635854342,
+        "a": 1
+      }
+    },
+    {
+      "slug": "macao",
+      "displayName": "Macao",
+      "spriteAsset": "Assets/MarbleFlag/macao_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/macao.png",
+      "source": "flag-icons:mo",
+      "territoryColor": {
+        "r": 0.000544097892467292,
+        "g": 0.4701412171086051,
+        "b": 0.36794789303170894,
+        "a": 1
+      }
+    },
+    {
+      "slug": "madagascar",
+      "displayName": "Madagascar",
+      "spriteAsset": "Assets/MarbleFlag/madagascar_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/madagascar.png",
+      "source": "flag-icons:mg",
+      "territoryColor": {
+        "r": 0.0018428087152606663,
+        "g": 0.4931051476188343,
+        "b": 0.22631303854367338,
+        "a": 1
+      }
+    },
+    {
+      "slug": "malawi",
+      "displayName": "Malawi",
+      "spriteAsset": "Assets/MarbleFlag/malawi_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/malawi.png",
+      "source": "flag-icons:mw",
+      "territoryColor": {
+        "r": 0.9600601116358952,
+        "g": 0.07803635322742235,
+        "b": 0.03128095033633892,
+        "a": 1
+      }
+    },
+    {
+      "slug": "malaysia",
+      "displayName": "Malaysia",
+      "spriteAsset": "Assets/MarbleFlag/malaysia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/malaysia.png",
+      "source": "flag-icons:my",
+      "territoryColor": {
+        "r": 0.7984086857883649,
+        "g": 0.006737967914438503,
+        "b": 0.006854642683519689,
+        "a": 1
+      }
+    },
+    {
+      "slug": "maldives",
+      "displayName": "Maldives",
+      "spriteAsset": "Assets/MarbleFlag/maldives_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/maldives.png",
+      "source": "flag-icons:mv",
+      "territoryColor": {
+        "r": 0.8217245989304812,
+        "g": 0.06354723707664883,
+        "b": 0.20392156862745098,
+        "a": 1
+      }
+    },
+    {
+      "slug": "mali",
+      "displayName": "Mali",
+      "spriteAsset": "Assets/MarbleFlag/mali_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/mali.png",
+      "source": "flag-icons:ml",
+      "territoryColor": {
+        "r": 0.00018674136321195143,
+        "g": 0.603548085901027,
+        "b": 0.00037348272642390287,
+        "a": 1
+      }
+    },
+    {
+      "slug": "malta",
+      "displayName": "Malta",
+      "spriteAsset": "Assets/MarbleFlag/malta_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/malta.png",
+      "source": "flag-icons:mt",
+      "territoryColor": {
+        "r": 0.8116382036685642,
+        "g": 0.07805186590765338,
+        "b": 0.1683744465528147,
+        "a": 1
+      }
+    },
+    {
+      "slug": "marshall-islands",
+      "displayName": "Marshall Islands",
+      "spriteAsset": "Assets/MarbleFlag/marshall-islands_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/marshall-islands.png",
+      "source": "flag-icons:mh",
+      "territoryColor": {
+        "r": 0.23073895408836728,
+        "g": 0.35257157942736456,
+        "b": 0.6394156846745226,
+        "a": 1
+      }
+    },
+    {
+      "slug": "mauritania",
+      "displayName": "Mauritania",
+      "spriteAsset": "Assets/MarbleFlag/mauritania_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/mauritania.png",
+      "source": "flag-icons:mr",
+      "territoryColor": {
+        "r": 0.0018369974252327194,
+        "g": 0.3851505248564072,
+        "b": 0.19959562949759027,
+        "a": 1
+      }
+    },
+    {
+      "slug": "mauritius",
+      "displayName": "Mauritius",
+      "spriteAsset": "Assets/MarbleFlag/mauritius_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/mauritius.png",
+      "source": "flag-icons:mu",
+      "territoryColor": {
+        "r": 0.9308823529411765,
+        "g": 0.15294117647058825,
+        "b": 0.2161764705882353,
+        "a": 1
+      }
+    },
+    {
+      "slug": "mexico",
+      "displayName": "Mexico",
+      "spriteAsset": "Assets/MarbleFlag/mexico_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/FlagMexico.png",
+      "source": "flag-icons:mx",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.40709617180205415,
+        "b": 0.27731092436974786,
+        "a": 1
+      }
+    },
+    {
+      "slug": "micronesia",
+      "displayName": "Micronesia",
+      "spriteAsset": "Assets/MarbleFlag/micronesia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/micronesia.png",
+      "source": "flag-icons:fm",
+      "territoryColor": {
+        "r": 0.40391747513201526,
+        "g": 0.5921640263621105,
+        "b": 0.8392197797699456,
+        "a": 1
+      }
+    },
+    {
+      "slug": "moldova",
+      "displayName": "Moldova",
+      "spriteAsset": "Assets/MarbleFlag/moldova_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/moldova.png",
+      "source": "flag-icons:md",
+      "territoryColor": {
+        "r": 0.0006594926731972526,
+        "g": 0.19225015683057473,
+        "b": 0.6098570026862262,
+        "a": 1
+      }
+    },
+    {
+      "slug": "monaco",
+      "displayName": "Monaco",
+      "spriteAsset": "Assets/MarbleFlag/monaco_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/monaco.png",
+      "source": "flag-icons:mc",
+      "territoryColor": {
+        "r": 0.9529411764705882,
+        "g": 0.0937381404174573,
+        "b": 0.18798228969006958,
+        "a": 1
+      }
+    },
+    {
+      "slug": "mongolia",
+      "displayName": "Mongolia",
+      "spriteAsset": "Assets/MarbleFlag/mongolia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/mongolia.png",
+      "source": "flag-icons:mn",
+      "territoryColor": {
+        "r": 0.8547700606346957,
+        "g": 0.12677573037247028,
+        "b": 0.19592290731553666,
+        "a": 1
+      }
+    },
+    {
+      "slug": "montenegro",
+      "displayName": "Montenegro",
+      "spriteAsset": "Assets/MarbleFlag/montenegro_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/montenegro.png",
+      "source": "flag-icons:me",
+      "territoryColor": {
+        "r": 0.7681353563888762,
+        "g": 0.012773196032867059,
+        "b": 0.03057669233456357,
+        "a": 1
+      }
+    },
+    {
+      "slug": "morocco",
+      "displayName": "Morocco",
+      "spriteAsset": "Assets/MarbleFlag/morocco_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/morocco.png",
+      "source": "flag-icons:ma",
+      "territoryColor": {
+        "r": 0.7573120915032681,
+        "g": 0.1528096604495457,
+        "b": 0.17647058823529413,
+        "a": 1
+      }
+    },
+    {
+      "slug": "mozambique",
+      "displayName": "Mozambique",
+      "spriteAsset": "Assets/MarbleFlag/mozambique_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/mozambique.png",
+      "source": "flag-icons:mz",
+      "territoryColor": {
+        "r": 0.9997185994913144,
+        "g": 0.793484495914281,
+        "b": 0.002366650432021935,
+        "a": 1
+      }
+    },
+    {
+      "slug": "myanmar",
+      "displayName": "Myanmar",
+      "spriteAsset": "Assets/MarbleFlag/myanmar_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/myanmar.png",
+      "source": "flag-icons:mm",
+      "territoryColor": {
+        "r": 0.996078431372549,
+        "g": 0.7961802125430324,
+        "b": 0.000299356383774884,
+        "a": 1
+      }
+    },
+    {
+      "slug": "namibia",
+      "displayName": "Namibia",
+      "spriteAsset": "Assets/MarbleFlag/namibia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/namibia.png",
+      "source": "flag-icons:na",
+      "territoryColor": {
+        "r": 0.7802207989212877,
+        "g": 0.002958031350075847,
+        "b": 0.002958031350075847,
+        "a": 1
+      }
+    },
+    {
+      "slug": "nauru",
+      "displayName": "Nauru",
+      "spriteAsset": "Assets/MarbleFlag/nauru_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/nauru.png",
+      "source": "flag-icons:nr",
+      "territoryColor": {
+        "r": 0.0006281554537982859,
+        "g": 0.12983327462721617,
+        "b": 0.4394540331102501,
+        "a": 1
+      }
+    },
+    {
+      "slug": "nepal",
+      "displayName": "Nepal",
+      "spriteAsset": "Assets/MarbleFlag/nepal_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/nepal.png",
+      "source": "flag-icons:np",
+      "territoryColor": {
+        "r": 0.8132089664510306,
+        "g": 0.0043026929441853465,
+        "b": 0.005210370593250088,
+        "a": 1
+      }
+    },
+    {
+      "slug": "netherlands",
+      "displayName": "Netherlands",
+      "spriteAsset": "Assets/MarbleFlag/netherlands_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/netherlands.png",
+      "source": "flag-icons:nl",
+      "territoryColor": {
+        "r": 0.6819794584500467,
+        "g": 0.10868347338935574,
+        "b": 0.1557422969187675,
+        "a": 1
+      }
+    },
+    {
+      "slug": "new-caledonia",
+      "displayName": "New Caledonia",
+      "spriteAsset": "Assets/MarbleFlag/new-caledonia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/new-caledonia.png",
+      "source": "flag-icons:nc",
+      "territoryColor": {
+        "r": 0.0005338078291814947,
+        "g": 0.2080734072988626,
+        "b": 0.6793315190845022,
+        "a": 1
+      }
+    },
+    {
+      "slug": "new-zealand",
+      "displayName": "New Zealand",
+      "spriteAsset": "Assets/MarbleFlag/new-zealand_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/new-zealand.png",
+      "source": "flag-icons:nz",
+      "territoryColor": {
+        "r": 0.0014836933081185096,
+        "g": 0.14134501177797684,
+        "b": 0.4880342390763412,
+        "a": 1
+      }
+    },
+    {
+      "slug": "nicaragua",
+      "displayName": "Nicaragua",
+      "spriteAsset": "Assets/MarbleFlag/nicaragua_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/nicaragua.png",
+      "source": "flag-icons:ni",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.40298786181139123,
+        "b": 0.7760854341736695,
+        "a": 1
+      }
+    },
+    {
+      "slug": "niger",
+      "displayName": "Niger",
+      "spriteAsset": "Assets/MarbleFlag/niger_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/niger.png",
+      "source": "flag-icons:ne",
+      "territoryColor": {
+        "r": 0.8784480600750939,
+        "g": 0.3219691280767626,
+        "b": 0.024183006535947713,
+        "a": 1
+      }
+    },
+    {
+      "slug": "nigeria",
+      "displayName": "Nigeria",
+      "spriteAsset": "Assets/MarbleFlag/nigeria_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/nigeria.png",
+      "source": "flag-icons:ng",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.5287581699346405,
+        "b": 0.32446311858076565,
+        "a": 1
+      }
+    },
+    {
+      "slug": "niue",
+      "displayName": "Niue",
+      "spriteAsset": "Assets/MarbleFlag/niue_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/niue.png",
+      "source": "flag-icons:nu",
+      "territoryColor": {
+        "r": 0.995327657378741,
+        "g": 0.8658139834881321,
+        "b": 0.0006127450980392157,
+        "a": 1
+      }
+    },
+    {
+      "slug": "north-korea",
+      "displayName": "North Korea",
+      "spriteAsset": "Assets/MarbleFlag/north-korea_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/north-korea.png",
+      "source": "flag-icons:kp",
+      "territoryColor": {
+        "r": 0.7753009180550833,
+        "g": 0.002316672333673354,
+        "b": 0.002316672333673354,
+        "a": 1
+      }
+    },
+    {
+      "slug": "north-macedonia",
+      "displayName": "North Macedonia",
+      "spriteAsset": "Assets/MarbleFlag/north-macedonia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/north-macedonia.png",
+      "source": "flag-icons:mk",
+      "territoryColor": {
+        "r": 0.8229235776916008,
+        "g": 0.003935585354078089,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "northern-ireland",
+      "displayName": "Northern Ireland",
+      "spriteAsset": "Assets/MarbleFlag/northern-ireland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/northern-ireland.png",
+      "source": "flag-icons:gb-nir",
+      "territoryColor": {
+        "r": 0.7983241572491065,
+        "g": 0.0022940210566985415,
+        "b": 0.0022650439486139283,
+        "a": 1
+      }
+    },
+    {
+      "slug": "northern-mariana-islands",
+      "displayName": "Northern Mariana Islands",
+      "spriteAsset": "Assets/MarbleFlag/northern-mariana-islands_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/northern-mariana-islands.png",
+      "source": "flag-icons:mp",
+      "territoryColor": {
+        "r": 0.0016540047753418712,
+        "g": 0.4408103610447869,
+        "b": 0.7340698936401129,
+        "a": 1
+      }
+    },
+    {
+      "slug": "norway",
+      "displayName": "Norway",
+      "spriteAsset": "Assets/MarbleFlag/norway_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/norway.png",
+      "source": "flag-icons:no",
+      "territoryColor": {
+        "r": 0.9294117647058824,
+        "g": 0.1601295822676897,
+        "b": 0.22287468030690538,
+        "a": 1
+      }
+    },
+    {
+      "slug": "oman",
+      "displayName": "Oman",
+      "spriteAsset": "Assets/MarbleFlag/oman_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/oman.png",
+      "source": "flag-icons:om",
+      "territoryColor": {
+        "r": 0.9383942340981336,
+        "g": 0.17628594508964635,
+        "b": 0.16102770696293497,
+        "a": 1
+      }
+    },
+    {
+      "slug": "pakistan",
+      "displayName": "Pakistan",
+      "spriteAsset": "Assets/MarbleFlag/pakistan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/pakistan.png",
+      "source": "flag-icons:pk",
+      "territoryColor": {
+        "r": 0.04630038126361656,
+        "g": 0.34847222222222224,
+        "b": 0.042434640522875815,
+        "a": 1
+      }
+    },
+    {
+      "slug": "palau",
+      "displayName": "Palau",
+      "spriteAsset": "Assets/MarbleFlag/palau_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/palau.png",
+      "source": "flag-icons:pw",
+      "territoryColor": {
+        "r": 0.2903771853569014,
+        "g": 0.6785001931807206,
+        "b": 0.8390261276924562,
+        "a": 1
+      }
+    },
+    {
+      "slug": "palestine",
+      "displayName": "Palestine",
+      "spriteAsset": "Assets/MarbleFlag/palestine_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/palestine.png",
+      "source": "flag-icons:ps",
+      "territoryColor": {
+        "r": 0.0005743177774254356,
+        "g": 0.5882282472737522,
+        "b": 0.22264503285590964,
+        "a": 1
+      }
+    },
+    {
+      "slug": "panama",
+      "displayName": "Panama",
+      "spriteAsset": "Assets/MarbleFlag/panama_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/panama.png",
+      "source": "flag-icons:pa",
+      "territoryColor": {
+        "r": 0.0037726482998262597,
+        "g": 0.0037761940219125626,
+        "b": 0.6703116689713859,
+        "a": 1
+      }
+    },
+    {
+      "slug": "papua-new-guinea",
+      "displayName": "Papua New Guinea",
+      "spriteAsset": "Assets/MarbleFlag/papua-new-guinea_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/papua-new-guinea.png",
+      "source": "flag-icons:pg",
+      "territoryColor": {
+        "r": 0.9995571312199543,
+        "g": 0.0019068598767769248,
+        "b": 0.0001491526979428401,
+        "a": 1
+      }
+    },
+    {
+      "slug": "paraguay",
+      "displayName": "Paraguay",
+      "spriteAsset": "Assets/MarbleFlag/paraguay_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/paraguay.png",
+      "source": "flag-icons:py",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.2184873949579832,
+        "b": 0.6584500466853408,
+        "a": 1
+      }
+    },
+    {
+      "slug": "peru",
+      "displayName": "Peru",
+      "spriteAsset": "Assets/MarbleFlag/peru_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/peru.png",
+      "source": "flag-icons:pe",
+      "territoryColor": {
+        "r": 0.8509803921568627,
+        "g": 0.06313725490196079,
+        "b": 0.13764705882352943,
+        "a": 1
+      }
+    },
+    {
+      "slug": "philippines-the",
+      "displayName": "Philippines",
+      "spriteAsset": "Assets/MarbleFlag/philippines-the_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/philippines-the.png",
+      "source": "flag-icons:ph",
+      "territoryColor": {
+        "r": 0.0012435652727167562,
+        "g": 0.2188935161085083,
+        "b": 0.6582393429348141,
+        "a": 1
+      }
+    },
+    {
+      "slug": "poland",
+      "displayName": "Poland",
+      "spriteAsset": "Assets/MarbleFlag/poland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/poland.png",
+      "source": "flag-icons:pl",
+      "territoryColor": {
+        "r": 0.862618595825427,
+        "g": 0.07805186590765338,
+        "b": 0.23504111321948135,
+        "a": 1
+      }
+    },
+    {
+      "slug": "portugal",
+      "displayName": "Portugal",
+      "spriteAsset": "Assets/MarbleFlag/portugal_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/portugal.png",
+      "source": "flag-icons:pt",
+      "territoryColor": {
+        "r": 0.9985376321755534,
+        "g": 0.0012339269335271618,
+        "b": 0.0006870532855684198,
+        "a": 1
+      }
+    },
+    {
+      "slug": "puerto-rico",
+      "displayName": "Puerto Rico",
+      "spriteAsset": "Assets/MarbleFlag/puerto-rico_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/puerto-rico.png",
+      "source": "flag-icons:pr",
+      "territoryColor": {
+        "r": 0.9297359794981823,
+        "g": 0.0010084033613445378,
+        "b": 0.00136122534120031,
+        "a": 1
+      }
+    },
+    {
+      "slug": "qatar",
+      "displayName": "Qatar",
+      "spriteAsset": "Assets/MarbleFlag/qatar_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/qatar.png",
+      "source": "flag-icons:qa",
+      "territoryColor": {
+        "r": 0.5521980481690393,
+        "g": 0.10434237621989435,
+        "b": 0.2379293878890978,
+        "a": 1
+      }
+    },
+    {
+      "slug": "romania",
+      "displayName": "Romania",
+      "spriteAsset": "Assets/MarbleFlag/romania_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/romania.png",
+      "source": "flag-icons:ro",
+      "territoryColor": {
+        "r": 0.00019607843137254904,
+        "g": 0.1923529411764706,
+        "b": 0.6115686274509804,
+        "a": 1
+      }
+    },
+    {
+      "slug": "russia",
+      "displayName": "Russia",
+      "spriteAsset": "Assets/MarbleFlag/russia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/russia.png",
+      "source": "flag-icons:ru",
+      "territoryColor": {
+        "r": 0.8364145658263304,
+        "g": 0.1684407096171802,
+        "b": 0.11690009337068161,
+        "a": 1
+      }
+    },
+    {
+      "slug": "rwanda",
+      "displayName": "Rwanda",
+      "spriteAsset": "Assets/MarbleFlag/rwanda_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/rwanda.png",
+      "source": "flag-icons:rw",
+      "territoryColor": {
+        "r": 0.004588516798215697,
+        "g": 0.6320828055131494,
+        "b": 0.8665865462695294,
+        "a": 1
+      }
+    },
+    {
+      "slug": "saba",
+      "displayName": "Saba",
+      "spriteAsset": "Assets/MarbleFlag/saba_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/saba.png",
+      "source": "marble-derived",
+      "territoryColor": {
+        "r": 0.9762291052114062,
+        "g": 0.850526346231708,
+        "b": 0.050776505292382444,
+        "a": 1
+      }
+    },
+    {
+      "slug": "saint-kitts-and-nevis",
+      "displayName": "Saint Kitts And Nevis",
+      "spriteAsset": "Assets/MarbleFlag/saint-kitts-and-nevis_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/saint-kitts-and-nevis.png",
+      "source": "flag-icons:kn",
+      "territoryColor": {
+        "r": 0.7806423258958756,
+        "g": 0.003110209601081812,
+        "b": 0.00077079107505071,
+        "a": 1
+      }
+    },
+    {
+      "slug": "saint-lucia",
+      "displayName": "Saint Lucia",
+      "spriteAsset": "Assets/MarbleFlag/saint-lucia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/saint-lucia.png",
+      "source": "flag-icons:lc",
+      "territoryColor": {
+        "r": 0.39666685648121786,
+        "g": 0.8119001069288638,
+        "b": 0.9997924694240394,
+        "a": 1
+      }
+    },
+    {
+      "slug": "saint-vincent-and-the-grenadines",
+      "displayName": "Saint Vincent And The Grenadines",
+      "spriteAsset": "Assets/MarbleFlag/saint-vincent-and-the-grenadines_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/saint-vincent-and-the-grenadines.png",
+      "source": "flag-icons:vc",
+      "territoryColor": {
+        "r": 0.9551923300284034,
+        "g": 0.9441815282925232,
+        "b": 0.0013515368452173544,
+        "a": 1
+      }
+    },
+    {
+      "slug": "samoa",
+      "displayName": "Samoa",
+      "spriteAsset": "Assets/MarbleFlag/samoa_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/samoa.png",
+      "source": "flag-icons:ws",
+      "territoryColor": {
+        "r": 0.8071142258986927,
+        "g": 0.06675347222222222,
+        "b": 0.14934640522875817,
+        "a": 1
+      }
+    },
+    {
+      "slug": "san-marino",
+      "displayName": "San Marino",
+      "spriteAsset": "Assets/MarbleFlag/san-marino_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/san-marino.png",
+      "source": "flag-icons:sm",
+      "territoryColor": {
+        "r": 0.09703811959566434,
+        "g": 0.7132700036536354,
+        "b": 0.937337717695774,
+        "a": 1
+      }
+    },
+    {
+      "slug": "sao-tome-and-principe",
+      "displayName": "Sao Tome And Principe",
+      "spriteAsset": "Assets/MarbleFlag/sao-tome-and-principe_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/sao-tome-and-principe.png",
+      "source": "flag-icons:st",
+      "territoryColor": {
+        "r": 0.06957615563365405,
+        "g": 0.6785139521038582,
+        "b": 0.16883486009487045,
+        "a": 1
+      }
+    },
+    {
+      "slug": "saudi-arabia",
+      "displayName": "Saudi Arabia",
+      "spriteAsset": "Assets/MarbleFlag/saudi-arabia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/saudi-arabia.png",
+      "source": "flag-icons:sa",
+      "territoryColor": {
+        "r": 0.08520843005427836,
+        "g": 0.36398828458597704,
+        "b": 0.19121917109433662,
+        "a": 1
+      }
+    },
+    {
+      "slug": "scotland",
+      "displayName": "Scotland",
+      "spriteAsset": "Assets/MarbleFlag/scotland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/scotland.png",
+      "source": "flag-icons:gb-sct",
+      "territoryColor": {
+        "r": 0.0013432144511347846,
+        "g": 0.3968465338891462,
+        "b": 0.7414852555195307,
+        "a": 1
+      }
+    },
+    {
+      "slug": "senegal",
+      "displayName": "Senegal",
+      "spriteAsset": "Assets/MarbleFlag/senegal_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/senegal.png",
+      "source": "flag-icons:sn",
+      "territoryColor": {
+        "r": 0.04171024715882218,
+        "g": 0.4461696463561303,
+        "b": 0.14950338508939068,
+        "a": 1
+      }
+    },
+    {
+      "slug": "serbia",
+      "displayName": "Serbia",
+      "spriteAsset": "Assets/MarbleFlag/serbia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/serbia.png",
+      "source": "flag-icons:rs",
+      "territoryColor": {
+        "r": 0.7774443561208267,
+        "g": 0.21048290937996822,
+        "b": 0.23396926338102808,
+        "a": 1
+      }
+    },
+    {
+      "slug": "seychelles-the",
+      "displayName": "Seychelles",
+      "spriteAsset": "Assets/MarbleFlag/seychelles-the_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/seychelles-the.png",
+      "source": "flag-icons:sc",
+      "territoryColor": {
+        "r": 0.8514799758371292,
+        "g": 0.13646144552741996,
+        "b": 0.13940343831121124,
+        "a": 1
+      }
+    },
+    {
+      "slug": "sierra-leone",
+      "displayName": "Sierra Leone",
+      "spriteAsset": "Assets/MarbleFlag/sierra-leone_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/sierra-leone.png",
+      "source": "flag-icons:sl",
+      "territoryColor": {
+        "r": 0.0005602240896358543,
+        "g": 0.803548085901027,
+        "b": 0.0005602240896358543,
+        "a": 1
+      }
+    },
+    {
+      "slug": "singapore",
+      "displayName": "Singapore",
+      "spriteAsset": "Assets/MarbleFlag/singapore_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/singapore.png",
+      "source": "flag-icons:sg",
+      "territoryColor": {
+        "r": 0.8742558570706219,
+        "g": 0.0007730771391651216,
+        "b": 0.0007730771391651216,
+        "a": 1
+      }
+    },
+    {
+      "slug": "slovakia",
+      "displayName": "Slovakia",
+      "spriteAsset": "Assets/MarbleFlag/slovakia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/slovakia.png",
+      "source": "flag-icons:sk",
+      "territoryColor": {
+        "r": 0.9341614383763527,
+        "g": 0.1094726795514197,
+        "b": 0.1445001193032689,
+        "a": 1
+      }
+    },
+    {
+      "slug": "slovenia",
+      "displayName": "Slovenia",
+      "spriteAsset": "Assets/MarbleFlag/slovenia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/slovenia.png",
+      "source": "flag-icons:si",
+      "territoryColor": {
+        "r": 0.8364145658263304,
+        "g": 0.00006127450980392157,
+        "b": 0.00024509803921568627,
+        "a": 1
+      }
+    },
+    {
+      "slug": "solomon-islands-the",
+      "displayName": "Solomon Islands",
+      "spriteAsset": "Assets/MarbleFlag/solomon-islands-the_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/solomon-islands-the.png",
+      "source": "flag-icons:sb",
+      "territoryColor": {
+        "r": 0.0032093634555271384,
+        "g": 0.0030814862176754758,
+        "b": 0.8388018613242398,
+        "a": 1
+      }
+    },
+    {
+      "slug": "somalia",
+      "displayName": "Somalia",
+      "spriteAsset": "Assets/MarbleFlag/somalia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/somalia.png",
+      "source": "flag-icons:so",
+      "territoryColor": {
+        "r": 0.2518447164100539,
+        "g": 0.6513109619686801,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "slug": "south-africa",
+      "displayName": "South Africa",
+      "spriteAsset": "Assets/MarbleFlag/south-africa_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/south-africa.png",
+      "source": "flag-icons:za",
+      "territoryColor": {
+        "r": 0.003461570282121287,
+        "g": 0.4711475138578638,
+        "b": 0.2796492098949284,
+        "a": 1
+      }
+    },
+    {
+      "slug": "south-korea",
+      "displayName": "South Korea",
+      "spriteAsset": "Assets/MarbleFlag/south-korea_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/south-korea.png",
+      "source": "flag-icons:kr",
+      "territoryColor": {
+        "r": 0.8064950980392157,
+        "g": 0.17712928921568627,
+        "b": 0.22331495098039217,
+        "a": 1
+      }
+    },
+    {
+      "slug": "south-sudan",
+      "displayName": "South Sudan",
+      "spriteAsset": "Assets/MarbleFlag/south-sudan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/south-sudan.png",
+      "source": "flag-icons:ss",
+      "territoryColor": {
+        "r": 0.05876824738706055,
+        "g": 0.27891854539172495,
+        "b": 0.6873352336529326,
+        "a": 1
+      }
+    },
+    {
+      "slug": "spain",
+      "displayName": "Spain",
+      "spriteAsset": "Assets/MarbleFlag/spain_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/spain.png",
+      "source": "flag-icons:es",
+      "territoryColor": {
+        "r": 0.6673447037872945,
+        "g": 0.08404041558342619,
+        "b": 0.10553762058490224,
+        "a": 1
+      }
+    },
+    {
+      "slug": "sri-lanka",
+      "displayName": "Sri Lanka",
+      "spriteAsset": "Assets/MarbleFlag/sri-lanka_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/sri-lanka.png",
+      "source": "flag-icons:lk",
+      "territoryColor": {
+        "r": 0.5552624219259812,
+        "g": 0.12768714458842173,
+        "b": 0.16037413380566173,
+        "a": 1
+      }
+    },
+    {
+      "slug": "st-eustatius",
+      "displayName": "Sint Eustatius",
+      "spriteAsset": "Assets/MarbleFlag/st-eustatius_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/st-eustatius.png",
+      "source": "marble-derived",
+      "territoryColor": {
+        "r": 0.007362602281701026,
+        "g": 0.16483357696120438,
+        "b": 0.5328998437421241,
+        "a": 1
+      }
+    },
+    {
+      "slug": "st-martin",
+      "displayName": "Sint Maarten",
+      "spriteAsset": "Assets/MarbleFlag/st-martin_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/st-martin.png",
+      "source": "flag-icons:sx",
+      "territoryColor": {
+        "r": 0.9286374255190697,
+        "g": 0.1611045489146127,
+        "b": 0.22399401527679344,
+        "a": 1
+      }
+    },
+    {
+      "slug": "st-patrick",
+      "displayName": "Saint Patrick",
+      "spriteAsset": "Assets/MarbleFlag/st-patrick_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/st-patrick.png",
+      "source": "saint-patrick-saltire",
+      "territoryColor": {
+        "r": 0.8065095603458775,
+        "g": 0.0030751431007185483,
+        "b": 0.0030751431007185483,
+        "a": 1
+      }
+    },
+    {
+      "slug": "sudan",
+      "displayName": "Sudan",
+      "spriteAsset": "Assets/MarbleFlag/sudan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/sudan.png",
+      "source": "flag-icons:sd",
+      "territoryColor": {
+        "r": 0.9998520162782093,
+        "g": 0.00043690432147701846,
+        "b": 0.000306537709423392,
+        "a": 1
+      }
+    },
+    {
+      "slug": "suriname",
+      "displayName": "Suriname",
+      "spriteAsset": "Assets/MarbleFlag/suriname_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/suriname.png",
+      "source": "flag-icons:sr",
+      "territoryColor": {
+        "r": 0.21280443012940048,
+        "g": 0.4923150816522574,
+        "b": 0.24417697914900832,
+        "a": 1
+      }
+    },
+    {
+      "slug": "swaziland",
+      "displayName": "Eswatini",
+      "spriteAsset": "Assets/MarbleFlag/swaziland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/swaziland.png",
+      "source": "flag-icons:sz",
+      "territoryColor": {
+        "r": 0.24242424242424243,
+        "g": 0.3679144385026738,
+        "b": 0.7262032085561497,
+        "a": 1
+      }
+    },
+    {
+      "slug": "sweden",
+      "displayName": "Sweden",
+      "spriteAsset": "Assets/MarbleFlag/sweden_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/sweden.png",
+      "source": "flag-icons:se",
+      "territoryColor": {
+        "r": 0.0010493086123338224,
+        "g": 0.3199709513435004,
+        "b": 0.5785810620544514,
+        "a": 1
+      }
+    },
+    {
+      "slug": "switzerland",
+      "displayName": "Switzerland",
+      "spriteAsset": "Assets/MarbleFlag/switzerland_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/switzerland.png",
+      "source": "flag-icons:ch",
+      "territoryColor": {
+        "r": 1,
+        "g": 0.0016385257806826434,
+        "b": 0.0016385257806826434,
+        "a": 1
+      }
+    },
+    {
+      "slug": "syria",
+      "displayName": "Syria",
+      "spriteAsset": "Assets/MarbleFlag/syria_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/syria.png",
+      "source": "flag-icons:sy",
+      "territoryColor": {
+        "r": 0.00037348272642390287,
+        "g": 0.4776844070961718,
+        "b": 0.2380952380952381,
+        "a": 1
+      }
+    },
+    {
+      "slug": "taiwan",
+      "displayName": "Taiwan",
+      "spriteAsset": "Assets/MarbleFlag/taiwan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/taiwan.png",
+      "source": "flag-icons:tw",
+      "territoryColor": {
+        "r": 0.998642636402387,
+        "g": 0,
+        "b": 0.0008152173913043479,
+        "a": 1
+      }
+    },
+    {
+      "slug": "tajikistan",
+      "displayName": "Tajikistan",
+      "spriteAsset": "Assets/MarbleFlag/tajikistan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/tajikistan.png",
+      "source": "flag-icons:tj",
+      "territoryColor": {
+        "r": 0.7997821350762527,
+        "g": 0.00021786492374727668,
+        "b": 0.00021786492374727668,
+        "a": 1
+      }
+    },
+    {
+      "slug": "tanzania",
+      "displayName": "Tanzania",
+      "spriteAsset": "Assets/MarbleFlag/tanzania_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/tanzania.png",
+      "source": "flag-icons:tz",
+      "territoryColor": {
+        "r": 0.0010555380797595331,
+        "g": 0.5995246583481878,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "thailand",
+      "displayName": "Thailand",
+      "spriteAsset": "Assets/MarbleFlag/thailand_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/thailand.png",
+      "source": "flag-icons:th",
+      "territoryColor": {
+        "r": 0.17703081232492998,
+        "g": 0.16507936507936508,
+        "b": 0.2905695611577965,
+        "a": 1
+      }
+    },
+    {
+      "slug": "togo",
+      "displayName": "Togo",
+      "spriteAsset": "Assets/MarbleFlag/togo_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/togo.png",
+      "source": "flag-icons:tg",
+      "territoryColor": {
+        "r": 0.06477813488800857,
+        "g": 0.5249620051324214,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "slug": "tonga",
+      "displayName": "Tonga",
+      "spriteAsset": "Assets/MarbleFlag/tonga_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/tonga.png",
+      "source": "flag-icons:to",
+      "territoryColor": {
+        "r": 0.7569360559869619,
+        "g": 0.0005955099900184405,
+        "b": 0.0005955099900184405,
+        "a": 1
+      }
+    },
+    {
+      "slug": "trinidad-and-tobago",
+      "displayName": "Trinidad And Tobago",
+      "spriteAsset": "Assets/MarbleFlag/trinidad-and-tobago_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/trinidad-and-tobago.png",
+      "source": "flag-icons:tt",
+      "territoryColor": {
+        "r": 0.8785422147392052,
+        "g": 0.0016233470132238942,
+        "b": 0.0016233470132238942,
+        "a": 1
+      }
+    },
+    {
+      "slug": "tunisia",
+      "displayName": "Tunisia",
+      "spriteAsset": "Assets/MarbleFlag/tunisia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/tunisia.png",
+      "source": "flag-icons:tn",
+      "territoryColor": {
+        "r": 0.9057634508042408,
+        "g": 0.0006341447303233478,
+        "b": 0.07350794332331473,
+        "a": 1
+      }
+    },
+    {
+      "slug": "turkey",
+      "displayName": "Turkey",
+      "spriteAsset": "Assets/MarbleFlag/turkey_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/turkey.png",
+      "source": "flag-icons:tr",
+      "territoryColor": {
+        "r": 0.8900505617681329,
+        "g": 0.038559806821357206,
+        "b": 0.08927236396037307,
+        "a": 1
+      }
+    },
+    {
+      "slug": "turkmenistan",
+      "displayName": "Turkmenistan",
+      "spriteAsset": "Assets/MarbleFlag/turkmenistan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/turkmenistan.png",
+      "source": "flag-icons:tm",
+      "territoryColor": {
+        "r": 0.0006132231826410669,
+        "g": 0.518001478875035,
+        "b": 0.2392131364899666,
+        "a": 1
+      }
+    },
+    {
+      "slug": "tuvalu",
+      "displayName": "Tuvalu",
+      "spriteAsset": "Assets/MarbleFlag/tuvalu_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/tuvalu.png",
+      "source": "flag-icons:tv",
+      "territoryColor": {
+        "r": 0.0007491675915649279,
+        "g": 0.622032618078678,
+        "b": 0.7938463435688741,
+        "a": 1
+      }
+    },
+    {
+      "slug": "ukraine",
+      "displayName": "Ukraine",
+      "spriteAsset": "Assets/MarbleFlag/ukraine_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/ukraine.png",
+      "source": "flag-icons:ua",
+      "territoryColor": {
+        "r": 0.001838235294117647,
+        "g": 0.3417892156862745,
+        "b": 0.7205882352941176,
+        "a": 1
+      }
+    },
+    {
+      "slug": "united-arab-emirates",
+      "displayName": "United Arab Emirates",
+      "spriteAsset": "Assets/MarbleFlag/united-arab-emirates_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/united-arab-emirates.png",
+      "source": "flag-icons:ae",
+      "territoryColor": {
+        "r": 0.9982174688057041,
+        "g": 0.00124777183600713,
+        "b": 0.0010667335115864527,
+        "a": 1
+      }
+    },
+    {
+      "slug": "united-kingdom",
+      "displayName": "United Kingdom",
+      "spriteAsset": "Assets/MarbleFlag/united-kingdom_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/united-kingdom.png",
+      "source": "flag-icons:gb",
+      "territoryColor": {
+        "r": 0.7829193899782135,
+        "g": 0.05671840958605664,
+        "b": 0.17508714596949893,
+        "a": 1
+      }
+    },
+    {
+      "slug": "united-states",
+      "displayName": "United States",
+      "spriteAsset": "Assets/MarbleFlag/united-states_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/united-states.png",
+      "source": "flag-icons:us",
+      "territoryColor": {
+        "r": 0.084720431174156,
+        "g": 0.17307806765201866,
+        "b": 0.35632708395331153,
+        "a": 1
+      }
+    },
+    {
+      "slug": "uruguay",
+      "displayName": "Uruguay",
+      "spriteAsset": "Assets/MarbleFlag/uruguay_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/uruguay.png",
+      "source": "flag-icons:uy",
+      "territoryColor": {
+        "r": 0.003357640576891914,
+        "g": 0.2109026089774753,
+        "b": 0.6548079727758873,
+        "a": 1
+      }
+    },
+    {
+      "slug": "uzbekistan",
+      "displayName": "Uzbekistan",
+      "spriteAsset": "Assets/MarbleFlag/uzbekistan_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/uzbekistan.png",
+      "source": "flag-icons:uz",
+      "territoryColor": {
+        "r": 0.11764705882352941,
+        "g": 0.7098039215686275,
+        "b": 0.22745098039215686,
+        "a": 1
+      }
+    },
+    {
+      "slug": "vanuatu",
+      "displayName": "Vanuatu",
+      "spriteAsset": "Assets/MarbleFlag/vanuatu_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/vanuatu.png",
+      "source": "flag-icons:vu",
+      "territoryColor": {
+        "r": 0.00031720856463124506,
+        "g": 0.5850445491440034,
+        "b": 0.2629316913125282,
+        "a": 1
+      }
+    },
+    {
+      "slug": "vatican-city",
+      "displayName": "Vatican City",
+      "spriteAsset": "Assets/MarbleFlag/vatican-city_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/vatican-city.png",
+      "source": "flag-icons:va",
+      "territoryColor": {
+        "r": 1,
+        "g": 0.8786764705882353,
+        "b": 0.001838235294117647,
+        "a": 1
+      }
+    },
+    {
+      "slug": "venezuela",
+      "displayName": "Venezuela",
+      "spriteAsset": "Assets/MarbleFlag/venezuela_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/venezuela.png",
+      "source": "flag-icons:ve",
+      "territoryColor": {
+        "r": 0.9996265172735761,
+        "g": 0.8009337068160598,
+        "b": 0.00018674136321195143,
+        "a": 1
+      }
+    },
+    {
+      "slug": "vietnam",
+      "displayName": "Vietnam",
+      "spriteAsset": "Assets/MarbleFlag/vietnam_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/vietnam.png",
+      "source": "flag-icons:vn",
+      "territoryColor": {
+        "r": 0.8549805212974322,
+        "g": 0.14568455263554378,
+        "b": 0.11383310733733669,
+        "a": 1
+      }
+    },
+    {
+      "slug": "wales",
+      "displayName": "Wales",
+      "spriteAsset": "Assets/MarbleFlag/wales_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/wales.png",
+      "source": "flag-icons:gb-wls",
+      "territoryColor": {
+        "r": 0.0008141268203187708,
+        "g": 0.6723168214654283,
+        "b": 0.22350074532737071,
+        "a": 1
+      }
+    },
+    {
+      "slug": "yemen",
+      "displayName": "Yemen",
+      "spriteAsset": "Assets/MarbleFlag/yemen_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/yemen.png",
+      "source": "flag-icons:ye",
+      "territoryColor": {
+        "r": 0.9452847805788982,
+        "g": 0.02595704948646125,
+        "b": 0.0031746031746031746,
+        "a": 1
+      }
+    },
+    {
+      "slug": "zambia",
+      "displayName": "Zambia",
+      "spriteAsset": "Assets/MarbleFlag/zambia_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/zambia.png",
+      "source": "flag-icons:zm",
+      "territoryColor": {
+        "r": 0.09699735367047989,
+        "g": 0.5415973828426163,
+        "b": 0.0000013891493543928376,
+        "a": 1
+      }
+    },
+    {
+      "slug": "zimbabwe",
+      "displayName": "Zimbabwe",
+      "spriteAsset": "Assets/MarbleFlag/zimbabwe_round.png",
+      "textureAsset": "Assets/MultiplyOrRelease/Art/TeamFlags/zimbabwe.png",
+      "source": "flag-icons:zw",
+      "territoryColor": {
+        "r": 0.004150900126132325,
+        "g": 0.39399915911783817,
+        "b": 0.002274204028589994,
+        "a": 1
+      }
+    }
+  ]
+}

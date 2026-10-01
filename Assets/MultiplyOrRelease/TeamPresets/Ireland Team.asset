@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a69433b3d7579d498f53912b10d6680, type: 3}
+  m_Name: Ireland Team
+  m_EditorClassIdentifier: MultiplyOrRelease.Runtime::MultiplyOrRelease.TeamPreset
+  savedSlot: 0
+  team:
+    name: Ireland
+    cannonSprite: {fileID: -2712870181054222652, guid: 722c72913383c7e469fd142e3c70df76, type: 3}
+    plinkoSprite: {fileID: -2712870181054222652, guid: 722c72913383c7e469fd142e3c70df76, type: 3}
+    projectileSprite: {fileID: -2712870181054222652, guid: 722c72913383c7e469fd142e3c70df76, type: 3}
+    projectileSpriteTint: {r: 1, g: 1, b: 1, a: 1}
+    territoryFlag: {fileID: 2800000, guid: 0e14f5038d4385042a9433e996ee6d7c, type: 3}
+    territoryColor: {r: 0.00037348273, g: 0.60336137, b: 0.28534082, a: 1}
+    ammoTextColor: {r: 0.00061899424, g: 1, b: 0.47291857, a: 1}
+    projectileColor: {r: 0.00061899424, g: 1, b: 0.47291857, a: 1}
+    projectileTrailColor: {r: 0.00061899424, g: 1, b: 0.47291857, a: 1}
+    plinkoBallColor: {r: 1, g: 1, b: 1, a: 1}
+    plinkoTrailColor: {r: 0.00061899424, g: 1, b: 0.47291857, a: 1}
+    barrelColor: {r: 0.00061899424, g: 1, b: 0.47291857, a: 1}
+    cannonTint: {r: 1, g: 1, b: 1, a: 1}
+    aimDegrees: -45
+    sweepDegrees: 120
+    sweepSpeed: 90
+    clockwise: 1
+    sweepPhase: 0.22
+    sweepMode: 0
+    hitPoints: 1

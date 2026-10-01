@@ -4,7 +4,8 @@
   "private": true,
   "description": "Convert flag-icons SVGs into readable PNG textures for Unity.",
   "scripts": {
-    "generate": "node generate-flags.cjs"
+    "generate": "node generate-flags.cjs",
+    "generate:teams": "node generate-marble-flags.cjs"
   },
   "dependencies": {
     "flag-icons": "7.5.0",

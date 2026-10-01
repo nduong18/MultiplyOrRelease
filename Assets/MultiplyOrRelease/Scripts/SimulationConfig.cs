@@ -284,6 +284,9 @@ namespace MultiplyOrRelease
     }
     [Serializable] public sealed class TeamSettings
     {
+        // All mutable values are primitives; Unity assets intentionally stay shared.
+        public TeamSettings Copy() => (TeamSettings)MemberwiseClone();
+
         public string name = "Team";
         public Sprite cannonSprite;
         public Sprite plinkoSprite;
