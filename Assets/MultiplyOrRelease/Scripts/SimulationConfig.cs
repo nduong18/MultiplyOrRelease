@@ -150,6 +150,8 @@ namespace MultiplyOrRelease
         [Range(.1f, .9f)] public float multiplyRegion = .5f;
         public bool mirrorRightBoards = true;
         public bool collideBalls = true;
+        [Tooltip("Freeze this team's Plinko positions, velocities, and timers while its cannon still has queued Release shots. Resume when the queue is empty, without waiting for airborne shots.")]
+        public bool pauseWhileReleasing = true;
         public Color backgroundColor = new Color(.025f, .035f, .052f);
         public Color pegColor = new Color(.27f, .32f, .39f);
         public Color multiplyColor = new Color(.56f, 1, .05f);
@@ -209,6 +211,8 @@ namespace MultiplyOrRelease
         public float ammoTextSize = 1.25f;
         [Tooltip("Render order of stored-ammo numbers. Higher draws on top; Plinko pegs use 4, trails 7, and marbles 8.")]
         public int ammoTextSortingOrder = 20;
+        [Tooltip("During Release, show remaining queued shots decreasing to Ammo After Release instead of immediately showing the reset stored ammo.")]
+        public bool showReleaseCountdown = true;
         public float hudMargin = .55f;
         [Header("Camera")]
         public bool autoFrameCamera = true;

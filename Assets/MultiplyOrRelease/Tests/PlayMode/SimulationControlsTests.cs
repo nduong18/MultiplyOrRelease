@@ -17,6 +17,64 @@ public class SimulationControlsTests
     {
         yield return VerifyFrameFiring(1, 8);
     }
+    [UnityTest] public IEnumerator EliminatedCannonsLeaveNoRimOrMarbleAndRestartRestoresThem()
+    {
+        SceneManager.LoadScene("MultiplyOrRelease");
+        for (int frame = 0; frame < 8; frame++) yield return null;
+        var controller = Object.FindFirstObjectByType<SimulationController>();
+        controller.Model.Eliminate(0); controller.Model.Eliminate(2); controller.Model.Eliminate(3);
+        controller.Step();
+        var visuals = controller.transform.Find("Simulation Visuals");
+        for (int team = 0; team < 4; team++)
+        {
+            var cannon = visuals.Find(controller.config.teams[team].name + " Cannon");
+            Assert.IsNotNull(cannon); Assert.AreEqual(team == 1, cannon.gameObject.activeInHierarchy);
+            foreach (var graphic in cannon.GetComponentsInChildren<SpriteRenderer>(true))
+                Assert.AreEqual(team == 1, graphic.gameObject.activeInHierarchy, "No rim or marble may remain visible after elimination.");
+        }
+        controller.RestartSameSeed();
+        // Runtime Destroy removes the old visuals at the end of the frame.
+        yield return null;
+        visuals = controller.transform.Find("Simulation Visuals");
+        for (int team = 0; team < 4; team++)
+            Assert.IsTrue(visuals.Find(controller.config.teams[team].name + " Cannon").gameObject.activeInHierarchy);
+    }
+    [UnityTest] public IEnumerator ReleaseCountdownRendersAndPlinkoResumesAfterQueueDrains()
+    {
+        SceneManager.LoadScene("MultiplyOrRelease");
+        for (int frame = 0; frame < 8; frame++) yield return null;
+        var controller = Object.FindFirstObjectByType<SimulationController>();
+        frameTestConfig = Object.Instantiate(controller.config);
+        frameTestConfig.cannon.firingMode = FiringMode.FramesBetweenShots;
+        frameTestConfig.cannon.framesBetweenShots = 1;
+        frameTestConfig.plinko.pauseWhileReleasing = true;
+        frameTestConfig.presentation.showReleaseCountdown = true;
+        frameTestConfig.cannon.destroyOnEnemyHit = false;
+        controller.config = frameTestConfig; controller.Rebuild(); controller.TogglePause();
+        var model = controller.Model;
+        foreach (var team in model.teams) foreach (var b in team.balls) b.delay = 999;
+        var ball = model.teams[0].balls[0]; ball.active = true;
+        ball.position = new Vector2(0, 1); ball.velocity = Vector2.down;
+        model.teams[0].ammo = 4; model.Release(0);
+        yield return null;
+        TextMesh ammo = null;
+        foreach (var text in controller.GetComponentsInChildren<TextMesh>(true))
+            if (text.name == "Stored Ammo") { ammo = text; break; }
+        Assert.IsNotNull(ammo); Assert.AreEqual("4", ammo.text);
+        float initialAngle = model.teams[0].angle;
+        for (int shot = 1; shot <= 4; shot++)
+        {
+            controller.Step();
+            Assert.AreEqual(Mathf.Max(1, 4 - shot).ToString(), ammo.text);
+            Assert.AreEqual(new Vector2(0, 1), ball.position);
+            Assert.AreEqual(Vector2.down, ball.velocity);
+            yield return null;
+        }
+        Assert.AreNotEqual(initialAngle, model.teams[0].angle, "The barrel keeps rotating while Plinko is frozen.");
+        Assert.AreEqual(4, model.teams[0].fired); Assert.AreEqual(0, model.teams[0].queued);
+        Assert.Greater(model.shots.Count, 0);
+        controller.Step(); Assert.AreNotEqual(new Vector2(0, 1), ball.position);
+    }
     [UnityTest] public IEnumerator FrameFiringEveryTwoFramesAtLowSimulationSpeed()
     {
         yield return VerifyFrameFiring(2, .1f);

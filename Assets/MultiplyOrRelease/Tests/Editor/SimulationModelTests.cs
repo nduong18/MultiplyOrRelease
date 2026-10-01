@@ -29,6 +29,69 @@ public class SimulationModelTests
         Assert.AreEqual(32, m.teams[0].ammo); m.Release(0);
         Assert.AreEqual(32, m.teams[0].queued); Assert.AreEqual(1, m.teams[0].ammo);
     }
+    [TestCase(FiringMode.ShotsPerSecond)] [TestCase(FiringMode.FramesBetweenShots)]
+    public void ReleaseFreezesOnlyItsPlinkoUntilTheLastQueuedShot(FiringMode mode)
+    {
+        config.cannon.firingMode = mode; config.cannon.shotsPerSecond = 10;
+        config.cannon.destroyOnEnemyHit = false;
+        var m = NewModel();
+        foreach (var team in m.teams) foreach (var b in team.balls) b.delay = 999;
+        var ball = m.teams[0].balls[0]; ball.active = true;
+        ball.position = new Vector2(0, 1); ball.velocity = Vector2.down;
+        ball.age = .25f;
+        Vector2 position = ball.position, velocity = ball.velocity;
+        float delay = m.teams[0].balls[1].delay;
+        m.teams[0].ammo = 4; m.Release(0);
+        Assert.AreEqual(4, m.DisplayAmmo(0));
+        int steps = 0;
+        while (m.teams[0].queued > 0 && steps++ < 100)
+        {
+            long before = m.teams[0].queued;
+            m.Tick(.01f); m.AdvanceFiringFrame();
+            Assert.AreEqual(position, ball.position); Assert.AreEqual(velocity, ball.velocity);
+            Assert.AreEqual(.25f, ball.age); Assert.AreEqual(0, ball.cycles);
+            Assert.IsTrue(ball.active); Assert.AreEqual(delay, m.teams[0].balls[1].delay);
+            Assert.LessOrEqual(m.teams[0].queued, before);
+            Assert.AreEqual(Math.Max(1, m.teams[0].queued), m.DisplayAmmo(0));
+        }
+        Assert.AreEqual(0, m.teams[0].queued); Assert.AreEqual(4, m.teams[0].fired);
+        Assert.AreEqual(1, m.DisplayAmmo(0)); Assert.IsFalse(m.IsPlinkoPaused(0));
+        Assert.Less(m.teams[1].balls[0].delay, 999, "Other teams must keep advancing.");
+        Assert.Greater(m.shots.Count, 0, "Resume must not wait for airborne shots.");
+        m.Tick(.01f); Assert.AreNotEqual(position, ball.position);
+        Assert.Greater(ball.age, .25f); Assert.Less(m.teams[0].balls[1].delay, delay);
+    }
+    [Test] public void FirstReleaseGateImmediatelyStopsLaterBallsInTheSameTick()
+    {
+        config.cannon.firingMode = FiringMode.FramesBetweenShots;
+        var m = NewModel();
+        foreach (var team in m.teams) foreach (var b in team.balls) b.delay = 999;
+        m.teams[0].ammo = 8;
+        var first = m.teams[0].balls[0]; var second = m.teams[0].balls[1];
+        Vector2 gate = new Vector2(config.plinko.width * .25f, -config.plinko.height * .5f + .3f);
+        first.active = second.active = true;
+        first.position = second.position = gate; first.velocity = second.velocity = Vector2.down;
+        m.Tick(1f / 120);
+        Assert.AreEqual(8, m.teams[0].queued); Assert.AreEqual(1, m.teams[0].releases);
+        Assert.AreEqual(1, first.cycles); Assert.AreEqual(0, second.cycles);
+        Assert.AreEqual(gate, second.position); Assert.AreEqual(Vector2.down, second.velocity);
+        Assert.AreEqual(0, second.age); Assert.AreEqual(8, m.DisplayAmmo(0));
+    }
+    [Test] public void ReleasePauseAndCountdownCanBeDisabledIndependently()
+    {
+        config.plinko.pauseWhileReleasing = false;
+        config.presentation.showReleaseCountdown = false;
+        config.cannon.firingMode = FiringMode.FramesBetweenShots;
+        var m = NewModel(); m.teams[0].ammo = 8; m.Release(0);
+        var ball = m.teams[0].balls[0]; ball.active = true; ball.position = new Vector2(0, 1);
+        Assert.IsFalse(m.IsPlinkoPaused(0)); Assert.AreEqual(1, m.DisplayAmmo(0));
+        m.Tick(.01f); Assert.AreNotEqual(new Vector2(0, 1), ball.position);
+        config.plinko.pauseWhileReleasing = true;
+        Assert.IsTrue(m.IsPlinkoPaused(0)); Assert.AreEqual(1, m.DisplayAmmo(0));
+        config.presentation.showReleaseCountdown = true; Assert.AreEqual(8, m.DisplayAmmo(0));
+        m.teams[0].queued = long.MaxValue;
+        Assert.AreEqual(long.MaxValue, m.DisplayAmmo(0), "Countdown must not overflow at the storage limit.");
+    }
     [Test] public void ActiveShotBudgetDefersEveryRemainingShot()
     {
         config.projectile.maxActive = 32; config.cannon.shotsPerSecond = 3000;
@@ -36,6 +99,7 @@ public class SimulationModelTests
         for (int i = 0; i < 10; i++) m.Tick(1f / 120);
         Assert.AreEqual(32, m.shots.Count); Assert.AreEqual(224, m.teams[0].queued);
         Assert.AreEqual(256, m.teams[0].queued + m.teams[0].fired);
+        Assert.IsTrue(m.IsPlinkoPaused(0)); Assert.AreEqual(224, m.DisplayAmmo(0));
     }
     [TestCase(1)] [TestCase(2)] [TestCase(5)]
     public void FrameFiringUsesPerCannonIntervalsAndNeverCatchesUp(int interval)
@@ -222,13 +286,20 @@ public class SimulationModelTests
         Assert.AreEqual(1, left.cycles); Assert.AreEqual(1, right.cycles);
         Assert.IsFalse(left.active); Assert.Greater(left.position.y, 0);
     }
-    [Test] public void DefaultScenePresetCanCompleteAnEntireMatch()
+    [Test] public void ReferenceFiringRatesCanCompleteAnEntireMatch()
     {
         var preset = UnityEditor.AssetDatabase.LoadAssetAtPath<SimulationConfig>("Assets/MultiplyOrRelease/Config/DefaultSimulation.asset");
         Assert.IsNotNull(preset, "Create the simulation scene before running integration tests.");
         var copy = UnityEngine.Object.Instantiate(preset);
         try
         {
+            // Inspector firing/sweep tuning is user data, not a completion-time
+            // contract. Use known reference rates on a copy; never edit the asset.
+            copy.randomSeed = 1207;
+            copy.cannon.firingMode = FiringMode.ShotsPerSecond;
+            copy.cannon.shotsPerSecond = 180;
+            copy.plinko.pauseWhileReleasing = true;
+            foreach (var team in copy.teams) team.sweepSpeed = 38;
             var m = new SimulationModel(copy, copy.randomSeed); m.Start();
             for (int i = 0; i < 144000 && m.phase != MatchPhase.Finished; i++)
             {
@@ -236,7 +307,7 @@ public class SimulationModelTests
                 // Emulate a 60 FPS player at the default 120 fixed ticks/second.
                 if (i % 2 == 1) m.AdvanceFiringFrame();
             }
-            Assert.AreEqual(MatchPhase.Finished, m.phase, "Default seed should finish within 20 simulated minutes.");
+            Assert.AreEqual(MatchPhase.Finished, m.phase, "Reference firing rates should finish within 20 simulated minutes.");
             Assert.LessOrEqual(m.AliveCount, 1); Assert.Greater(m.totalFired, 0);
             int cells = 0; foreach (int count in m.territoryCounts) { Assert.GreaterOrEqual(count, 0); cells += count; }
             Assert.AreEqual(m.owners.Length, cells);

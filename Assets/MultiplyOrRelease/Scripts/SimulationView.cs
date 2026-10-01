@@ -248,9 +248,11 @@ namespace MultiplyOrRelease
                 var s = model.teams[t]; var team = c.teams[t];
                 plinkoPanels[t].gameObject.SetActive(c.presentation.cameraFocus == CameraFocus.Simulation);
                 barrels[t].localRotation = Quaternion.Euler(0, 0, s.angle);
-                barrels[t].gameObject.SetActive(s.alive);
+                // Hide the whole cannon (rim, marble, and barrel) on elimination.
+                barrels[t].parent.gameObject.SetActive(s.alive);
                 cannons[t].color = s.alive ? (team.cannonSprite != null ? team.cannonTint : team.territoryColor) : c.cannon.eliminatedTint;
-                string number = s.alive ? (c.presentation.compactAmmoNumbers ? ShortNumber(s.ammo) : s.ammo.ToString("N0")) : "OUT";
+                long displayAmmo = model.DisplayAmmo(t);
+                string number = s.alive ? (c.presentation.compactAmmoNumbers ? ShortNumber(displayAmmo) : displayAmmo.ToString("N0")) : "OUT";
                 if (ammo[t].text != number)
                 {
                     ammo[t].text = number;
@@ -262,16 +264,17 @@ namespace MultiplyOrRelease
                 status[t].text = !s.alive ? "ELIMINATED" : s.queued > 0 ? "FIRING  ·  " + ShortNumber(s.queued) + " QUEUED" : s.lastEvent;
                 status[t].gameObject.SetActive(c.presentation.showPlinkoStatus);
                 status[t].color = s.alive ? team.ammoTextColor : c.presentation.secondaryTextColor;
+                bool plinkoPaused = model.IsPlinkoPaused(t);
                 for (int b = 0; b < s.balls.Length; b++)
                 {
                     var ball = s.balls[b]; var r = balls[t][b]; var tr = ballTrails[t][b];
-                    bool visible = s.alive && (preview || ball.active);
+                    bool visible = s.alive && (preview || ball.active || plinkoPaused);
                     if (ballCycles[t][b] != ball.cycles || !ball.active) { tr.emitting = false; tr.Clear(); }
                     r.transform.parent.localPosition = centers[t] + ball.position;
                     r.enabled = visible;
                     if (ballCycles[t][b] != ball.cycles) tr.Clear();
-                    tr.emitting = !preview && visible && c.presentation.showTrails;
-                    tr.time = clockPaused ? 1000000 : c.plinko.trailTime / clockSpeed;
+                    tr.emitting = !preview && visible && !plinkoPaused && c.presentation.showTrails;
+                    tr.time = clockPaused || plinkoPaused ? 1000000 : c.plinko.trailTime / clockSpeed;
                     if (!visible || !c.presentation.showTrails) tr.Clear();
                     ballCycles[t][b] = ball.cycles;
                 }

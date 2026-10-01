@@ -63,6 +63,7 @@ MonoBehaviour:
     multiplyRegion: 0.5
     mirrorRightBoards: 1
     collideBalls: 1
+    pauseWhileReleasing: 1
     backgroundColor: {r: 0.025, g: 0.035, b: 0.052, a: 1}
     pegColor: {r: 0.27, g: 0.32, b: 0.39, a: 1}
     multiplyColor: {r: 0.56, g: 1, b: 0.05, a: 1}
@@ -77,7 +78,7 @@ MonoBehaviour:
     maxStoredAmmo: 1073741824
     multiplier: 2
     firingMode: 0
-    shotsPerSecond: 10
+    shotsPerSecond: 20
     framesBetweenShots: 1
     cornerInset: 0.65
     hitRadius: 0.23
@@ -109,6 +110,7 @@ MonoBehaviour:
     labelSize: 0.19
     ammoTextSize: 1.25
     ammoTextSortingOrder: 20
+    showReleaseCountdown: 1
     hudMargin: 0.55
     autoFrameCamera: 1
     cameraFocus: 0

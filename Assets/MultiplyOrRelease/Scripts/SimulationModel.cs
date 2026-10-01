@@ -55,6 +55,13 @@ namespace MultiplyOrRelease
         float finishTimer;
         public float CellWidth => config.board.size / config.board.columns;
         public float CellHeight => config.board.size / config.board.rows;
+        public bool IsPlinkoPaused(int t) => config.plinko.pauseWhileReleasing && teams[t].queued > 0;
+        public long DisplayAmmo(int t)
+        {
+            var s = teams[t];
+            return config.presentation.showReleaseCountdown && s.queued > 0
+                ? Math.Max(s.queued, config.cannon.ammoAfterRelease) : s.ammo;
+        }
         public int AliveCount
         {
             get { int n = 0; for (int i = 0; i < 4; i++) if (teams[i].alive) n++; return n; }
@@ -181,6 +188,7 @@ namespace MultiplyOrRelease
         }
         void StepPlinko(int t, float dt)
         {
+            if (IsPlinkoPaused(t)) return;
             var team = teams[t];
             var p = config.plinko;
             float left = -p.width * .5f + p.ballRadius + p.wallInset;
@@ -221,6 +229,9 @@ namespace MultiplyOrRelease
                     if (multiply) Multiply(t); else Release(t);
                     ball.cycles++;
                     ResetBall(ball, p.recycleDelay);
+                    // The first Release freezes the rest of this panel immediately,
+                    // including same-tick gate contacts and ball-ball collisions.
+                    if (IsPlinkoPaused(t)) return;
                 }
                 else if (ball.age > p.maxFallTime)
                 {
