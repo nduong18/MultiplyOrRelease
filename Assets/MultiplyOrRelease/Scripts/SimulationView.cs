@@ -92,10 +92,10 @@ namespace MultiplyOrRelease
         }
         SpriteRenderer Square(string name, Vector2 pos, Vector2 size, Color color, int order, Transform parent = null)
             => Sprite(name, pos, size, c.presentation.squareSprite, color, order, parent);
-        TextMesh Text(string name, string text, Vector2 pos, float size, Color color, int order, TextAnchor anchor = TextAnchor.MiddleCenter)
+        TextMesh Text(string name, string text, Vector2 pos, float size, Color color, int order, TextAnchor anchor = TextAnchor.MiddleCenter, Font font = null)
         {
             var go = new GameObject(name, typeof(TextMesh)); go.transform.SetParent(defaultParent != null ? defaultParent : root, false); go.transform.localPosition = pos;
-            var tm = go.GetComponent<TextMesh>(); tm.font = c.presentation.font;
+            var tm = go.GetComponent<TextMesh>(); tm.font = font != null ? font : c.presentation.font;
             tm.fontSize = 96; tm.characterSize = size / 7.5f; tm.anchor = anchor;
             tm.alignment = TextAlignment.Center; tm.color = color; tm.text = text;
             var mr = go.GetComponent<MeshRenderer>(); mr.sharedMaterial = tm.font.material; mr.sortingOrder = order;
@@ -133,13 +133,13 @@ namespace MultiplyOrRelease
             float gy = -p.height * .5f + p.gateHeight * .5f;
             Square("Multiply Gate", center + new Vector2(mx, gy), new Vector2(multiplyWidth, p.gateHeight), p.multiplyColor, 5);
             Square("Release Gate", center + new Vector2(rx, gy), new Vector2(releaseWidth, p.gateHeight), p.releaseColor, 5);
-            Text("Multiply Label", "×" + c.cannon.multiplier, center + new Vector2(mx, gy), p.gateTextSize, p.gateTextColor, 6);
-            Text("Release Label", "R", center + new Vector2(rx, gy), p.gateTextSize, p.gateTextColor, 6);
+            Text("Multiply Label", "×" + c.cannon.multiplier, center + new Vector2(mx, gy) + p.multiplyTextOffset, p.gateTextSize, p.gateTextColor, 6, font: p.font);
+            Text("Release Label", "R", center + new Vector2(rx, gy) + p.releaseTextOffset, p.gateTextSize, p.gateTextColor, 6, font: p.font);
             if (c.presentation.showTeamNames)
-                Text("Team Name", team.name.ToUpperInvariant(), center + new Vector2(0, p.height * .5f - p.teamLabelInset), c.presentation.labelSize, c.presentation.textColor, 9);
+                Text("Team Name", team.name.ToUpperInvariant(), center + new Vector2(0, p.height * .5f - p.teamLabelInset) + p.teamNameOffset, c.presentation.labelSize, c.presentation.textColor, 9, font: p.font);
             Color ammoColor = team.ammoTextColor; ammoColor.a = p.ammoTextOpacity;
-            ammo[t] = Text("Stored Ammo", "1", center + Vector2.up * .04f, c.presentation.ammoTextSize, ammoColor, c.presentation.ammoTextSortingOrder);
-            status[t] = Text("Team Status", "READY", center + new Vector2(0, -p.height * .5f + p.gateHeight + .24f), p.eventTextSize, team.ammoTextColor, 9);
+            ammo[t] = Text("Stored Ammo", "1", center + Vector2.up * .04f + p.ammoTextOffset, c.presentation.ammoTextSize, ammoColor, c.presentation.ammoTextSortingOrder, font: p.font);
+            status[t] = Text("Team Status", "READY", center + new Vector2(0, -p.height * .5f + p.gateHeight + .24f) + p.statusTextOffset, p.eventTextSize, team.ammoTextColor, 9, font: p.font);
             var cannonParent = new GameObject(team.name + " Cannon").transform;
             cannonParent.SetParent(root, false); cannonParent.localPosition = s.cannonPosition;
             var barrel = new GameObject("Sweep Pivot").transform; barrel.SetParent(cannonParent, false); barrels[t] = barrel;

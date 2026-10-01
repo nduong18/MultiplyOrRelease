@@ -121,6 +121,18 @@ namespace MultiplyOrRelease
     }
     [Serializable] public sealed class PlinkoSettings
     {
+        [Tooltip("Font for all Plinko text: ammo count, team names, multiply/release gates and status. Leave empty to use Presentation Font. Apply / Restart after changing.")]
+        public Font font;
+        [Tooltip("Offset of the large ammo number from its default position. World units: +X right, +Y up; applies equally to all four panels.")]
+        public Vector2 ammoTextOffset;
+        [Tooltip("Offset of team names from their default position. +X right, +Y up.")]
+        public Vector2 teamNameOffset;
+        [Tooltip("Offset of the multiply label from the center of its gate. +X right, +Y up, even on mirrored panels.")]
+        public Vector2 multiplyTextOffset;
+        [Tooltip("Offset of the release label from the center of its gate. +X right, +Y up, even on mirrored panels.")]
+        public Vector2 releaseTextOffset;
+        [Tooltip("Offset of the status/event text from its default position. +X right, +Y up.")]
+        public Vector2 statusTextOffset;
         [Range(1, 30)] public int ballCount = 5;
         [Tooltip("Derive panel width/height from grid size, gap, and frame thickness so the complete board is a rectangle with aspect 16:9.")]
         public bool fitTo16By9 = true;

@@ -35,13 +35,19 @@ MonoBehaviour:
     borderThickness: 0.0264
     quadrantOwners: 00000000010000000200000003000000
   plinko:
+    font: {fileID: 12800000, guid: d3c9886b610629a449978a1803f4d812, type: 3}
+    ammoTextOffset: {x: 0, y: 0}
+    teamNameOffset: {x: 0, y: -0.1}
+    multiplyTextOffset: {x: 0, y: -0.05}
+    releaseTextOffset: {x: 0, y: -0.05}
+    statusTextOffset: {x: 0, y: 0}
     ballCount: 5
     fitTo16By9: 1
     width: 3.732222
     height: 4.875
     boardGap: 0.25
     gateHeight: 0.34
-    gateTextSize: 0.22
+    gateTextSize: 0.23
     eventTextSize: 0.16
     teamLabelInset: 0.22
     spawnTopInset: 0.4
@@ -67,7 +73,7 @@ MonoBehaviour:
     backgroundColor: {r: 0.025, g: 0.035, b: 0.052, a: 1}
     pegColor: {r: 0.27, g: 0.32, b: 0.39, a: 1}
     multiplyColor: {r: 0.56, g: 1, b: 0.05, a: 1}
-    releaseColor: {r: 1, g: 0.06, b: 0.43, a: 1}
+    releaseColor: {r: 1, g: 0.20367281, b: 0.058823526, a: 1}
     gateTextColor: {r: 0, g: 0, b: 0, a: 1}
     ammoTextOpacity: 0.32
     trailTime: 0.15
@@ -112,8 +118,8 @@ MonoBehaviour:
     textColor: {r: 0.9, g: 0.93, b: 1, a: 1}
     secondaryTextColor: {r: 0.45, g: 0.54, b: 0.67, a: 1}
     frameThickness: 0.12
-    labelSize: 0.19
-    ammoTextSize: 1.25
+    labelSize: 0.3
+    ammoTextSize: 1
     ammoTextSortingOrder: 20
     showReleaseCountdown: 1
     hudMargin: 0.55
