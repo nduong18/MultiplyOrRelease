@@ -36,6 +36,9 @@ Thứ tự `Teams`: trên trái, trên phải, dưới trái, dưới phải. G�
 
 ## Điều khiển trong Inspector
 
+- `Celebration` port nguyên phần trình bày từ `C:/UnityGame/TerritoryBattle`: 3 → 2 → 1 → GO! với pop/outline/font Minecraft, winner card 700×600 với cờ tròn đội thắng, confetti/firework và sound `countdown.mp3` / `winner.mp3`. Giữ layout, màu, font, timing và thông số burst của `TerritoryGrid.unity`; file sound sao chép nguyên bản. Mã gốc được tách ra `SimulationCelebration` và `SimulationCelebrationFirework`, không đưa gameplay/skill/combat của TerritoryBattle vào.
+- `Celebration > Enable Start Countdown`, `Enable Victory Card`, `Enable Victory Confetti`, `Enable Sounds` bật mặc định; mọi font, size, màu, thời gian, âm lượng/clip có thể chỉnh trong Inspector. Countdown dùng thời gian thực, không nhân theo Simulation Speed; simulation giữ nguyên ở Ready cho tới hết GO. Pause Intro dừng cả countdown và sound; Inspector Step bỏ qua intro để debug. Winner hiện theo kết quả cuối của simulation hiện tại (sau settling/result delay); sound winner phát một lần, confetti lặp cho tới Restart. Hòa hiện DRAW, không confetti/sound winner. Restart/Apply xóa UI, sound và particle của lượt trước. Khi winner card bật, HUD không hiện thêm result panel cũ.
+- Ngoài Play mode, các nút `Preview 321 GO`, `Preview Winner`, `Clear Preview` trong Inspector cho xem bố cục ngay, không phát sound. Chỉnh config tự rebuild preview; preview không lưu vào scene. Card dùng cờ và tên đội hiện tại, không dùng roster USA/Brazil/... của project nguồn.
 - `Plinko`: chỉnh vị trí từng loại chữ bằng `Ammo Text Offset` (số đạn), `Team Name Offset` (tên đội), `Multiply Text Offset` (×2), `Release Text Offset` (R), `Status Text Offset` (trạng thái). X dương sang phải, Y dương lên trên, đơn vị world; áp dụng cùng hướng trên cả 4 bảng, không đảo offset khi gate được mirror. `(0, 0)` giữ nguyên vị trí cũ. Ngoài Play mode preview tự cập nhật; trong Play mode bấm Apply / Restart. Offset không di chuyển gate hay thay đổi gameplay.
 - `Plinko > Font`: kéo asset font `.ttf` / `.otf` vào để đổi font riêng cho toàn bộ chữ trong 4 bảng Plinko (số đạn, tên đội, ×2/R và trạng thái). Để `None` sẽ dùng `Presentation > Font` như cũ; không thay font HUD. Bấm Apply / Restart sau khi đổi, hoặc chỉnh ngoài Play mode để preview tự cập nhật.
 - `Projectile > Visual Scale = 2` trong preset: đạn hiển thị to gấp đôi (cả chiều rộng/cao), giữ nguyên radius va chạm và tốc độ. Đặt `1` để về kích thước cũ. Kích thước hiển thị = `2 × Radius × Visual Scale`; bấm Apply / Restart sau khi chỉnh.
@@ -55,6 +58,14 @@ Thứ tự `Teams`: trên trái, trên phải, dưới trái, dưới phải. G�
 - Inspector hiển thị trạng thái, thời gian, seed, tổng đạn, lượng đạn/hàng đợi chính xác và đội thắng.
 - `Presentation > Camera Focus`: Simulation ôm toàn bộ grid và 4 bảng Plinko; Territory Grid chỉ lấy grid trung tâm. Camera Padding chỉnh khoảng trống; Camera Offset chỉnh tâm. Tắt Auto Frame Camera để chỉnh Camera trực tiếp bằng Inspector.
 - `Plinko > Fit To 16 By 9` mặc định bật: Width/Height tự tính từ kích thước grid, Board Gap và Frame Thickness. Mép trên/dưới hai cột Plinko thẳng hàng với grid và có khung chung thành một hình chữ nhật 16:9. Tắt tùy chọn để chỉnh Width/Height thủ công. Camera Padding mặc định 0 để khung vừa đủ Game view 16:9; Game view tỷ lệ khác sẽ có khoảng trống đối xứng để giữ nguyên hình và không cắt board.
+
+## Cannon firing pop
+
+`DefaultSimulation > Cannon > Flag Firing Pop`: Enable Fire Pop bật/tắt scale pop của lá cờ cannon khi đạn thực sự được bắn ra; Fire Pop Scale = 1.2 phóng lớn 20%, Fire Pop Duration là thời gian về kích thước gốc (giây ở Speed 1). Pop chỉ thay đổi hình ảnh, không đổi nòng, vị trí cannon, collider hay nhịp bắn. Khi bắn nhanh, các phát trong một pop dùng chung nhịp hiện tại để không cộng dồn hoặc giữ cờ mãi ở kích thước lớn. Pause/Speed/Step áp dụng cho animation; Apply / Restart sau khi đổi config.
+
+## Grid impact VFX
+
+`DefaultSimulation > Grid Impact` bật/tắt VFX khi đạn chiếm grid. Mỗi viên đạn chạm chỉ tạo đúng một hạt tròn, kể cả Capture Radius chiếm nhiều ô. Hạt không có trail; mặc định lấy Projectile Color của đội bắn. Tắt Use Team Color để chọn một màu chung. Duration, Size In Cells, Spread In Cells, Opacity và Halo Opacity chỉnh hình dáng hiệu ứng; kích thước tự theo độ phân giải grid. Spread In Cells = 0 giữ hạt tại điểm trúng. Max Particles giới hạn pool, tái dùng hạt cũ khi đông đạn. Pause/Speed/Step điều khiển cả hiệu ứng. Apply / Restart sau khi đổi config.
 
 ## Hạn mức và kiến trúc
 

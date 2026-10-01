@@ -16,6 +16,9 @@ namespace MultiplyOrRelease
         SimulationConfig sessionConfig;
         SimulationView view;
         SimulationHud hud;
+        SimulationCelebration celebration;
+        int celebrationPreview; // Editor-only preview selection; never serialized into the scene.
+        public bool CountdownActive => celebration != null && celebration.IsCountingDown;
         float accumulator;
         bool rebuildRequested;
 
@@ -29,6 +32,8 @@ namespace MultiplyOrRelease
             if (Model == null) return;
             FitCamera();
             if (!Application.isPlaying) return;
+            // Let the last impacts fade after Finished; hold them during Inspector Pause.
+            if (!Paused) view.AdvanceEffects(Mathf.Min(Time.unscaledDeltaTime, .25f) * Speed);
             if (!Paused && Model.phase != MatchPhase.Ready && Model.phase != MatchPhase.Finished)
             {
                 accumulator += Mathf.Min(Time.unscaledDeltaTime, .25f) * Speed;
@@ -48,6 +53,7 @@ namespace MultiplyOrRelease
             }
             view.SetClock(Speed, Paused || Model.phase == MatchPhase.Finished);
             view.Render(); hud?.Render();
+            celebration?.PresentResult(Model);
         }
         public void Rebuild()
         {
@@ -78,7 +84,12 @@ namespace MultiplyOrRelease
                 foreach (Transform child in transform)
                     if (child.name == "Generated Preview" || child.name == "Simulation HUD") MarkTransient(child);
             FitCamera();
-            if (Application.isPlaying && sessionConfig.autoStart) Model.Start();
+            if (Application.isPlaying)
+            {
+                EnsureCelebration();
+                if (sessionConfig.autoStart) StartMatch();
+            }
+            else if (celebrationPreview > 0) ShowCelebrationPreview();
             hud?.Render();
         }
         static void MarkTransient(Transform item)
@@ -88,6 +99,13 @@ namespace MultiplyOrRelease
         }
         void Cleanup()
         {
+            if (celebration != null)
+            {
+                celebration.Clear();
+                celebration.gameObject.SetActive(false);
+                if (Application.isPlaying) Destroy(celebration.gameObject); else DestroyImmediate(celebration.gameObject);
+                celebration = null;
+            }
             view?.Dispose(); view = null; hud?.Dispose(); hud = null; Model = null;
             if (sessionConfig != null)
             {
@@ -116,15 +134,63 @@ namespace MultiplyOrRelease
         public void TogglePause()
         {
             if (Model == null) return;
-            if (Model.phase == MatchPhase.Ready) { Model.Start(); Paused = false; }
+            if (CountdownActive)
+            {
+                Paused = !Paused;
+                celebration.SetCountdownPaused(Paused);
+            }
+            else if (Model.phase == MatchPhase.Ready) { StartMatch(); Paused = false; }
             else if (Model.phase != MatchPhase.Finished) Paused = !Paused;
         }
         public void Step()
         {
             if (Model == null || Model.phase == MatchPhase.Finished) return;
+            // Inspector Step deliberately bypasses the intro for deterministic debugging.
+            celebration?.SkipCountdown();
             if (Model.phase == MatchPhase.Ready) Model.Start();
-            Paused = true; Model.Tick(1f / sessionConfig.ticksPerSecond);
+            Paused = true;
+            view.AdvanceEffects(1f / sessionConfig.ticksPerSecond);
+            Model.Tick(1f / sessionConfig.ticksPerSecond);
             Model.AdvanceFiringFrame(); view.Render(); hud?.Render();
+            celebration?.PresentResult(Model);
+        }
+        void EnsureCelebration()
+        {
+            if (celebration != null || sessionConfig == null) return;
+            var host = new GameObject("Match Presentation"); host.transform.SetParent(transform, false);
+            celebration = host.AddComponent<SimulationCelebration>();
+            celebration.Initialize(this, sessionConfig);
+        }
+        void StartMatch()
+        {
+            if (Application.isPlaying && sessionConfig.celebration.enableStartCountdown)
+            {
+                EnsureCelebration();
+                celebration.BeginCountdown(() => { if (Model != null) Model.Start(); });
+            }
+            else Model.Start();
+        }
+        void ShowCelebrationPreview()
+        {
+            EnsureCelebration();
+            if (celebrationPreview == 1) celebration.PreviewCountdown();
+            else celebration.ShowVictoryCard(sessionConfig.teams[0]);
+            MarkTransient(celebration.transform);
+        }
+        public void PreviewCountdown()
+        {
+            if (Application.isPlaying) return;
+            celebrationPreview = 1; Rebuild();
+        }
+        public void PreviewWinnerCard()
+        {
+            if (Application.isPlaying) return;
+            celebrationPreview = 2; Rebuild();
+        }
+        public void ClearCelebrationPreview()
+        {
+            if (Application.isPlaying) return;
+            celebrationPreview = 0; Rebuild();
         }
         public void RestartSameSeed() { Rebuild(); }
         public void RestartNewSeed() { restartIndex++; Rebuild(); }

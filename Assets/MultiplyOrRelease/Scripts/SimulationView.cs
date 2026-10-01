@@ -13,6 +13,7 @@ namespace MultiplyOrRelease
         readonly Transform[] plinkoPanels = new Transform[4];
         Transform defaultParent;
         readonly SpriteRenderer[] cannons = new SpriteRenderer[4];
+        readonly float[] firePopRemaining = new float[4];
         readonly Transform[] barrels = new Transform[4];
         readonly SpriteRenderer[][] balls = new SpriteRenderer[4][];
         readonly TrailRenderer[][] ballTrails = new TrailRenderer[4][];
@@ -33,6 +34,7 @@ namespace MultiplyOrRelease
         TerritoryStyle lastStyle;
         FlagMapping lastMapping;
         readonly bool preview;
+        readonly GridImpactVfx gridImpacts;
         float clockSpeed = 1;
         bool clockPaused;
         sealed class ShotVisual
@@ -59,6 +61,8 @@ namespace MultiplyOrRelease
             Square("Arena Frame", Vector2.zero, new Vector2(c.board.size + c.presentation.frameThickness * 2, c.board.size + c.presentation.frameThickness * 2), c.presentation.frameColor, -2);
             Square("Grid Background", Vector2.zero, Vector2.one * c.board.size, c.board.gridColor, -1);
             for (int t = 0; t < 4; t++) BuildTeam(t);
+            gridImpacts = new GridImpactVfx(root, model);
+            model.ShotFired += PopCannon;
             Render(true);
         }
         void MeshObject(string name, Mesh mesh, Material material, int order)
@@ -283,6 +287,7 @@ namespace MultiplyOrRelease
                 // Hide the whole cannon (rim, marble, and barrel) on elimination.
                 barrels[t].parent.gameObject.SetActive(s.alive);
                 cannons[t].color = s.alive ? (team.cannonSprite != null ? team.cannonTint : team.territoryColor) : c.cannon.eliminatedTint;
+                if (!s.alive || !c.cannon.enableFirePop) ResetFirePop(t);
                 long displayAmmo = model.DisplayAmmo(t);
                 string number = s.alive ? (c.presentation.compactAmmoNumbers ? ShortNumber(displayAmmo) : displayAmmo.ToString("N0")) : "OUT";
                 if (ammo[t].text != number)
@@ -369,8 +374,44 @@ namespace MultiplyOrRelease
             return (value / 1000000000000000000.0).ToString("0.#") + "E";
         }
         public void SetClock(float speed, bool paused) { clockSpeed = Mathf.Max(.1f, speed); clockPaused = paused; }
+        void PopCannon(int team)
+        {
+            if (!c.cannon.enableFirePop || !model.teams[team].alive) return;
+            // Finish the current pulse even when firing every frame; retriggering
+            // its peak on every shot would hold the flag permanently enlarged.
+            if (firePopRemaining[team] > 0) return;
+            firePopRemaining[team] = c.cannon.firePopDuration;
+            SetFirePopScale(team);
+        }
+        void SetFirePopScale(int team)
+        {
+            float remaining = Mathf.Clamp01(firePopRemaining[team] / c.cannon.firePopDuration);
+            float scale = 1 + (c.cannon.firePopScale - 1) * remaining * remaining * remaining;
+            // Animate the centred visual pivot, not the imported sprite's
+            // off-centre pivot, the cannon body, barrel, or collision geometry.
+            cannons[team].transform.parent.localScale = new Vector3(scale, scale, 1);
+        }
+        void ResetFirePop(int team)
+        {
+            firePopRemaining[team] = 0;
+            cannons[team].transform.parent.localScale = Vector3.one;
+        }
+        public void AdvanceEffects(float deltaTime)
+        {
+            gridImpacts.Advance(deltaTime);
+            if (deltaTime <= 0) return;
+            for (int team = 0; team < 4; team++)
+            {
+                if (!c.cannon.enableFirePop || !model.teams[team].alive) { ResetFirePop(team); continue; }
+                firePopRemaining[team] = Mathf.Max(0, firePopRemaining[team] - deltaTime);
+                SetFirePopScale(team);
+            }
+        }
         public void Dispose()
         {
+            model.ShotFired -= PopCannon;
+            gridImpacts.Dispose();
+            root.gameObject.SetActive(false);
             Destroy(root.gameObject); Destroy(gridMesh); Destroy(borderMesh); Destroy(gridMaterial); Destroy(atlas);
         }
         static void Destroy(UnityEngine.Object obj)

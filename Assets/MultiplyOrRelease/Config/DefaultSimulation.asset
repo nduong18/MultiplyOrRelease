@@ -93,6 +93,9 @@ MonoBehaviour:
     muzzleLength: 0.46
     barrelWidth: 0.16
     rimWidth: 0.085
+    enableFirePop: 1
+    firePopScale: 1.2
+    firePopDuration: 0.3
     eliminatedTint: {r: 0.2, g: 0.2, b: 0.2, a: 0.35}
     destroyOnEnemyHit: 1
   projectile:
@@ -112,6 +115,17 @@ MonoBehaviour:
     matchTrailToSize: 1
     trailWidth: 0.095
     taperTrail: 0
+  gridImpact:
+    enabled: 1
+    useTeamColor: 1
+    color: {r: 0.1, g: 1, b: 0.3, a: 1}
+    duration: 0.4
+    sizeInCells: 1.3
+    spreadInCells: 0.5
+    opacity: 0.9
+    haloOpacity: 0.16
+    sortingOrder: 30
+    maxParticles: 512
   presentation:
     backgroundColor: {r: 0.018, g: 0.026, b: 0.045, a: 1}
     frameColor: {r: 0.14, g: 0.18, b: 0.24, a: 1}
@@ -148,6 +162,42 @@ MonoBehaviour:
     titleFontSize: 28
     hudFontSize: 17
     resultFontSize: 42
+  celebration:
+    enableStartCountdown: 1
+    countdownStartDelay: 1
+    countdownStepDuration: 1
+    countdownFontSize: 200
+    countdownFont: {fileID: 12800000, guid: d3c9886b610629a449978a1803f4d812, type: 3}
+    countdownPopDuration: 0.35
+    countdownPopOvershoot: 1.70158
+    threeColor: {r: 0.1, g: 0.45, b: 1, a: 1}
+    twoColor: {r: 1, g: 0.15, b: 0.15, a: 1}
+    oneColor: {r: 1, g: 0.85, b: 0.1, a: 1}
+    goColor: {r: 0.15, g: 0.9, b: 0.3, a: 1}
+    enableVictoryCard: 1
+    victoryPopDuration: 0.45
+    victoryPopOvershoot: 1.70158
+    victoryFont: {fileID: 12800000, guid: d3c9886b610629a449978a1803f4d812, type: 3}
+    victoryTitleFontSize: 110
+    victoryStatusFontSize: 64
+    victoryBackdropColor: {r: 0, g: 0, b: 0, a: 0}
+    victoryCardColor: {r: 0.08, g: 0.08, b: 0.1, a: 0.92}
+    victoryStatusColor: {r: 1, g: 1, b: 1, a: 1}
+    victoryCardWidth: 700
+    victoryCardHeight: 600
+    victoryFlagSize: 200
+    enableVictoryConfetti: 1
+    victoryConfettiBurstCount: 100
+    victoryConfettiBurstInterval: 0.08
+    victoryConfettiLoopInterval: 0.1
+    victoryConfettiSortingOrder: 10002
+    particleShader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    glowShader: {fileID: 4800000, guid: 15fe95690d5dd9c429b8de7cde81d198, type: 3}
+    enableSounds: 1
+    masterVolume: 1
+    countdownClip: {fileID: 8300000, guid: 37df6ef0778c4bd4aae77deadca006ef, type: 3}
+    countdownGoClip: {fileID: 0}
+    winnerClip: {fileID: 8300000, guid: 5a7fd32218495b94c9096ec8cd744daa, type: 3}
   teams:
   - name: Indonesia
     cannonSprite: {fileID: 2252660868610030695, guid: 46cfa91424fc9e047bcb62eceb79187b, type: 3}

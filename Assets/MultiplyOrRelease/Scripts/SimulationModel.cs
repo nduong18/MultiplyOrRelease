@@ -48,6 +48,9 @@ namespace MultiplyOrRelease
         public int boardVersion { get; private set; }
         public string resultReason { get; private set; }
         public long totalFired { get; private set; }
+        // Fired once per projectile/grid contact, not for every cell in a capture radius.
+        public event Action<Vector2, int> GridHit;
+        public event Action<int> ShotFired;
         readonly System.Random random;
         readonly Stack<ShotState> shotPool = new Stack<ShotState>();
         readonly int[] firingFrameCooldown = new int[4];
@@ -337,6 +340,7 @@ namespace MultiplyOrRelease
             shot.velocity = direction * config.projectile.speed;
             shots.Add(shot);
             s.queued--; s.fired++; totalFired++;
+            ShotFired?.Invoke(t);
         }
         void RemoveShot(int index)
         {
@@ -388,6 +392,7 @@ namespace MultiplyOrRelease
                     if (owners[y * config.board.columns + x] != shot.team)
                     {
                         Capture(x, y, shot.team);
+                        GridHit?.Invoke(shot.position, shot.team);
                         if (config.projectile.despawnOnCapture)
                         {
                             remove = true;

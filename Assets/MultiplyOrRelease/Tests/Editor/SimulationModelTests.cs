@@ -298,6 +298,7 @@ public class SimulationModelTests
             copy.randomSeed = 1207;
             copy.cannon.firingMode = FiringMode.ShotsPerSecond;
             copy.cannon.shotsPerSecond = 180;
+            copy.projectile.speed = 6.5f;
             copy.plinko.pauseWhileReleasing = true;
             foreach (var team in copy.teams) team.sweepSpeed = 38;
             var m = new SimulationModel(copy, copy.randomSeed); m.Start();

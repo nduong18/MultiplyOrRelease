@@ -26,7 +26,9 @@ namespace MultiplyOrRelease
         public PlinkoSettings plinko = new PlinkoSettings();
         public CannonSettings cannon = new CannonSettings();
         public ProjectileSettings projectile = new ProjectileSettings();
+        public GridImpactSettings gridImpact = new GridImpactSettings();
         public PresentationSettings presentation = new PresentationSettings();
+        public CelebrationSettings celebration = new CelebrationSettings();
         [Tooltip("Order: upper left, upper right, lower left, lower right. Exactly four teams.")]
         public TeamSettings[] teams = new TeamSettings[4];
 
@@ -37,6 +39,10 @@ namespace MultiplyOrRelease
 
         public void Validate()
         {
+            if (gridImpact == null) gridImpact = new GridImpactSettings();
+            gridImpact.Validate();
+            if (celebration == null) celebration = new CelebrationSettings();
+            celebration.Validate();
             ticksPerSecond = Mathf.Clamp(ticksPerSecond, 30, 240);
             maxTicksPerFrame = Mathf.Clamp(maxTicksPerFrame, 16, 512);
             simulationSpeed = Mathf.Clamp(simulationSpeed, .1f, 8f);
@@ -63,6 +69,8 @@ namespace MultiplyOrRelease
             cannon.hitRadius = Mathf.Clamp(cannon.hitRadius, .05f, .7f);
             cannon.cornerInset = Mathf.Clamp(cannon.cornerInset, .4f, board.size * .24f);
             cannon.muzzleLength = Mathf.Clamp(cannon.muzzleLength, .1f, .8f);
+            cannon.firePopScale = Mathf.Clamp(cannon.firePopScale, 1, 2);
+            cannon.firePopDuration = Mathf.Clamp(cannon.firePopDuration, .03f, 1);
             projectile.speed = Mathf.Clamp(projectile.speed, 1, 35);
             projectile.lifeTime = Mathf.Clamp(projectile.lifeTime, 1, 120);
             projectile.maxActive = Mathf.Clamp(projectile.maxActive, 32, 5000);
@@ -196,6 +204,13 @@ namespace MultiplyOrRelease
         public float muzzleLength = .46f;
         public float barrelWidth = .16f;
         public float rimWidth = .085f;
+        [Header("Flag Firing Pop")]
+        [Tooltip("Visual-only scale pop on the cannon flag when a projectile actually spawns. Does not change the barrel or hit radius.")]
+        public bool enableFirePop = true;
+        [Tooltip("Peak flag scale relative to its original size. 1.2 = 20% larger.")]
+        [Range(1, 2)] public float firePopScale = 1.2f;
+        [Tooltip("Seconds at simulation speed 1 to return to normal. Rapid shots share an active pulse instead of stacking scale or keeping it enlarged. Pause/Speed/Step affect this animation.")]
+        [Range(.03f, 1)] public float firePopDuration = .12f;
         public Color eliminatedTint = new Color(.2f, .2f, .2f, .35f);
         public bool destroyOnEnemyHit = true;
     }

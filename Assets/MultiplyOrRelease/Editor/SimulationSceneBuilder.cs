@@ -142,7 +142,7 @@ public sealed class SimulationControllerEditor : Editor
             EditorGUILayout.LabelField("Playback (current run)", EditorStyles.boldLabel);
             using (new EditorGUILayout.HorizontalScope())
             {
-                string action = simulation.Model != null && simulation.Model.phase == MatchPhase.Ready ? "Start" : simulation.Paused ? "Resume" : "Pause";
+                string action = simulation.CountdownActive ? (simulation.Paused ? "Resume Intro" : "Pause Intro") : simulation.Model != null && simulation.Model.phase == MatchPhase.Ready ? "Start" : simulation.Paused ? "Resume" : "Pause";
                 if (GUILayout.Button(action)) simulation.TogglePause();
                 if (GUILayout.Button("Step")) simulation.Step();
                 if (GUILayout.Button("New Seed")) simulation.RestartNewSeed();
@@ -160,6 +160,16 @@ public sealed class SimulationControllerEditor : Editor
             }
             if (!string.IsNullOrEmpty(simulation.PerformanceMessage)) EditorGUILayout.HelpBox(simulation.PerformanceMessage, MessageType.Warning);
             EditorGUILayout.HelpBox(simulation.Diagnostics(), MessageType.None);
+        }
+        if (!Application.isPlaying)
+        {
+            EditorGUILayout.Space();
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button("Preview 321 GO")) simulation.PreviewCountdown();
+                if (GUILayout.Button("Preview Winner")) simulation.PreviewWinnerCard();
+                if (GUILayout.Button("Clear Preview")) simulation.ClearCelebrationPreview();
+            }
         }
         showConfig = EditorGUILayout.Foldout(showConfig, "All simulation settings", true);
         if (showConfig && simulation.config != null)

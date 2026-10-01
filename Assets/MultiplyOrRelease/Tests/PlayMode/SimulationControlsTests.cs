@@ -49,6 +49,7 @@ public class SimulationControlsTests
         frameTestConfig.cannon.framesBetweenShots = 1;
         frameTestConfig.plinko.pauseWhileReleasing = true;
         frameTestConfig.presentation.showReleaseCountdown = true;
+        frameTestConfig.celebration.enableStartCountdown = false;
         frameTestConfig.cannon.destroyOnEnemyHit = false;
         controller.config = frameTestConfig; controller.Rebuild(); controller.TogglePause();
         var model = controller.Model;
@@ -89,6 +90,7 @@ public class SimulationControlsTests
         frameTestConfig.cannon.framesBetweenShots = interval;
         frameTestConfig.cannon.destroyOnEnemyHit = false;
         frameTestConfig.matchTimeLimit = 0;
+        frameTestConfig.celebration.enableStartCountdown = false;
         controller.config = frameTestConfig; controller.Rebuild(); controller.SetSpeed(speed);
         foreach (var team in controller.Model.teams)
         {

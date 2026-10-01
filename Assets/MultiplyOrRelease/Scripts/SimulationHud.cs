@@ -116,7 +116,7 @@ namespace MultiplyOrRelease
             trailLabel.text = controller.TrailsVisible ? "Trails on" : "Trails off";
             statistics.text = "SEED " + controller.CurrentSeed + "    ·    " + m.shots.Count.ToString("N0") + " ACTIVE    ·    " + SimulationView.ShortNumber(m.totalFired) + " FIRED\n" +
                 (m.phase == MatchPhase.Settling ? "Resolving airborne projectiles…" : controller.PerformanceMessage);
-            resultPanel.SetActive(m.phase == MatchPhase.Finished);
+            resultPanel.SetActive(m.phase == MatchPhase.Finished && !config.celebration.enableVictoryCard);
             if (m.phase == MatchPhase.Finished)
             {
                 resultTitle.text = m.winner < 0 ? "DRAW" : config.teams[m.winner].name.ToUpperInvariant() + " WINS";
