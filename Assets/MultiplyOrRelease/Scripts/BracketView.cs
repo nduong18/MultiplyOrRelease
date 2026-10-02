@@ -52,6 +52,8 @@ namespace MultiplyOrRelease
             championName.resizeTextForBestFit = true;
             championName.resizeTextMinSize = 14; championName.resizeTextMaxSize = 26;
             championName.gameObject.SetActive(false);
+            var channelName = Label("Channel Name", "Dragon Marbles", board.transform, new Vector2(0, -365), new Vector2(540, 44), 32, config.accentColor);
+            channelName.fontStyle = FontStyle.Bold;
             if (!Application.isPlaying) MarkTransient(root.transform);
         }
         static void MarkTransient(Transform node)

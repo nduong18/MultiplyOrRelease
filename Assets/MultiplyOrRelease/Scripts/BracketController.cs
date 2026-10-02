@@ -86,8 +86,9 @@ namespace MultiplyOrRelease
                 ActiveMatch = State.NextMatch;
                 Phase = BracketPhase.PreparingMatch;
                 view.ShowBracket(); view.Refresh(State);
-                if (config.flagMoveDelay > 0)
-                    yield return new WaitForSecondsRealtime(config.flagMoveDelay);
+                float moveDelay = attempts == 0 ? config.initialFlagMoveDelay : config.flagMoveDelay;
+                if (moveDelay > 0)
+                    yield return new WaitForSecondsRealtime(moveDelay);
                 yield return view.AnimateMatch(ActiveMatch, Mathf.Max(.05f, config.flagMoveDuration));
                 if (config.matchStartDelay > 0)
                     yield return new WaitForSecondsRealtime(config.matchStartDelay);

@@ -28,6 +28,7 @@ public class BracketPlayTests
         config.simulation = simulationConfig;
         if (quick)
         {
+            config.initialFlagMoveDelay = 0;
             config.flagMoveDelay = 0;
             config.flagMoveDuration = .05f; config.matchStartDelay = .05f;
             config.winnerCardHoldDuration = .15f;
@@ -56,7 +57,7 @@ public class BracketPlayTests
         if (config != null) Object.Destroy(config);
         if (simulationConfig != null) Object.Destroy(simulationConfig);
     }
-    [UnityTest] public IEnumerator BracketWaitsThreeSecondsSlidesOneSecondThenHoldsTwoSecondsBeforeGameplay()
+    [UnityTest] public IEnumerator FirstBracketWaitsSevenSecondsAndLaterBracketWaitsThreeSeconds()
     {
         yield return Load();
         Assert.AreEqual(BracketPhase.PreparingMatch, bracket.Phase);
@@ -67,10 +68,11 @@ public class BracketPlayTests
         var flag = root.Find("Bracket Board/Team Slot 0").GetComponent<RectTransform>();
         float from = flag.anchoredPosition.x;
         Assert.AreEqual(3, config.flagMoveDelay);
+        Assert.AreEqual(7, config.initialFlagMoveDelay);
         Assert.AreEqual(1, config.flagMoveDuration);
         Assert.AreEqual(2, config.matchStartDelay);
-        yield return new WaitForSecondsRealtime(2.6f);
-        Assert.AreEqual(from, flag.anchoredPosition.x, .01f, "Flags stay still during the initial three-second hold.");
+        yield return new WaitForSecondsRealtime(6.6f);
+        Assert.AreEqual(from, flag.anchoredPosition.x, .01f, "Flags stay still during the initial seven-second hold.");
         Assert.IsFalse(bracket.simulation.gameObject.activeSelf);
         Assert.IsFalse(root.Find("Bracket Board/Slot Number 0").gameObject.activeSelf);
         yield return new WaitForSecondsRealtime(.8f);
@@ -102,10 +104,24 @@ public class BracketPlayTests
         }
         Assert.IsFalse(bracket.simulation.CountdownActive);
         Assert.AreEqual(MatchPhase.Running, bracket.simulation.Model.phase);
+        config.winnerCardHoldDuration = .15f;
+        FinishWithWinner(0);
+        yield return WaitForPhase(BracketPhase.ShowingResult);
+        yield return WaitForPhase(BracketPhase.PreparingMatch);
+        Assert.AreEqual(2, bracket.ActiveMatch);
+        var nextFlag = root.Find("Bracket Board/Team Slot 8").GetComponent<RectTransform>();
+        Assert.AreEqual(640, nextFlag.anchoredPosition.x, .01f);
+        yield return new WaitForSecondsRealtime(2.6f);
+        Assert.AreEqual(640, nextFlag.anchoredPosition.x, .01f, "Later bracket visits retain the three-second hold.");
+        yield return new WaitForSecondsRealtime(.8f);
+        Assert.Less(nextFlag.anchoredPosition.x, 640);
+        Assert.Greater(nextFlag.anchoredPosition.x, 500);
+        Assert.IsFalse(bracket.simulation.gameObject.activeSelf);
     }
     [UnityTest] public IEnumerator WinnerCardStaysFiveSecondsBeforeAutomaticReturn()
     {
         yield return Load();
+        config.initialFlagMoveDelay = 0;
         config.flagMoveDelay = 0;
         config.flagMoveDuration = .05f; config.matchStartDelay = 0;
         bracket.Rebuild();

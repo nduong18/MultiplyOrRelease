@@ -263,6 +263,7 @@ MonoBehaviour:
   flagSize: 76
   lineWidth: 3
   randomizeMatchSeed: 1
+  initialFlagMoveDelay: 7
   flagMoveDelay: 3
   flagMoveDuration: 1
   matchStartDelay: 2

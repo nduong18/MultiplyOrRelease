@@ -24,6 +24,8 @@ namespace MultiplyOrRelease
         [Header("Automatic Tournament")]
         [Tooltip("Generate a fresh seed for every match and draw replay. Disable to use Simulation Random Seed plus the match attempt index.")]
         public bool randomizeMatchSeed = true;
+        [Tooltip("Real seconds to show the first bracket before the first match's flags begin moving.")]
+        [Min(0)] public float initialFlagMoveDelay = 7;
         [Tooltip("Real seconds to show the bracket before the flags begin moving.")]
         [Min(0)] public float flagMoveDelay = 3;
         [Tooltip("Real seconds for the four flags to slide into their numbered positions.")]
