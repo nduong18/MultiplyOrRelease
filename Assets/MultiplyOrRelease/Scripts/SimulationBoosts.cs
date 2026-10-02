@@ -10,12 +10,23 @@ namespace MultiplyOrRelease
         public BoostKind kind;
         public Vector2 position;
         public float expiresAt;
+        public BoostCollection flight;
+    }
+
+    public sealed class BoostCollection
+    {
+        public BoostState pickup;
+        public int team;
+        public Vector2 target;
+        public float startedAt, duration;
+        public bool completed, canceled;
     }
 
     public sealed partial class SimulationModel
     {
         public readonly List<BoostState> boosts = new List<BoostState>();
-        public event Action<Vector2, int, BoostKind> BoostCollected;
+        public readonly List<BoostCollection> collectingBoosts = new List<BoostCollection>();
+        public event Action<BoostState, int> BoostCollected;
         System.Random boostRandom;
         float nextBoostSpawn;
         int nextBoostId;
@@ -32,6 +43,7 @@ namespace MultiplyOrRelease
 
         void StepBoosts()
         {
+            StepBoostCollections();
             for (int t = 0; t < 4; t++)
             {
                 var team = teams[t];
@@ -115,13 +127,46 @@ namespace MultiplyOrRelease
             if (nearest < 0) return false;
             var pickup = boosts[nearest];
             boosts.RemoveAt(nearest); // A second bullet can never claim the same pickup.
-            ApplyBoost(shot.team, pickup.kind);
-            BoostCollected?.Invoke(pickup.position, shot.team, pickup.kind);
+            if (config.boosts.animateCollection)
+            {
+                pickup.flight = new BoostCollection
+                {
+                    pickup = pickup, team = shot.team, target = teams[shot.team].cannonPosition,
+                    startedAt = elapsed, duration = config.boosts.collectionFlightDuration
+                };
+                collectingBoosts.Add(pickup.flight);
+            }
+            else ApplyBoost(shot.team, pickup.kind);
+            BoostCollected?.Invoke(pickup, shot.team);
             return true;
         }
 
         static long DoubleClamped(long amount, long ceiling)
             => amount > ceiling / 2 ? ceiling : amount * 2;
+
+        void StepBoostCollections()
+        {
+            if (AliveCount <= 1 || (config.matchTimeLimit > 0 && elapsed >= config.matchTimeLimit))
+            {
+                CancelBoostCollections();
+                return;
+            }
+            for (int i = 0; i < collectingBoosts.Count;)
+            {
+                var flight = collectingBoosts[i];
+                if (elapsed - flight.startedAt < flight.duration) { i++; continue; }
+                flight.completed = true;
+                collectingBoosts.RemoveAt(i);
+                // A destroyed cannon cannot receive a reward or be revived by a delivery.
+                if (teams[flight.team].alive) ApplyBoost(flight.team, flight.pickup.kind);
+            }
+        }
+
+        void CancelBoostCollections()
+        {
+            foreach (var flight in collectingBoosts) flight.canceled = true;
+            collectingBoosts.Clear();
+        }
 
         void ApplyBoost(int t, BoostKind kind)
         {

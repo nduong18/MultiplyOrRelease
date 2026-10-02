@@ -157,6 +157,7 @@ namespace MultiplyOrRelease
             {
                 phase = MatchPhase.Settling;
                 boosts.Clear();
+                CancelBoostCollections();
                 for (int i = 0; i < 4; i++) teams[i].queued = 0;
             }
             if (phase == MatchPhase.Settling && shots.Count == 0)
@@ -184,6 +185,7 @@ namespace MultiplyOrRelease
                 for (int t = 0; t < 4; t++) teams[t].queued = 0;
                 phase = MatchPhase.Finished;
                 boosts.Clear();
+                CancelBoostCollections();
             }
         }
         void UpdateCannon(int t)

@@ -6,6 +6,8 @@
 
 ## Boost ngẫu nhiên
 
+Khi đạn bắn trúng, boost bay mượt về cannon đội bắn trong **1,2 giây mô phỏng**, thu nhỏ và mờ dần lúc tới nơi rồi biến mất. Sprite và nhãn bay cùng nhau. **Đội chỉ nhận boost khi vật phẩm tới cannon**; thời hạn tốc độ bắn/bi thêm bắt đầu lúc tới, còn x2 đạn áp dụng số đạn và hàng đợi Release còn lại lúc tới. Vật phẩm đang bay không thể được nhặt lần hai. Chuyến bay và hiệu lực dùng cùng thời gian mô phỏng, theo Pause/Speed/Step; Restart dọn toàn bộ vật phẩm đang bay. Cannon bị loại trước lúc tới không nhận thưởng; trận kết thúc hủy chuyến bay chưa hoàn tất. Trong `Boosts > Collection Flight`, chỉnh **Collection Flight Duration** để thay tốc độ bay, **Collection End Scale** để thay kích thước lúc tới, **Fade On Arrival** để bật/tắt mờ dần; tắt **Animate Collection** để vật phẩm biến mất và nhận boost ngay khi trúng. Apply / Restart sau khi chỉnh.
+
 Chỉnh trong `DefaultSimulation > Boosts`, rồi bấm **Apply / Restart**. Boost xuất hiện trong arena sau 3 giây mô phỏng, tiếp theo ngẫu nhiên mỗi 5–10 giây; tối đa 3 vật phẩm, tự biến mất sau 20 giây nếu không được nhặt. Vị trí tránh cannon, mép bản đồ và vật phẩm khác. Seed quyết định vị trí, loại và nhịp xuất hiện.
 
 - **SPD** (vàng): tốc độ bắn x2 trong 30 giây. Nhặt lại làm mới thời hạn, không cộng dồn hệ số. Áp dụng cả Shots Per Second và Frames Between Shots; khi boost làm tốc độ vượt một phát/frame, cannon có thể bắn nhiều phát trong cùng frame. Vẫn tuân theo giới hạn đạn active/spawn.

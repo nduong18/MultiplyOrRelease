@@ -21,6 +21,7 @@ namespace MultiplyOrRelease
         readonly PlinkoBall[][] ballStates = new PlinkoBall[4][];
         readonly Dictionary<int, BoostVisual> boostViews = new Dictionary<int, BoostVisual>();
         readonly Stack<BoostVisual> freeBoosts = new Stack<BoostVisual>();
+        readonly List<BoostVisual> collectedBoosts = new List<BoostVisual>();
         readonly TextMesh[] ammo = new TextMesh[4], status = new TextMesh[4];
         readonly Dictionary<int, ShotVisual> shotViews = new Dictionary<int, ShotVisual>();
         readonly Stack<ShotVisual> freeShots = new Stack<ShotVisual>();
@@ -48,7 +49,10 @@ namespace MultiplyOrRelease
         sealed class BoostVisual
         {
             public SpriteRenderer renderer;
+            public SpriteRenderer outline;
             public TextMesh label;
+            public BoostCollection flight;
+            public Color color, labelColor;
         }
 
         public SimulationView(Transform parent, SimulationModel simulation, bool isPreview)
@@ -71,6 +75,7 @@ namespace MultiplyOrRelease
             for (int t = 0; t < 4; t++) BuildTeam(t);
             gridImpacts = new GridImpactVfx(root, model);
             model.ShotFired += PopCannon;
+            model.BoostCollected += FlyBoostToCannon;
             Render(true);
         }
         void MeshObject(string name, Mesh mesh, Material material, int order)
@@ -207,38 +212,100 @@ namespace MultiplyOrRelease
             foreach (var boost in model.boosts)
             {
                 liveIds.Add(boost.id);
-                var appearance = c.boosts.Appearance(boost.kind);
-                var sprite = appearance.sprite != null ? appearance.sprite : c.presentation.circleSprite;
-                Vector2 size = Vector2.one * (c.boosts.radius * 2 * c.boosts.visualScale);
                 if (!boostViews.TryGetValue(boost.id, out var visual))
                 {
-                    if (freeBoosts.Count > 0) visual = freeBoosts.Pop();
-                    else
-                    {
-                        visual = new BoostVisual();
-                        visual.renderer = Sprite("Boost Pickup", boost.position, size, sprite, appearance.color, c.boosts.sortingOrder, root);
-                        defaultParent = visual.renderer.transform.parent;
-                        visual.label = Text("Boost Label", "", Vector2.zero, c.boosts.labelSize, c.boosts.labelColor, c.boosts.sortingOrder + 1);
-                        defaultParent = null;
-                    }
+                    visual = AcquireBoostVisual(boost);
                     boostViews.Add(boost.id, visual);
                 }
-                var pivot = visual.renderer.transform.parent;
-                pivot.gameObject.SetActive(true);
-                pivot.name = "Boost " + boost.kind;
-                pivot.localPosition = boost.position;
-                SetSpriteSize(visual.renderer, sprite, size);
-                visual.renderer.color = appearance.color;
-                visual.label.text = appearance.label;
-                visual.label.gameObject.SetActive(c.boosts.showLabels);
+                ConfigureBoostVisual(visual, boost);
             }
             deadIds.Clear();
             foreach (var pair in boostViews) if (!liveIds.Contains(pair.Key)) deadIds.Add(pair.Key);
             foreach (int id in deadIds)
             {
                 var visual = boostViews[id];
-                visual.renderer.transform.parent.gameObject.SetActive(false);
-                freeBoosts.Push(visual); boostViews.Remove(id);
+                ReleaseBoostVisual(visual); boostViews.Remove(id);
+            }
+            RenderBoostFlights();
+        }
+        BoostVisual AcquireBoostVisual(BoostState boost)
+        {
+            if (freeBoosts.Count > 0) return freeBoosts.Pop();
+            var appearance = c.boosts.Appearance(boost.kind);
+            var sprite = appearance.sprite != null ? appearance.sprite : c.presentation.circleSprite;
+            var visual = new BoostVisual();
+            visual.renderer = Sprite("Boost Pickup", boost.position, Vector2.one * (c.boosts.radius * 2 * c.boosts.visualScale),
+                sprite, appearance.color, c.boosts.sortingOrder, root);
+            defaultParent = visual.renderer.transform.parent;
+            visual.outline = Sprite("Pickup Outline", Vector2.zero, Vector2.one,
+                c.presentation.circleSprite, c.boosts.outlineColor, Mathf.Max(-32768, c.boosts.sortingOrder - 1));
+            visual.label = Text("Boost Label", "", Vector2.zero, c.boosts.labelSize, c.boosts.labelColor, c.boosts.sortingOrder + 1);
+            defaultParent = null;
+            return visual;
+        }
+        void ConfigureBoostVisual(BoostVisual visual, BoostState boost)
+        {
+            var appearance = c.boosts.Appearance(boost.kind);
+            var sprite = appearance.sprite != null ? appearance.sprite : c.presentation.circleSprite;
+            var pivot = visual.renderer.transform.parent;
+            pivot.gameObject.SetActive(true);
+            pivot.name = "Boost " + boost.kind;
+            pivot.localPosition = boost.position;
+            pivot.localScale = Vector3.one;
+            SetSpriteSize(visual.renderer, sprite, Vector2.one * (c.boosts.radius * 2 * c.boosts.visualScale));
+            SetSpriteSize(visual.outline, c.presentation.circleSprite,
+                Vector2.one * (c.boosts.radius * 2 * c.boosts.visualScale + c.boosts.outlineWidth * 2));
+            visual.outline.transform.parent.gameObject.SetActive(c.boosts.outlineWidth > 0);
+            visual.outline.sortingOrder = Mathf.Max(-32768, c.boosts.sortingOrder - 1);
+            visual.outline.color = c.boosts.outlineColor;
+            visual.color = appearance.color; visual.labelColor = c.boosts.labelColor;
+            visual.renderer.color = visual.color; visual.label.color = visual.labelColor;
+            visual.label.text = appearance.label;
+            visual.label.gameObject.SetActive(c.boosts.showLabels);
+        }
+        void ReleaseBoostVisual(BoostVisual visual)
+        {
+            visual.renderer.transform.parent.gameObject.SetActive(false);
+            freeBoosts.Push(visual);
+        }
+        void FlyBoostToCannon(BoostState boost, int team)
+        {
+            bool rendered = boostViews.TryGetValue(boost.id, out var visual);
+            if (rendered) boostViews.Remove(boost.id);
+            if (boost.flight == null)
+            {
+                if (rendered) ReleaseBoostVisual(visual);
+                return;
+            }
+            // A pickup can spawn and be hit between renders. It still gets a flight.
+            if (!rendered) visual = AcquireBoostVisual(boost);
+            ConfigureBoostVisual(visual, boost);
+            visual.renderer.transform.parent.name = "Collected Boost " + boost.kind;
+            visual.flight = boost.flight;
+            collectedBoosts.Add(visual);
+        }
+        void RenderBoostFlights()
+        {
+            for (int i = collectedBoosts.Count - 1; i >= 0; i--)
+            {
+                var visual = collectedBoosts[i];
+                var flight = visual.flight;
+                if (flight.canceled)
+                {
+                    ReleaseBoostVisual(visual); collectedBoosts.RemoveAt(i);
+                    continue;
+                }
+                float u = flight.completed ? 1 : Mathf.Clamp01((model.elapsed - flight.startedAt) / flight.duration);
+                float eased = u * u * (3 - 2 * u);
+                var pivot = visual.renderer.transform.parent;
+                pivot.localPosition = Vector2.Lerp(flight.pickup.position, flight.target, eased);
+                pivot.localScale = Vector3.one * Mathf.Lerp(1, c.boosts.collectionEndScale, eased);
+                float opacity = c.boosts.fadeOnArrival ? 1 - Mathf.InverseLerp(.8f, 1, u) : 1;
+                var color = visual.color; color.a *= opacity; visual.renderer.color = color;
+                color = c.boosts.outlineColor; color.a *= opacity; visual.outline.color = color;
+                color = visual.labelColor; color.a *= opacity; visual.label.color = color;
+                if (!flight.completed) continue;
+                ReleaseBoostVisual(visual); collectedBoosts.RemoveAt(i);
             }
         }
         Texture2D MakeAtlas()
@@ -491,6 +558,8 @@ namespace MultiplyOrRelease
         public void Dispose()
         {
             model.ShotFired -= PopCannon;
+            model.BoostCollected -= FlyBoostToCannon;
+            collectedBoosts.Clear(); boostViews.Clear(); freeBoosts.Clear();
             gridImpacts.Dispose();
             root.gameObject.SetActive(false);
             Destroy(root.gameObject); Destroy(gridMesh); Destroy(borderMesh); Destroy(gridMaterial); Destroy(atlas);

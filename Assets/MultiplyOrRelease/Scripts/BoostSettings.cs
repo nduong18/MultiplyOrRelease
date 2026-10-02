@@ -41,8 +41,18 @@ namespace MultiplyOrRelease
         [Min(.1f)] public float extraMarbleDuration = 30;
         [Tooltip("Each pickup adds one Plinko marble with its own expiry. Limit extra marbles per team.")]
         [Range(1, 30)] public int maxExtraMarbles = 5;
+        [Header("Collection Flight")]
+        public bool animateCollection = true;
+        [Tooltip("Simulation seconds to fly from the hit position to the collecting team's cannon. Pause/Speed/Step apply. The boost is awarded on arrival; timed effects start then.")]
+        [Min(.05f)] public float collectionFlightDuration = 1.2f;
+        [Tooltip("Scale at arrival relative to the pickup's normal size. 1 keeps the size unchanged.")]
+        [Range(0, 1)] public float collectionEndScale = .25f;
+        public bool fadeOnArrival = true;
         [Header("Appearance")]
         public float visualScale = 1;
+        [Tooltip("Circular border around the boost. Set width to 0 to hide it.")]
+        [Min(0)] public float outlineWidth = .04f;
+        public Color outlineColor = Color.white;
         public int sortingOrder = 16;
         public bool showLabels = true;
         public Color labelColor = Color.black;
@@ -68,7 +78,10 @@ namespace MultiplyOrRelease
             fireRateDuration = Mathf.Max(.1f, fireRateDuration);
             extraMarbleDuration = Mathf.Max(.1f, extraMarbleDuration);
             maxExtraMarbles = Mathf.Clamp(maxExtraMarbles, 1, 30);
+            collectionFlightDuration = Mathf.Clamp(collectionFlightDuration, .05f, 10);
+            collectionEndScale = Mathf.Clamp01(collectionEndScale);
             visualScale = Mathf.Clamp(visualScale, .1f, 10);
+            outlineWidth = Mathf.Clamp(outlineWidth, 0, .25f);
             sortingOrder = Mathf.Clamp(sortingOrder, -32768, 32766);
             labelSize = Mathf.Max(.05f, labelSize);
             if (fireRate == null) fireRate = new BoostAppearance { label = "SPD", color = new Color(1, .7f, .1f) };

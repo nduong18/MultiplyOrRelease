@@ -131,13 +131,19 @@ MonoBehaviour:
     consumeProjectile: 1
     fireRateMultiplier: 2
     fireRateDuration: 30
-    extraMarbleDuration: 30
+    extraMarbleDuration: 15
     maxExtraMarbles: 5
-    visualScale: 1
+    animateCollection: 1
+    collectionFlightDuration: 1
+    collectionEndScale: 0.4
+    fadeOnArrival: 1
+    visualScale: 1.3
+    outlineWidth: 0.04
+    outlineColor: {r: 1, g: 1, b: 1, a: 1}
     sortingOrder: 16
     showLabels: 1
     labelColor: {r: 0, g: 0, b: 0, a: 1}
-    labelSize: 0.14
+    labelSize: 0.2
     fireRate:
       enabled: 1
       spawnWeight: 1
@@ -151,7 +157,7 @@ MonoBehaviour:
       color: {r: 0.25, g: 1, b: 0.4, a: 1}
       label: x2
     extraMarble:
-      enabled: 0
+      enabled: 1
       spawnWeight: 1
       sprite: {fileID: 0}
       color: {r: 0.3, g: 0.8, b: 1, a: 1}
