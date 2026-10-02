@@ -226,8 +226,8 @@ MonoBehaviour:
     resultFontSize: 42
   celebration:
     enableStartCountdown: 1
-    countdownStartDelay: 1.5
-    countdownAnimationDelay: 1
+    countdownStartDelay: 0.7
+    countdownAnimationDelay: 0.3
     countdownStepDuration: 1
     countdownFontSize: 200
     countdownFont: {fileID: 12800000, guid: d3c9886b610629a449978a1803f4d812, type: 3}

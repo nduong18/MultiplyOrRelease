@@ -2,6 +2,18 @@
 
 `Simulation > Simulation Speed` áp dụng ngay trong Play mode, kể cả khi đang Pause; không cần Apply / Restart. Giá trị mới điều khiển mô phỏng, boost, VFX và trails của lượt chơi hiện tại. Chỉnh tốc độ không khởi động lại trận hoặc đổi seed. Thanh Playback > Speed vẫn điều khiển lượt hiện tại cho đến khi Simulation Speed trong config được chỉnh tiếp.
 
+## Tournament Bracket
+
+Mở scene `Assets/MultiplyOrRelease/Scenes/Bracket.unity` hoặc menu `Tools > Multiply or Release > Create or Open Bracket`. Bracket gồm 16 đội: M1/M2 bên trái, M3/M4 bên phải, mỗi trận 4 đội; W1–W4 vào chung kết M5. Bố cục tự thu theo màn hình, chỉ hiển thị cờ và đường nối, không hiện tên đội.
+
+Scene bracket không có nút điều khiển. Nhấn Play để giải tự chạy theo hướng trái sang phải, trên xuống dưới: M1 (trên trái) → M3 (trên phải) → M2 (dưới trái) → M4 (dưới phải) → chung kết M5. Chọn đội trước Play tại `Config/DefaultBracket.asset > Teams`: 0–3 là M1, 4–7 là M2, 8–11 là M3, 12–15 là M4. Mỗi vị trí nhận một Team Preset; 16 đội phải khác nhau.
+
+Trước mỗi trận, hiện bracket và chờ **3 giây thực**, rồi cờ di chuyển trong **1 giây**. Trận nhóm đưa bốn cờ vào đường dọc và để lại các ô số 1–4 bên ngoài; chung kết đưa bốn cờ W1–W4 vào hàng có số 1–4 ở giữa. Sau khi di chuyển xong, chờ **2 giây thực** rồi chuyển vào gameplay. Mỗi trận trong giải giữ countdown 321 GO và âm thanh theo cấu hình `Celebration`, chỉ bắt đầu simulation sau khi GO kết thúc. Gameplay dùng bản sao config và team, không sửa preset/config gốc.
+
+Khi trận kết thúc, kết quả chốt ngay; winner card hiện theo `Victory Card Delay` của simulation (mặc định 1 giây). Từ khi card xuất hiện, chờ **5 giây thực** rồi tự trở về bracket, cập nhật cờ W và giới thiệu trận tiếp theo. Hòa tự chơi lại cùng nhóm với seed mới. Sau chung kết, bracket giữ cờ Champion, hiện tên đội dưới chữ CHAMPION và chạy pháo hoa giống winner card, không mở thêm card. Các chuyển cảnh dùng hai phần hiển thị trong cùng scene để giữ nguyên kết quả giải.
+
+Chỉnh `DefaultBracket > Flag Move Delay` (3 giây), `Flag Move Duration` (1 giây), `Match Start Delay` (2 giây), `Winner Card Hold Duration` (5 giây). Các khoảng chờ dùng thời gian thực, không nhân theo Simulation Speed. Font, màu nền/đường nối/chữ, kích thước cờ, độ dày đường vẫn cấu hình tại DefaultBracket. Pháo hoa Champion dùng cấu hình `Simulation > Celebration` giống winner card. Dừng Play hoặc Rebuild dọn animation, trận đấu và pháo hoa của giải hiện tại.
+
 ## Hiệu ứng nổ cannon
 
 Đạn đối phương trúng cannon tạo chớp sáng, vòng xung kích, tia lửa/debris màu đội bị trúng và khói nhẹ tại tâm lá cờ. Trúng đạn gây sát thương vẫn có hiệu ứng; phát phá hủy cannon nổ lớn hơn. Hiệu ứng tiếp tục sau khi lá cờ bị ẩn, kể cả khi trận kết thúc. Đạn đội nhà, va chạm grid và thao tác loại đội thủ công không tạo vụ nổ.

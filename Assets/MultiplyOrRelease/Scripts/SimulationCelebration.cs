@@ -21,6 +21,8 @@ namespace MultiplyOrRelease
         RectTransform countdownRect, victoryCardRect;
         SimulationCelebrationFirework victoryConfettiEffect;
         bool resultShown;
+        bool championCelebration;
+        public bool ResultVisible { get; private set; }
         public bool IsCountingDown { get; private set; }
 
         public void Initialize(SimulationController owner, SimulationConfig session)
@@ -86,6 +88,7 @@ namespace MultiplyOrRelease
                 yield return new WaitForSecondsRealtime(settings.victoryCardDelay);
             ShowVictoryCard(model.winner >= 0 ? config.teams[model.winner] :
                 new TeamSettings { name = "DRAW", territoryColor = config.presentation.textColor }, model.winner >= 0);
+            ResultVisible = true;
             if (model.winner < 0)
             {
                 victoryStatusText.text = "DRAW";
@@ -143,6 +146,7 @@ namespace MultiplyOrRelease
         }
         public void Clear()
         {
+            ResultVisible = false; championCelebration = false;
             if (soundModel != null)
             {
                 soundModel.CannonHit -= PlayCannonExplosion;
@@ -269,12 +273,20 @@ namespace MultiplyOrRelease
             if (Application.isPlaying) victoryPopRoutine = StartCoroutine(RunVictoryPop());
             else victoryCardRect.localScale = Vector3.one;
             if (Application.isPlaying && celebrate && settings.enableVictoryConfetti && victoryConfettiRoutine == null)
-                victoryConfettiRoutine = StartCoroutine(RunVictoryConfetti());
+                victoryConfettiRoutine = StartCoroutine(RunVictoryConfetti(controller.simulationCamera));
         }
 
-        private IEnumerator RunVictoryConfetti()
+        public void CelebrateChampion(Camera displayCamera, SimulationConfig source)
         {
-            Camera displayCamera = controller.simulationCamera;
+            Clear();
+            config = source; settings = source.celebration;
+            championCelebration = true;
+            if (Application.isPlaying && settings.enableVictoryConfetti)
+                victoryConfettiRoutine = StartCoroutine(RunVictoryConfetti(displayCamera));
+        }
+
+        private IEnumerator RunVictoryConfetti(Camera displayCamera)
+        {
             if (displayCamera == null) yield break;
 
             // Dedicated host avoids mutating or deleting unrelated particle effects.
@@ -289,7 +301,7 @@ namespace MultiplyOrRelease
             victoryConfettiEffect.glowShader = settings.glowShader;
             victoryConfettiEffect.SetSortingOrder(settings.victoryConfettiSortingOrder);
 
-            while (victoryCanvasObject != null)
+            while (victoryCanvasObject != null || championCelebration)
             {
                 for (int burstIndex = 0; burstIndex < settings.victoryConfettiBurstCount; burstIndex++)
                 {

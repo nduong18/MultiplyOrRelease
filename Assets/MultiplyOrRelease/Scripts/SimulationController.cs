@@ -19,6 +19,7 @@ namespace MultiplyOrRelease
         SimulationCelebration celebration;
         int celebrationPreview; // Editor-only preview selection; never serialized into the scene.
         public bool CountdownActive => celebration != null && celebration.IsCountingDown;
+        public bool ResultCardVisible => celebration != null && celebration.ResultVisible;
         float accumulator;
         float lastConfiguredSpeed;
         bool rebuildRequested;
