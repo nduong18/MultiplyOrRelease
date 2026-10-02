@@ -24,6 +24,8 @@ namespace MultiplyOrRelease
         [Header("Winner Card — TerritoryBattle")]
         [Tooltip("Show the original card when the simulation finishes; does not change the match's winner rules.")]
         public bool enableVictoryCard = true;
+        [Tooltip("Real seconds from the match ending to the result card, winner sound and confetti. Does not delay locking the winner.")]
+        [Min(0)] public float victoryCardDelay = 1;
         [Min(.05f)] public float victoryPopDuration = .45f;
         [Range(0, 3)] public float victoryPopOvershoot = 1.70158f;
         [Tooltip("Leave empty to reuse Countdown Font, then Presentation Font.")]
@@ -53,6 +55,10 @@ namespace MultiplyOrRelease
         public AudioClip countdownClip;
         public AudioClip countdownGoClip;
         public AudioClip winnerClip;
+        [Tooltip("Played when an enemy bullet destroys a cannon flag.")]
+        public AudioClip explosionClip;
+        [Tooltip("Played when a boost reaches its cannon and the reward is applied.")]
+        public AudioClip collectClip;
 
         public void Validate()
         {
@@ -61,6 +67,7 @@ namespace MultiplyOrRelease
             countdownStepDuration = Mathf.Max(.1f, countdownStepDuration);
             countdownFontSize = Mathf.Max(24, countdownFontSize);
             countdownPopDuration = Mathf.Max(.05f, countdownPopDuration);
+            victoryCardDelay = Mathf.Max(0, victoryCardDelay);
             victoryPopDuration = Mathf.Max(.05f, victoryPopDuration);
             victoryTitleFontSize = Mathf.Max(24, victoryTitleFontSize);
             victoryStatusFontSize = Mathf.Max(18, victoryStatusFontSize);

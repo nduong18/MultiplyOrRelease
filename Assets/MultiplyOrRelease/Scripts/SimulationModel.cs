@@ -60,7 +60,6 @@ namespace MultiplyOrRelease
         readonly Stack<ShotState> shotPool = new Stack<ShotState>();
         readonly float[] firingFrameCooldown = new float[4];
         int nextShotId, fireCursor;
-        float finishTimer;
         public float CellWidth => config.board.size / config.board.columns;
         public float CellHeight => config.board.size / config.board.rows;
         public bool IsPlinkoPaused(int t) => config.plinko.pauseWhileReleasing && teams[t].queued > 0;
@@ -142,6 +141,7 @@ namespace MultiplyOrRelease
         public void Tick(float dt)
         {
             if (phase == MatchPhase.Ready || phase == MatchPhase.Finished) return;
+            if (FinishEliminationIfNeeded()) return;
             elapsed += dt;
             if (phase == MatchPhase.Running)
             {
@@ -154,24 +154,7 @@ namespace MultiplyOrRelease
                 if (config.cannon.firingMode == FiringMode.ShotsPerSecond) FireQueued(dt);
             }
             StepShots(dt);
-            if (phase == MatchPhase.Running && AliveCount <= 1)
-            {
-                phase = MatchPhase.Settling;
-                boosts.Clear();
-                CancelBoostCollections();
-                for (int i = 0; i < 4; i++) teams[i].queued = 0;
-            }
-            if (phase == MatchPhase.Settling && shots.Count == 0)
-            {
-                finishTimer += dt;
-                if (finishTimer >= config.resultDelay)
-                {
-                    winner = -1;
-                    for (int t = 0; t < 4; t++) if (teams[t].alive) winner = t;
-                    resultReason = winner < 0 ? "All cannons destroyed" : "Last cannon standing";
-                    phase = MatchPhase.Finished;
-                }
-            }
+            if (phase == MatchPhase.Finished || FinishEliminationIfNeeded()) return;
             if (phase == MatchPhase.Running && config.matchTimeLimit > 0 && elapsed >= config.matchTimeLimit)
             {
                 int best = -1;
@@ -183,11 +166,27 @@ namespace MultiplyOrRelease
                 }
                 winner = tie ? -1 : best;
                 resultReason = "Time limit — territory ranking";
-                for (int t = 0; t < 4; t++) teams[t].queued = 0;
-                phase = MatchPhase.Finished;
-                boosts.Clear();
-                CancelBoostCollections();
+                FinishMatch();
             }
+        }
+
+        bool FinishEliminationIfNeeded()
+        {
+            if (AliveCount > 1) return false;
+            winner = -1;
+            for (int t = 0; t < 4; t++) if (teams[t].alive) winner = t;
+            resultReason = winner < 0 ? "All cannons destroyed" : "Last cannon standing";
+            FinishMatch();
+            return true;
+        }
+
+        void FinishMatch()
+        {
+            phase = MatchPhase.Finished;
+            for (int t = 0; t < 4; t++) teams[t].queued = 0;
+            boosts.Clear();
+            CancelBoostCollections();
+            while (shots.Count > 0) RemoveShot(shots.Count - 1);
         }
         void UpdateCannon(int t)
         {
@@ -392,6 +391,9 @@ namespace MultiplyOrRelease
                             teams[t].health--;
                             if (config.cannon.destroyOnEnemyHit || teams[t].health <= 0) Eliminate(t);
                             CannonHit?.Invoke(t, shot.team, !teams[t].alive);
+                            // Lock the winner at this hit. Clearing the projectile
+                            // list is safe because we return before any further indexing.
+                            if (FinishEliminationIfNeeded()) return;
                             remove = true; break;
                         }
                     }
@@ -466,7 +468,7 @@ namespace MultiplyOrRelease
         }
         public void Eliminate(int t)
         {
-            if (!teams[t].alive) return;
+            if (phase == MatchPhase.Finished || !teams[t].alive) return;
             teams[t].alive = false; teams[t].health = 0; teams[t].queued = 0;
             teams[t].lastEvent = "ELIMINATED"; teams[t].eventTime = elapsed;
             teams[t].fireRateBoostUntil = 0;

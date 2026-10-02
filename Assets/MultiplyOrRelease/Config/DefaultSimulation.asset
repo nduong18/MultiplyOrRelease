@@ -112,7 +112,7 @@ MonoBehaviour:
     despawnOnCapture: 1
     bounceOnCapture: 0
     bounceAtArenaEdge: 1
-    maxBorderCollisions: 4
+    maxBorderCollisions: 2
     captureRadiusCells: 0
     trailTime: 0.15
     matchTrailToSize: 1
@@ -238,6 +238,7 @@ MonoBehaviour:
     oneColor: {r: 1, g: 0.85, b: 0.1, a: 1}
     goColor: {r: 0.15, g: 0.9, b: 0.3, a: 1}
     enableVictoryCard: 1
+    victoryCardDelay: 1
     victoryPopDuration: 0.45
     victoryPopOvershoot: 1.70158
     victoryFont: {fileID: 12800000, guid: d3c9886b610629a449978a1803f4d812, type: 3}
@@ -261,6 +262,8 @@ MonoBehaviour:
     countdownClip: {fileID: 8300000, guid: 37df6ef0778c4bd4aae77deadca006ef, type: 3}
     countdownGoClip: {fileID: 0}
     winnerClip: {fileID: 8300000, guid: 5a7fd32218495b94c9096ec8cd744daa, type: 3}
+    explosionClip: {fileID: 8300000, guid: 7a78f6fdb50ddd54593ec6a12f7e68de, type: 3}
+    collectClip: {fileID: 8300000, guid: 4166eebada241a74ba4d5a149f77ea9b, type: 3}
   teams:
   - name: Brazil
     cannonSprite: {fileID: -4064824765295086984, guid: ca4544e9b7b38624c8dedbc69f80c6d6, type: 3}

@@ -27,6 +27,7 @@ namespace MultiplyOrRelease
         public readonly List<BoostState> boosts = new List<BoostState>();
         public readonly List<BoostCollection> collectingBoosts = new List<BoostCollection>();
         public event Action<BoostState, int> BoostCollected;
+        public event Action<BoostKind, int> BoostReceived;
         System.Random boostRandom;
         float nextBoostSpawn;
         float boostSpawnIntervalScale = 1;
@@ -272,6 +273,7 @@ namespace MultiplyOrRelease
                     break;
             }
             team.eventTime = elapsed;
+            BoostReceived?.Invoke(kind, t);
         }
     }
 }

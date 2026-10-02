@@ -228,20 +228,32 @@ public class SimulationModelTests
         m.shots.Add(new ShotState { id = 999, team = 0, position = pos + Vector2.left * .3f, velocity = Vector2.right * 35 });
         m.Tick(1f / 120); Assert.IsFalse(m.teams[1].alive); Assert.AreEqual(0, m.shots.Count);
     }
-    [Test] public void LastSurvivorWaitsForAirborneShotsBeforeWinning()
+    [Test] public void LastSurvivorWinsImmediatelyAndClearsAirborneShotsAndQueues()
     {
-        config.resultDelay = 0; var m = NewModel();
+        config.resultDelay = 120; var m = NewModel();
         m.shots.Add(new ShotState { id = 999, team = 1, position = new Vector2(2, 2), velocity = Vector2.right });
+        m.teams[0].queued = 100;
         m.Eliminate(1); m.Eliminate(2); m.Eliminate(3); m.Tick(.01f);
-        Assert.AreEqual(MatchPhase.Settling, m.phase); Assert.AreEqual(-1, m.winner);
-        m.shots.Clear(); m.Tick(.01f); Assert.AreEqual(MatchPhase.Finished, m.phase); Assert.AreEqual(0, m.winner);
+        Assert.AreEqual(MatchPhase.Finished, m.phase); Assert.AreEqual(0, m.winner);
+        Assert.AreEqual(0, m.shots.Count); Assert.AreEqual(0, m.teams[0].queued);
+        float elapsed = m.elapsed; m.Tick(30);
+        Assert.AreEqual(elapsed, m.elapsed);
     }
-    [Test] public void FinalAirborneShotCanDestroyLastCannonAndCauseDraw()
+    [Test] public void FinalEnemyHitLocksWinnerBeforeOtherShotsInTheSameTick()
     {
-        config.resultDelay = 0; var m = NewModel(); m.Eliminate(1); m.Eliminate(2); m.Eliminate(3);
-        var pos = m.teams[0].cannonPosition;
-        m.shots.Add(new ShotState { id = 999, team = 1, position = pos + Vector2.right * .3f, velocity = Vector2.left * 35 });
-        m.Tick(1f / 120); Assert.AreEqual(MatchPhase.Finished, m.phase); Assert.AreEqual(-1, m.winner);
+        config.resultDelay = 120; config.cannon.destroyOnEnemyHit = true;
+        var m = NewModel(); m.Eliminate(2); m.Eliminate(3);
+        int impacts = 0; m.CannonHit += (target, shooter, destroyed) => impacts++;
+        // StepShots visits the last entry first: the winning hit is resolved
+        // before the opponent's already-airborne shot reaches the survivor.
+        m.shots.Add(new ShotState { id = 999, team = 1, position = m.teams[0].cannonPosition });
+        m.shots.Add(new ShotState { id = 1000, team = 0, position = m.teams[1].cannonPosition });
+        m.Tick(1f / 120);
+        Assert.AreEqual(MatchPhase.Finished, m.phase); Assert.AreEqual(0, m.winner);
+        Assert.AreEqual(1, impacts); Assert.AreEqual(0, m.shots.Count);
+        Assert.IsTrue(m.teams[0].alive); Assert.IsFalse(m.teams[1].alive);
+        m.Eliminate(0);
+        Assert.IsTrue(m.teams[0].alive, "The finished match must keep its winning team.");
     }
     [Test] public void SameSeedReplaysSameGateEventsAndTerritory()
     {

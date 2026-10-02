@@ -8,6 +8,8 @@
 
 Chỉnh `DefaultSimulation > Cannon Impact`: **Enabled**, **Duration**, **Size Multiplier**, **Destruction Multiplier**, **Spark Count / Spark Spread**, **Fire Color**, **Use Team Color**, **Smoke Color / Smoke Opacity**, **Sorting Order** và **Max Bursts**. Pause/Speed/Step điều khiển hiệu ứng; Restart dọn hết vụ nổ. Các đối tượng được tái sử dụng và giới hạn số lượng; ngẫu nhiên hình ảnh không thay đổi seed gameplay. Trong Play mode bấm Apply / Restart sau khi chỉnh.
 
+SFX `explosion.mp3` phát khi đạn đối phương phá hủy cannon flag, kể cả phát cuối kết thúc trận. SFX `collect.mp3` phát khi boost bay đến cannon và nhận thưởng; boost bị hủy không phát âm thanh. Tắt Collection Animation thì âm thanh phát lúc nhận thưởng ngay. Chỉnh clip ở `DefaultSimulation > Celebration > Explosion Clip / Collect Clip`, dùng chung `Enable Sounds` và `Master Volume`; Restart dừng âm thanh của lượt trước. SFX hoạt động độc lập với bật/tắt VFX và winner card.
+
 ## Giới hạn va chạm border của đạn
 
 `DefaultSimulation > Projectile > Max Border Collisions` mặc định **10**: từng viên đạn bật lại tối đa 10 lần ở border và biến mất ở lần chạm border thứ **11**. `0` tắt giới hạn. Chạm góc đồng thời ở hai trục tính một lần. Bộ đếm riêng cho mỗi viên và được đặt lại khi đạn mới dùng lại pool. Chạm grid/cannon/boost không tăng bộ đếm border; Despawn On Capture vẫn bật mặc định, nên chạm grid đối phương vẫn chiếm ô rồi biến mất ngay. Lifetime và Consume Projectile vẫn áp dụng. Bấm Apply / Restart sau khi chỉnh trong Play mode.
@@ -47,14 +49,14 @@ Chọn GameObject `Multiply or Release` để chỉnh config và điều khiển
 - Sau Release, kho đạn về 1 là lựa chọn triển khai vì tài liệu không quy định. Chỉnh `Cannon > Ammo After Release` để đổi.
 - Đạn đi xuyên các ô cùng đội, đổi màu/flag ô đối phương và biến mất ngay sau khi chiếm ô. `Projectile > Despawn On Capture` bật mặc định và được ưu tiên hơn `Bounce On Capture`; tắt tùy chọn này nếu muốn dùng lại chế độ bật lại hoặc xuyên tiếp. Đạn bật ở biên arena.
 - Cannon mặc định chết bởi một đạn đối phương. Có thể tắt `Destroy On Enemy Hit` và chỉnh `Teams > Hit Points` để dùng máu nhiều điểm.
-- Đội chết dừng Plinko và hủy đạn chưa bắn. Đạn đã bay vẫn tồn tại và vẫn chiếm ô/phá cannon. Khi còn tối đa 1 đội, ngừng bắn mới và chờ đạn trên sân giải quyết hết; đội sống cuối cùng thắng. Đạn cuối có thể tạo kết quả hòa.
+- Đội chết dừng Plinko và hủy đạn chưa bắn. Đạn đã bay vẫn tiếp tục khi còn ít nhất 2 đội. Ngay khi cannon đối thủ cuối cùng bị tiêu diệt, đội sống cuối cùng thắng và kết quả được chốt. Đạn còn trên sân, hàng đợi bắn và boost được dọn ngay; VFX/SFX nổ cuối vẫn tiếp tục. Winner card, sound winner và confetti hiện sau **1 giây thực**, chỉnh ở `Celebration > Victory Card Delay`; `0` hiện ngay. Delay không phụ thuộc Simulation Speed/Pause và không chờ đạn bay hết. Restart hủy card đang chờ. Nếu tất cả đội được loại thủ công trước tick kế tiếp, kết quả là hòa.
 - Không có thời hạn trận mặc định. `Match Time Limit > 0` bật giới hạn, xếp hạng đội còn sống theo lãnh thổ; bằng điểm thì hòa.
 
 ## Chỉnh cấu hình
 
 | Nhóm | Các thông số chính |
 | --- | --- |
-| Simulation | Auto start, seed, tốc độ, tick/giây, hạn mức tick/frame, thời hạn, thời gian chờ kết quả |
+| Simulation | Auto start, seed, tốc độ, tick/giây, hạn mức tick/frame, thời hạn |
 | Board | Số hàng/cột, kích thước, khe grid, màu nền, màu hoặc hình cờ, cách ánh xạ cờ, độ sáng, checker, đường biên, đội sở hữu từng quadrant |
 | Plinko | Số bi, kích thước bảng, hàng/cột chốt, bán kính bi/chốt, gravity, restitution, damping, va chạm bi, spawn/kick, thời gian tái thả, ngưỡng chống kẹt, vị trí spawn/chốt, tỷ lệ ×2/R, mirror, màu và kích thước chữ/gate, trail |
 | Cannon | Đạn đầu, đạn sau Release, trần kho, hệ số nhân, tốc độ bắn, vị trí góc, bán kính trúng đạn, kích thước marble/nòng/rim, màu khi bị loại |
@@ -69,7 +71,7 @@ Thứ tự `Teams`: trên trái, trên phải, dưới trái, dưới phải. G�
 ## Điều khiển trong Inspector
 
 - `Celebration` port nguyên phần trình bày từ `C:/UnityGame/TerritoryBattle`: 3 → 2 → 1 → GO! với pop/outline/font Minecraft, winner card 700×600 với cờ tròn đội thắng, confetti/firework và sound `countdown.mp3` / `winner.mp3`. Giữ layout, màu, font, timing và thông số burst của `TerritoryGrid.unity`; file sound sao chép nguyên bản. Mã gốc được tách ra `SimulationCelebration` và `SimulationCelebrationFirework`, không đưa gameplay/skill/combat của TerritoryBattle vào.
-- `Celebration > Enable Start Countdown`, `Enable Victory Card`, `Enable Victory Confetti`, `Enable Sounds` bật mặc định; mọi font, size, màu, thời gian, âm lượng/clip có thể chỉnh trong Inspector. Countdown dùng thời gian thực, không nhân theo Simulation Speed; simulation giữ nguyên ở Ready cho tới hết GO. Pause Intro dừng cả countdown và sound; Inspector Step bỏ qua intro để debug. Winner hiện theo kết quả cuối của simulation hiện tại (sau settling/result delay); sound winner phát một lần, confetti lặp cho tới Restart. Hòa hiện DRAW, không confetti/sound winner. Restart/Apply xóa UI, sound và particle của lượt trước. Khi winner card bật, HUD không hiện thêm result panel cũ.
+- `Celebration > Enable Start Countdown`, `Enable Victory Card`, `Enable Victory Confetti`, `Enable Sounds` bật mặc định; mọi font, size, màu, thời gian, âm lượng/clip có thể chỉnh trong Inspector. Countdown dùng thời gian thực, không nhân theo Simulation Speed; simulation giữ nguyên ở Ready cho tới hết GO. Pause Intro dừng cả countdown và sound; Inspector Step bỏ qua intro để debug. Winner card hiện sau `Victory Card Delay` kể từ khi chốt kết quả; sound winner phát một lần cùng card, confetti lặp cho tới Restart. Hòa hiện DRAW, không confetti/sound winner. Restart/Apply xóa UI, sound và particle của lượt trước. Khi winner card bật, HUD không hiện thêm result panel cũ.
 - Ngoài Play mode, các nút `Preview 321 GO`, `Preview Winner`, `Clear Preview` trong Inspector cho xem bố cục ngay, không phát sound. Chỉnh config tự rebuild preview; preview không lưu vào scene. Card dùng cờ và tên đội hiện tại, không dùng roster USA/Brazil/... của project nguồn.
 - `Plinko`: chỉnh vị trí từng loại chữ bằng `Ammo Text Offset` (số đạn), `Team Name Offset` (tên đội), `Multiply Text Offset` (×2), `Release Text Offset` (R), `Status Text Offset` (trạng thái). X dương sang phải, Y dương lên trên, đơn vị world; áp dụng cùng hướng trên cả 4 bảng, không đảo offset khi gate được mirror. `(0, 0)` giữ nguyên vị trí cũ. Ngoài Play mode preview tự cập nhật; trong Play mode bấm Apply / Restart. Offset không di chuyển gate hay thay đổi gameplay.
 - `Plinko > Font`: kéo asset font `.ttf` / `.otf` vào để đổi font riêng cho toàn bộ chữ trong 4 bảng Plinko (số đạn, tên đội, ×2/R và trạng thái). Để `None` sẽ dùng `Presentation > Font` như cũ; không thay font HUD. Bấm Apply / Restart sau khi đổi, hoặc chỉnh ngoài Play mode để preview tự cập nhật.

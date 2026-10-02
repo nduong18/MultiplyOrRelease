@@ -13,6 +13,7 @@ namespace MultiplyOrRelease
         SimulationConfig config;
         CelebrationSettings settings;
         AudioSource sfxSource;
+        SimulationModel soundModel;
         Action onCountdownComplete;
         Coroutine countdownRoutine, countdownPopRoutine, victoryPopRoutine, victoryConfettiRoutine;
         GameObject countdownCanvasObject, victoryCanvasObject;
@@ -30,6 +31,9 @@ namespace MultiplyOrRelease
                 sfxSource = gameObject.AddComponent<AudioSource>();
                 sfxSource.playOnAwake = false; sfxSource.loop = false;
                 sfxSource.spatialBlend = 0; sfxSource.volume = settings.masterVolume;
+                soundModel = controller.Model;
+                soundModel.CannonHit += PlayCannonExplosion;
+                soundModel.BoostReceived += PlayBoostCollect;
             }
         }
         public void BeginCountdown(Action complete)
@@ -56,9 +60,10 @@ namespace MultiplyOrRelease
         }
         public void SkipCountdown()
         {
+            bool wasCountingDown = IsCountingDown;
             if (countdownRoutine != null) StopCoroutine(countdownRoutine);
             countdownRoutine = null; onCountdownComplete = null; IsCountingDown = false;
-            if (sfxSource != null) sfxSource.Stop();
+            if (wasCountingDown && sfxSource != null) sfxSource.Stop();
             DestroyCountdownDisplay();
         }
         public void SetCountdownPaused(bool paused)
@@ -71,6 +76,14 @@ namespace MultiplyOrRelease
             if (resultShown || model.phase != MatchPhase.Finished) return;
             resultShown = true;
             if (!settings.enableVictoryCard) return;
+            StartCoroutine(PresentResultAfterDelay(model));
+        }
+        IEnumerator PresentResultAfterDelay(SimulationModel model)
+        {
+            // The winner is already locked; let the final explosion play first.
+            // Clear/Restart cancels this coroutine with the rest of the presentation.
+            if (settings.victoryCardDelay > 0)
+                yield return new WaitForSecondsRealtime(settings.victoryCardDelay);
             ShowVictoryCard(model.winner >= 0 ? config.teams[model.winner] :
                 new TeamSettings { name = "DRAW", territoryColor = config.presentation.textColor }, model.winner >= 0);
             if (model.winner < 0)
@@ -93,6 +106,11 @@ namespace MultiplyOrRelease
             if (Application.isPlaying && settings.enableSounds && clip != null && sfxSource != null)
                 sfxSource.PlayOneShot(clip);
         }
+        void PlayCannonExplosion(int target, int shooter, bool destroyed)
+        {
+            if (destroyed) PlayClip(settings.explosionClip);
+        }
+        void PlayBoostCollect(BoostKind kind, int team) => PlayClip(settings.collectClip);
         void DestroyCountdownDisplay()
         {
             if (countdownPopRoutine != null) StopCoroutine(countdownPopRoutine);
@@ -125,6 +143,12 @@ namespace MultiplyOrRelease
         }
         public void Clear()
         {
+            if (soundModel != null)
+            {
+                soundModel.CannonHit -= PlayCannonExplosion;
+                soundModel.BoostReceived -= PlayBoostCollect;
+                soundModel = null;
+            }
             StopAllCoroutines(); countdownRoutine = null; onCountdownComplete = null; IsCountingDown = false;
             countdownPopRoutine = victoryPopRoutine = victoryConfettiRoutine = null;
             if (sfxSource != null) sfxSource.Stop();

@@ -22,7 +22,8 @@ namespace MultiplyOrRelease
         [Range(16, 512)] public int maxTicksPerFrame = 128;
         [Tooltip("0 disables the match time limit. A timeout ranks surviving teams by territory.")]
         [Min(0)] public float matchTimeLimit = 0;
-        [Min(0)] public float resultDelay = 1.5f;
+        // Retained for older serialized config assets. Match results now appear immediately.
+        [HideInInspector, Min(0)] public float resultDelay = 1.5f;
         public BoardSettings board = new BoardSettings();
         public PlinkoSettings plinko = new PlinkoSettings();
         public CannonSettings cannon = new CannonSettings();
