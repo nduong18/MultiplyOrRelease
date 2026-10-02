@@ -42,6 +42,8 @@ namespace MultiplyOrRelease
         [Header("Effects")]
         [Range(1, 10)] public float fireRateMultiplier = 2;
         [Min(.1f)] public float fireRateDuration = 30;
+        [Tooltip("Multiplier applied to stored ammo and the remaining Release queue when Double Ammo is collected. Enter any integer >= 2. Spawn Weight below controls only how often this boost appears.")]
+        [Min(2)] public int doubleAmmoMultiplier = 2;
         [Min(.1f)] public float extraMarbleDuration = 30;
         [Tooltip("Each pickup adds one Plinko marble with its own expiry. Limit extra marbles per team.")]
         [Range(1, 30)] public int maxExtraMarbles = 5;
@@ -81,6 +83,7 @@ namespace MultiplyOrRelease
             cannonClearance = Mathf.Max(0, cannonClearance);
             fireRateMultiplier = Mathf.Clamp(fireRateMultiplier, 1, 10);
             fireRateDuration = Mathf.Max(.1f, fireRateDuration);
+            doubleAmmoMultiplier = Mathf.Max(2, doubleAmmoMultiplier);
             extraMarbleDuration = Mathf.Max(.1f, extraMarbleDuration);
             maxExtraMarbles = Mathf.Clamp(maxExtraMarbles, 1, 30);
             collectionFlightDuration = Mathf.Clamp(collectionFlightDuration, .05f, 10);

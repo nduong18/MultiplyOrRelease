@@ -41,7 +41,7 @@ MonoBehaviour:
     multiplyTextOffset: {x: 0, y: -0.05}
     releaseTextOffset: {x: 0, y: -0.05}
     statusTextOffset: {x: 0, y: 0}
-    ballCount: 6
+    ballCount: 7
     fitTo16By9: 1
     width: 3.732222
     height: 4.875
@@ -54,18 +54,18 @@ MonoBehaviour:
     pegTopInset: 0.65
     pegBottomInset: 0.85
     wallInset: 0.08
-    rows: 6
+    rows: 4
     columns: 3
     pegRadius: 0.14
     ballRadius: 0.13
-    gravity: 6
+    gravity: 15
     restitution: 0.68
     damping: 0.025
     spawnSpread: 0.9
     horizontalKick: 0.8
     initialStagger: 0.45
     recycleDelay: 0.15
-    maxFallTime: 9
+    maxFallTime: 10
     multiplyRegion: 0.5
     mirrorRightBoards: 1
     collideBalls: 1
@@ -85,7 +85,7 @@ MonoBehaviour:
     maxStoredAmmo: 1073741824
     multiplier: 2
     firingMode: 0
-    shotsPerSecond: 20
+    shotsPerSecond: 50
     framesBetweenShots: 1
     cornerInset: 0.65
     hitRadius: 0.23
@@ -102,7 +102,7 @@ MonoBehaviour:
     destroyOnEnemyHit: 1
   projectile:
     useTeamFlagSprite: 1
-    speed: 8
+    speed: 10
     radius: 0.055
     visualScale: 2
     lifeTime: 25
@@ -123,18 +123,19 @@ MonoBehaviour:
     firstSpawnDelay: 3
     spawnIntervalMin: 15
     spawnIntervalMax: 15
-    preferSmallerTerritories: 1
+    preferSmallerTerritories: 0
     twoTeamSpawnIntervalMultiplier: 0.5
     maxActive: 3
-    pickupLifetime: 20
+    pickupLifetime: 30
     radius: 0.22
     edgeInset: 0.3
     cannonClearance: 0.3
     consumeProjectile: 1
     fireRateMultiplier: 2
     fireRateDuration: 30
-    extraMarbleDuration: 15
-    maxExtraMarbles: 5
+    doubleAmmoMultiplier: 10
+    extraMarbleDuration: 30
+    maxExtraMarbles: 10
     animateCollection: 1
     collectionFlightDuration: 1
     collectionEndScale: 0.4
@@ -154,13 +155,13 @@ MonoBehaviour:
       label: FR
     doubleAmmo:
       enabled: 1
-      spawnWeight: 1
+      spawnWeight: 2
       sprite: {fileID: 0}
       color: {r: 0.25, g: 1, b: 0.4, a: 1}
-      label: x2
+      label: x10
     extraMarble:
       enabled: 1
-      spawnWeight: 1
+      spawnWeight: 2
       sprite: {fileID: 0}
       color: {r: 0.3, g: 0.8, b: 1, a: 1}
       label: +1

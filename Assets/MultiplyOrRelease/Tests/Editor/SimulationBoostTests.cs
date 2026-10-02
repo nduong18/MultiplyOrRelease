@@ -52,6 +52,15 @@ public class SimulationBoostTests
         Assert.AreEqual(0, model.teams[0].fired);
     }
 
+    [Test] public void DoubleAmmoUsesConfiguredMultiplier()
+    {
+        config.boosts.doubleAmmoMultiplier = 25;
+        model.teams[0].ammo = 7; model.teams[0].queued = 11;
+        Collect(BoostKind.DoubleAmmo);
+        Assert.AreEqual(175, model.teams[0].ammo);
+        Assert.AreEqual(275, model.teams[0].queued);
+    }
+
     [Test] public void DoubleAmmoSaturatesWithoutOverflow()
     {
         model.teams[0].ammo = config.cannon.maxStoredAmmo / 2 + 1;

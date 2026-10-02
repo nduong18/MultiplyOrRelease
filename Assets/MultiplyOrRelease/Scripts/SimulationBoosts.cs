@@ -209,8 +209,12 @@ namespace MultiplyOrRelease
             return true;
         }
 
-        static long DoubleClamped(long amount, long ceiling)
-            => amount > ceiling / 2 ? ceiling : amount * 2;
+        static long MultiplyClamped(long amount, int multiplier, long ceiling)
+        {
+            if (amount <= 0) return 0;
+            if (multiplier <= 1) return Math.Min(amount, ceiling);
+            return amount > ceiling / multiplier ? ceiling : amount * multiplier;
+        }
 
         void StepBoostCollections()
         {
@@ -247,9 +251,9 @@ namespace MultiplyOrRelease
                     team.lastEvent = "BOOST SPEED";
                     break;
                 case BoostKind.DoubleAmmo:
-                    team.ammo = DoubleClamped(team.ammo, config.cannon.maxStoredAmmo);
-                    team.queued = DoubleClamped(team.queued, long.MaxValue);
-                    team.lastEvent = "BOOST x2 AMMO";
+                    team.ammo = MultiplyClamped(team.ammo, s.doubleAmmoMultiplier, config.cannon.maxStoredAmmo);
+                    team.queued = MultiplyClamped(team.queued, s.doubleAmmoMultiplier, long.MaxValue);
+                    team.lastEvent = "BOOST x" + s.doubleAmmoMultiplier + " AMMO";
                     break;
                 case BoostKind.ExtraMarble:
                     int count = 0;
