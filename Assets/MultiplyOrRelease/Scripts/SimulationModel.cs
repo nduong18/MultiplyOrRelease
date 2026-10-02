@@ -17,6 +17,7 @@ namespace MultiplyOrRelease
         public Vector2[] pegs;
         public string lastEvent = "READY";
         public float eventTime;
+        public float fireRateBoostUntil;
     }
     public sealed class PlinkoBall
     {
@@ -24,10 +25,13 @@ namespace MultiplyOrRelease
         public float delay, age;
         public int cycles;
         public bool active;
+        // Zero for permanent marbles; an absolute simulation time for boost marbles.
+        public float expiresAt;
     }
     public sealed class ShotState
     {
         public int id, team;
+        public int borderCollisions;
         public Vector2 position, velocity;
         public float age;
     }
@@ -35,7 +39,7 @@ namespace MultiplyOrRelease
     // All randomness and motion use a local fixed clock: pausing/speed changes never
     // alter Unity's global time scale or physics settings. Optional frame-based
     // firing additionally requires one AdvanceFiringFrame call per active render frame.
-    public sealed class SimulationModel
+    public sealed partial class SimulationModel
     {
         public readonly SimulationConfig config;
         public readonly TeamState[] teams = new TeamState[4];
@@ -53,7 +57,7 @@ namespace MultiplyOrRelease
         public event Action<int> ShotFired;
         readonly System.Random random;
         readonly Stack<ShotState> shotPool = new Stack<ShotState>();
-        readonly int[] firingFrameCooldown = new int[4];
+        readonly float[] firingFrameCooldown = new float[4];
         int nextShotId, fireCursor;
         float finishTimer;
         public float CellWidth => config.board.size / config.board.columns;
@@ -75,6 +79,7 @@ namespace MultiplyOrRelease
             config = source;
             config.Validate();
             random = new System.Random(seed);
+            InitializeBoosts(seed);
             owners = new int[config.board.columns * config.board.rows];
             for (int y = 0; y < config.board.rows; y++)
                 for (int x = 0; x < config.board.columns; x++)
@@ -139,6 +144,7 @@ namespace MultiplyOrRelease
             elapsed += dt;
             if (phase == MatchPhase.Running)
             {
+                StepBoosts();
                 for (int t = 0; t < 4; t++) if (teams[t].alive)
                 {
                     UpdateCannon(t);
@@ -150,6 +156,7 @@ namespace MultiplyOrRelease
             if (phase == MatchPhase.Running && AliveCount <= 1)
             {
                 phase = MatchPhase.Settling;
+                boosts.Clear();
                 for (int i = 0; i < 4; i++) teams[i].queued = 0;
             }
             if (phase == MatchPhase.Settling && shots.Count == 0)
@@ -176,6 +183,7 @@ namespace MultiplyOrRelease
                 resultReason = "Time limit — territory ranking";
                 for (int t = 0; t < 4; t++) teams[t].queued = 0;
                 phase = MatchPhase.Finished;
+                boosts.Clear();
             }
         }
         void UpdateCannon(int t)
@@ -293,7 +301,7 @@ namespace MultiplyOrRelease
             for (int i = 0; i < 4; i++)
             {
                 var s = teams[i];
-                s.fireCredit = s.queued > 0 ? Mathf.Min(s.fireCredit + config.cannon.shotsPerSecond * dt, budget) : 0;
+                s.fireCredit = s.queued > 0 ? Mathf.Min(s.fireCredit + config.cannon.shotsPerSecond * FireRateScale(i) * dt, budget) : 0;
             }
             // Round robin makes the active-shot budget fair across all four teams.
             while (budget > 0 && shots.Count < config.projectile.maxActive)
@@ -317,16 +325,23 @@ namespace MultiplyOrRelease
         {
             if (config.cannon.firingMode != FiringMode.FramesBetweenShots || phase != MatchPhase.Running) return;
             for (int t = 0; t < 4; t++)
-                if (firingFrameCooldown[t] > 0) firingFrameCooldown[t]--;
+                firingFrameCooldown[t] = Mathf.Max(1 - FireRateScale(t), firingFrameCooldown[t] - FireRateScale(t));
             int budget = config.projectile.maxSpawnsPerTick;
-            for (int i = 0; i < 4 && budget > 0 && shots.Count < config.projectile.maxActive; i++)
+            // A boosted one-frame interval can fire multiple shots in this frame.
+            // Credit is limited to this frame; blocked capacity never causes catch-up bursts.
+            while (budget > 0 && shots.Count < config.projectile.maxActive)
             {
-                int t = fireCursor++ % 4;
-                var s = teams[t];
-                if (!s.alive || s.queued == 0 || firingFrameCooldown[t] > 0) continue;
-                SpawnQueuedShot(t);
-                firingFrameCooldown[t] = config.cannon.framesBetweenShots;
-                budget--;
+                bool fired = false;
+                for (int i = 0; i < 4 && budget > 0 && shots.Count < config.projectile.maxActive; i++)
+                {
+                    int t = fireCursor++ % 4;
+                    var s = teams[t];
+                    if (!s.alive || s.queued == 0 || firingFrameCooldown[t] > 0) continue;
+                    SpawnQueuedShot(t);
+                    firingFrameCooldown[t] += config.cannon.framesBetweenShots;
+                    budget--; fired = true;
+                }
+                if (!fired) break;
             }
         }
         void SpawnQueuedShot(int t)
@@ -336,6 +351,7 @@ namespace MultiplyOrRelease
             var direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
             var shot = shotPool.Count > 0 ? shotPool.Pop() : new ShotState();
             shot.id = ++nextShotId; shot.team = t; shot.age = 0;
+            shot.borderCollisions = 0;
             shot.position = s.cannonPosition + direction * config.cannon.muzzleLength;
             shot.velocity = direction * config.projectile.speed;
             shots.Add(shot);
@@ -376,16 +392,33 @@ namespace MultiplyOrRelease
                         }
                     }
                     if (remove) break;
+                    if (TryHitBoost(shot, old, shot.position) && config.boosts.consumeProjectile)
+                    {
+                        remove = true; break;
+                    }
                     float limit = half - config.projectile.radius;
+                    bool hitBorder = false;
                     if (Mathf.Abs(shot.position.x) > limit)
                     {
                         if (!config.projectile.bounceAtArenaEdge) { remove = true; break; }
                         shot.position.x = Mathf.Clamp(shot.position.x, -limit, limit); shot.velocity.x *= -1;
+                        hitBorder = true;
                     }
                     if (Mathf.Abs(shot.position.y) > limit)
                     {
                         if (!config.projectile.bounceAtArenaEdge) { remove = true; break; }
                         shot.position.y = Mathf.Clamp(shot.position.y, -limit, limit); shot.velocity.y *= -1;
+                        hitBorder = true;
+                    }
+                    // Count one physical contact even if both axes reflect at a corner.
+                    // Friendly cells, captures, cannons and pickups never add border hits.
+                    if (hitBorder)
+                    {
+                        if (shot.borderCollisions < int.MaxValue) shot.borderCollisions++;
+                        if (config.projectile.maxBorderCollisions > 0 && shot.borderCollisions > config.projectile.maxBorderCollisions)
+                        {
+                            remove = true; break;
+                        }
                     }
                     int x = Mathf.Clamp((int)((shot.position.x + half) / CellWidth), 0, config.board.columns - 1);
                     int y = Mathf.Clamp((int)((shot.position.y + half) / CellHeight), 0, config.board.rows - 1);
@@ -432,6 +465,7 @@ namespace MultiplyOrRelease
             if (!teams[t].alive) return;
             teams[t].alive = false; teams[t].health = 0; teams[t].queued = 0;
             teams[t].lastEvent = "ELIMINATED"; teams[t].eventTime = elapsed;
+            teams[t].fireRateBoostUntil = 0;
             foreach (var b in teams[t].balls) b.active = false;
         }
     }

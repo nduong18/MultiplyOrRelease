@@ -1,5 +1,23 @@
 # Multiply or Release
 
+## Giới hạn va chạm border của đạn
+
+`DefaultSimulation > Projectile > Max Border Collisions` mặc định **10**: từng viên đạn bật lại tối đa 10 lần ở border và biến mất ở lần chạm border thứ **11**. `0` tắt giới hạn. Chạm góc đồng thời ở hai trục tính một lần. Bộ đếm riêng cho mỗi viên và được đặt lại khi đạn mới dùng lại pool. Chạm grid/cannon/boost không tăng bộ đếm border; Despawn On Capture vẫn bật mặc định, nên chạm grid đối phương vẫn chiếm ô rồi biến mất ngay. Lifetime và Consume Projectile vẫn áp dụng. Bấm Apply / Restart sau khi chỉnh trong Play mode.
+
+## Boost ngẫu nhiên
+
+Chỉnh trong `DefaultSimulation > Boosts`, rồi bấm **Apply / Restart**. Boost xuất hiện trong arena sau 3 giây mô phỏng, tiếp theo ngẫu nhiên mỗi 5–10 giây; tối đa 3 vật phẩm, tự biến mất sau 20 giây nếu không được nhặt. Vị trí tránh cannon, mép bản đồ và vật phẩm khác. Seed quyết định vị trí, loại và nhịp xuất hiện.
+
+- **SPD** (vàng): tốc độ bắn x2 trong 30 giây. Nhặt lại làm mới thời hạn, không cộng dồn hệ số. Áp dụng cả Shots Per Second và Frames Between Shots; khi boost làm tốc độ vượt một phát/frame, cannon có thể bắn nhiều phát trong cùng frame. Vẫn tuân theo giới hạn đạn active/spawn.
+- **x2** (xanh lá): nhân đôi kho đạn và đạn còn chờ bắn sau Release; không nhân đạn đã bay. Kho tuân theo Max Stored Ammo; hàng chờ giới hạn ở số nguyên 64-bit, không tràn số.
+- **+1** (xanh dương): thêm một bi Plinko hoạt động bình thường trong 30 giây. Mỗi bi thêm có thời hạn riêng; tối đa 5 bi thêm mỗi đội. Khi đạt giới hạn, nhặt tiếp làm mới thời hạn bi thêm cũ nhất. Hết hạn chỉ xóa bi đó, giữ nguyên bi còn lại.
+
+Đội sở hữu viên đạn bắn trúng nhận boost, kể cả khi vật phẩm nằm trong lãnh thổ đội khác. Mỗi vật phẩm chỉ được nhặt một lần; đạn của đội đã bị loại không nhận boost. Consume Projectile bật mặc định: viên đạn nhặt vật phẩm biến mất. Tắt để đạn tiếp tục bay và xử lý grid như thường. Khi trận chuyển sang Settling/Finished, vật phẩm trên sân được dọn.
+
+Mọi timer dùng thời gian mô phỏng: Pause dừng timer, Step tiến một tick, Speed thay đổi tốc độ đếm. Timer bi thêm vẫn chạy khi Plinko tạm dừng để Release. Restart xóa boost và bi tạm, khôi phục lượt chạy theo seed.
+
+`Fire Rate / Double Ammo / Extra Marble` có Enabled, Spawn Weight, Sprite, Color và Label riêng. Bỏ chọn Enabled trong từng loại để tắt riêng loại đó, giữ nguyên Spawn Weight để bật lại. Enabled ở đầu Boosts tắt toàn bộ vật phẩm. Weight = 0 cũng ngừng spawn loại đó. Apply / Restart sau khi chỉnh. Sprite để None dùng hình tròn; kéo sprite mới vào từng loại để thay hình. Radius điều khiển va chạm; Visual Scale điều khiển kích thước hình. Có thể chỉnh thời gian spawn, số lượng, lifetime, khoảng tránh cannon/mép arena, hệ số/thời hạn tốc độ, thời hạn/số bi thêm, cỡ/màu chữ, Show Labels và Sorting Order. Diagnostics trong Inspector hiển thị số vật phẩm, số bi mỗi đội và thời gian speed boost còn lại.
+
 Game simulation 2D cho Unity 6000.3.19f1, triển khai theo `C:/Users/tt/Downloads/Multiply or Release Docs.docx` và ảnh trong tài liệu.
 
 ## Chạy game

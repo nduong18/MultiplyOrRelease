@@ -26,6 +26,7 @@ namespace MultiplyOrRelease
         public PlinkoSettings plinko = new PlinkoSettings();
         public CannonSettings cannon = new CannonSettings();
         public ProjectileSettings projectile = new ProjectileSettings();
+        public BoostSettings boosts = new BoostSettings();
         public GridImpactSettings gridImpact = new GridImpactSettings();
         public PresentationSettings presentation = new PresentationSettings();
         public CelebrationSettings celebration = new CelebrationSettings();
@@ -39,6 +40,7 @@ namespace MultiplyOrRelease
 
         public void Validate()
         {
+            if (boosts == null) boosts = new BoostSettings();
             if (gridImpact == null) gridImpact = new GridImpactSettings();
             gridImpact.Validate();
             if (celebration == null) celebration = new CelebrationSettings();
@@ -49,6 +51,7 @@ namespace MultiplyOrRelease
             board.columns = Mathf.Clamp(board.columns, 8, 160);
             board.rows = Mathf.Clamp(board.rows, 8, 160);
             board.size = Mathf.Clamp(board.size, 4, 30);
+            boosts.Validate(board.size);
             board.gridLineThickness = Mathf.Clamp(board.gridLineThickness, 0, .35f);
             plinko.ballCount = Mathf.Clamp(plinko.ballCount, 1, 30);
             plinko.rows = Mathf.Clamp(plinko.rows, 2, 12);
@@ -75,6 +78,7 @@ namespace MultiplyOrRelease
             projectile.lifeTime = Mathf.Clamp(projectile.lifeTime, 1, 120);
             projectile.maxActive = Mathf.Clamp(projectile.maxActive, 32, 5000);
             projectile.maxSpawnsPerTick = Mathf.Clamp(projectile.maxSpawnsPerTick, 1, 128);
+            projectile.maxBorderCollisions = Mathf.Clamp(projectile.maxBorderCollisions, 0, 1000000);
             projectile.radius = Mathf.Clamp(projectile.radius, .01f, .2f);
             projectile.visualScale = Mathf.Clamp(projectile.visualScale, .1f, 10);
             projectile.captureRadiusCells = Mathf.Clamp(projectile.captureRadiusCells, 0, 4);
@@ -235,6 +239,8 @@ namespace MultiplyOrRelease
         public bool despawnOnCapture = true;
         public bool bounceOnCapture = false;
         public bool bounceAtArenaEdge = true;
+        [Tooltip("Remove a bullet when its border-contact count exceeds this value. 10 = disappear on contact 11; 0 disables the limit. Grid, cannon and boost contacts do not count. A simultaneous corner contact counts once.")]
+        [Min(0)] public int maxBorderCollisions = 10;
         [Range(0, 4)] public int captureRadiusCells = 0;
         public float trailTime = .17f;
         [Tooltip("Automatically match trail width to the bullet's visible diameter, including Visual Scale. Disable to use Trail Width.")]

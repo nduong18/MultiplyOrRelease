@@ -18,6 +18,9 @@ namespace MultiplyOrRelease
         readonly SpriteRenderer[][] balls = new SpriteRenderer[4][];
         readonly TrailRenderer[][] ballTrails = new TrailRenderer[4][];
         readonly int[][] ballCycles = new int[4][];
+        readonly PlinkoBall[][] ballStates = new PlinkoBall[4][];
+        readonly Dictionary<int, BoostVisual> boostViews = new Dictionary<int, BoostVisual>();
+        readonly Stack<BoostVisual> freeBoosts = new Stack<BoostVisual>();
         readonly TextMesh[] ammo = new TextMesh[4], status = new TextMesh[4];
         readonly Dictionary<int, ShotVisual> shotViews = new Dictionary<int, ShotVisual>();
         readonly Stack<ShotVisual> freeShots = new Stack<ShotVisual>();
@@ -41,6 +44,11 @@ namespace MultiplyOrRelease
         {
             public SpriteRenderer renderer;
             public TrailRenderer trail;
+        }
+        sealed class BoostVisual
+        {
+            public SpriteRenderer renderer;
+            public TextMesh label;
         }
 
         public SimulationView(Transform parent, SimulationModel simulation, bool isPreview)
@@ -158,14 +166,80 @@ namespace MultiplyOrRelease
                 team.cannonSprite != null ? team.cannonSprite : c.presentation.circleSprite,
                 team.cannonSprite != null ? team.cannonTint : team.territoryColor, 12, cannonParent);
             balls[t] = new SpriteRenderer[s.balls.Length]; ballTrails[t] = new TrailRenderer[s.balls.Length]; ballCycles[t] = new int[s.balls.Length];
-            for (int b = 0; b < s.balls.Length; b++)
-            {
-                balls[t][b] = Sprite("Plinko Marble " + (b + 1), center + s.balls[b].position, Vector2.one * p.ballRadius * 2,
-                    team.plinkoSprite != null ? team.plinkoSprite : c.presentation.circleSprite,
-                    team.plinkoBallColor, 8);
-                ballTrails[t][b] = Trail(balls[t][b].transform.parent, team.plinkoTrailColor, p.trailTime, p.trailWidth, 7, p.taperTrail);
-            }
+            ballStates[t] = new PlinkoBall[s.balls.Length];
+            SyncBallVisuals(t);
             defaultParent = null;
+        }
+        void SyncBallVisuals(int t)
+        {
+            int count = model.teams[t].balls.Length;
+            var p = c.plinko; var team = c.teams[t];
+            for (int b = count; b < balls[t].Length; b++)
+            {
+                var pivot = balls[t][b].transform.parent.gameObject;
+                pivot.SetActive(false); Destroy(pivot);
+            }
+            Array.Resize(ref balls[t], count);
+            Array.Resize(ref ballTrails[t], count);
+            Array.Resize(ref ballCycles[t], count);
+            Array.Resize(ref ballStates[t], count);
+            for (int b = 0; b < count; b++)
+            {
+                var state = model.teams[t].balls[b];
+                if (balls[t][b] == null)
+                {
+                    balls[t][b] = Sprite("Plinko Marble " + (b + 1), centers[t] + state.position, Vector2.one * p.ballRadius * 2,
+                        team.plinkoSprite != null ? team.plinkoSprite : c.presentation.circleSprite, team.plinkoBallColor, 8, plinkoPanels[t]);
+                    ballTrails[t][b] = Trail(balls[t][b].transform.parent, team.plinkoTrailColor, p.trailTime, p.trailWidth, 7, p.taperTrail);
+                }
+                if (ballStates[t][b] == state) continue;
+                ballStates[t][b] = state;
+                ballCycles[t][b] = state.cycles;
+                var trail = ballTrails[t][b];
+                trail.emitting = false;
+                balls[t][b].transform.parent.localPosition = centers[t] + state.position;
+                trail.Clear();
+            }
+        }
+        void RenderBoosts()
+        {
+            liveIds.Clear();
+            foreach (var boost in model.boosts)
+            {
+                liveIds.Add(boost.id);
+                var appearance = c.boosts.Appearance(boost.kind);
+                var sprite = appearance.sprite != null ? appearance.sprite : c.presentation.circleSprite;
+                Vector2 size = Vector2.one * (c.boosts.radius * 2 * c.boosts.visualScale);
+                if (!boostViews.TryGetValue(boost.id, out var visual))
+                {
+                    if (freeBoosts.Count > 0) visual = freeBoosts.Pop();
+                    else
+                    {
+                        visual = new BoostVisual();
+                        visual.renderer = Sprite("Boost Pickup", boost.position, size, sprite, appearance.color, c.boosts.sortingOrder, root);
+                        defaultParent = visual.renderer.transform.parent;
+                        visual.label = Text("Boost Label", "", Vector2.zero, c.boosts.labelSize, c.boosts.labelColor, c.boosts.sortingOrder + 1);
+                        defaultParent = null;
+                    }
+                    boostViews.Add(boost.id, visual);
+                }
+                var pivot = visual.renderer.transform.parent;
+                pivot.gameObject.SetActive(true);
+                pivot.name = "Boost " + boost.kind;
+                pivot.localPosition = boost.position;
+                SetSpriteSize(visual.renderer, sprite, size);
+                visual.renderer.color = appearance.color;
+                visual.label.text = appearance.label;
+                visual.label.gameObject.SetActive(c.boosts.showLabels);
+            }
+            deadIds.Clear();
+            foreach (var pair in boostViews) if (!liveIds.Contains(pair.Key)) deadIds.Add(pair.Key);
+            foreach (int id in deadIds)
+            {
+                var visual = boostViews[id];
+                visual.renderer.transform.parent.gameObject.SetActive(false);
+                freeBoosts.Push(visual); boostViews.Remove(id);
+            }
         }
         Texture2D MakeAtlas()
         {
@@ -307,6 +381,7 @@ namespace MultiplyOrRelease
                 status[t].gameObject.SetActive(c.presentation.showPlinkoStatus);
                 status[t].color = s.alive ? team.ammoTextColor : c.presentation.secondaryTextColor;
                 bool plinkoPaused = model.IsPlinkoPaused(t);
+                SyncBallVisuals(t);
                 for (int b = 0; b < s.balls.Length; b++)
                 {
                     var ball = s.balls[b]; var r = balls[t][b]; var tr = ballTrails[t][b];
@@ -321,6 +396,7 @@ namespace MultiplyOrRelease
                     ballCycles[t][b] = ball.cycles;
                 }
             }
+            RenderBoosts();
             liveIds.Clear();
             foreach (var s in model.shots)
             {

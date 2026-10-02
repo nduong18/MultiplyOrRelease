@@ -112,11 +112,50 @@ MonoBehaviour:
     despawnOnCapture: 1
     bounceOnCapture: 0
     bounceAtArenaEdge: 1
+    maxBorderCollisions: 4
     captureRadiusCells: 0
     trailTime: 0.15
     matchTrailToSize: 1
     trailWidth: 0.095
     taperTrail: 0
+  boosts:
+    enabled: 1
+    firstSpawnDelay: 3
+    spawnIntervalMin: 15
+    spawnIntervalMax: 15
+    maxActive: 3
+    pickupLifetime: 20
+    radius: 0.22
+    edgeInset: 0.3
+    cannonClearance: 0.3
+    consumeProjectile: 1
+    fireRateMultiplier: 2
+    fireRateDuration: 30
+    extraMarbleDuration: 30
+    maxExtraMarbles: 5
+    visualScale: 1
+    sortingOrder: 16
+    showLabels: 1
+    labelColor: {r: 0, g: 0, b: 0, a: 1}
+    labelSize: 0.14
+    fireRate:
+      enabled: 1
+      spawnWeight: 1
+      sprite: {fileID: 0}
+      color: {r: 1, g: 0.7, b: 0.1, a: 1}
+      label: FR
+    doubleAmmo:
+      enabled: 1
+      spawnWeight: 1
+      sprite: {fileID: 0}
+      color: {r: 0.25, g: 1, b: 0.4, a: 1}
+      label: x2
+    extraMarble:
+      enabled: 0
+      spawnWeight: 1
+      sprite: {fileID: 0}
+      color: {r: 0.3, g: 0.8, b: 1, a: 1}
+      label: +1
   gridImpact:
     enabled: 1
     useTeamColor: 1
@@ -166,7 +205,8 @@ MonoBehaviour:
     resultFontSize: 42
   celebration:
     enableStartCountdown: 1
-    countdownStartDelay: 1
+    countdownStartDelay: 1.5
+    countdownAnimationDelay: 1
     countdownStepDuration: 1
     countdownFontSize: 200
     countdownFont: {fileID: 12800000, guid: d3c9886b610629a449978a1803f4d812, type: 3}

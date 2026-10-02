@@ -226,13 +226,14 @@ namespace MultiplyOrRelease
         {
             if (Model == null) return "No model";
             string s = "phase=" + Model.phase + " elapsed=" + Model.elapsed.ToString("0.00") + " alive=" + Model.AliveCount +
-                " activeShots=" + Model.shots.Count + " fired=" + Model.totalFired + " seed=" + CurrentSeed + " winner=" + Model.winner;
+                " activeShots=" + Model.shots.Count + " boosts=" + Model.boosts.Count + " fired=" + Model.totalFired + " seed=" + CurrentSeed + " winner=" + Model.winner;
             for (int t = 0; t < 4; t++)
             {
                 var team = Model.teams[t]; int cycles = 0;
                 foreach (var b in team.balls) cycles += b.cycles;
                 s += "\n" + config.teams[t].name + ": ammo=" + team.ammo + " queued=" + team.queued + " fired=" + team.fired +
-                    " ×2=" + team.multiplies + " releases=" + team.releases + " cells=" + Model.territoryCounts[t] + " cycles=" + cycles + " alive=" + team.alive;
+                    " ×2=" + team.multiplies + " releases=" + team.releases + " cells=" + Model.territoryCounts[t] + " cycles=" + cycles + " alive=" + team.alive +
+                    " marbles=" + team.balls.Length + " speedBoost=" + Mathf.Max(0, team.fireRateBoostUntil - Model.elapsed).ToString("0.0") + "s";
             }
             return s;
         }

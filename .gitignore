@@ -115,3 +115,6 @@ InitTestScene*.unity*
 
 # Flag asset tooling; generated Unity textures and the lockfile are versioned.
 /Tools/FlagAssets/node_modules/
+
+# Unity MCP verification screenshots.
+/Captures/
