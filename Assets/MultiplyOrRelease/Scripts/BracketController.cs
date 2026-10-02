@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MultiplyOrRelease
 {
-    public enum BracketPhase { Ready, PreparingMatch, PlayingMatch, ShowingResult, Champion }
+    public enum BracketPhase { Ready, PreparingMatch, PlayingMatch, ShowingResult, Champion, TransitioningToMatch, TransitioningToBracket }
 
     [ExecuteAlways]
     public sealed class BracketController : MonoBehaviour
@@ -17,6 +17,7 @@ namespace MultiplyOrRelease
         public int ActiveMatch { get; private set; } = -1;
         public BracketPhase Phase { get; private set; }
         BracketView view;
+        SceneTransition transition;
         SimulationConfig matchConfig;
         SimulationCelebration championCelebration;
         bool rebuildRequested;
@@ -73,6 +74,7 @@ namespace MultiplyOrRelease
             if (config == null) return;
             State = new BracketState(config.teams);
             view = new BracketView(transform, config, bracketCamera);
+            if (Application.isPlaying) transition = new SceneTransition(transform);
             view.Refresh(State); attempts = 0;
             Phase = BracketPhase.Ready;
             if (Application.isPlaying && State.IsReady && simulation != null && config.simulation != null)
@@ -92,11 +94,17 @@ namespace MultiplyOrRelease
                 yield return view.AnimateMatch(ActiveMatch, Mathf.Max(.05f, config.flagMoveDuration));
                 if (config.matchStartDelay > 0)
                     yield return new WaitForSecondsRealtime(config.matchStartDelay);
+                Phase = BracketPhase.TransitioningToMatch;
+                yield return transition.Cover(config.transitionStyle, config.transitionDuration, config.transitionColor);
                 matchConfig = State.CreateMatchConfig(config.simulation, ActiveMatch);
                 matchConfig.randomSeed = NextMatchSeed(matchConfig.randomSeed);
+                // Build the arena under the cover; start 321 GO only after it is revealed.
+                matchConfig.autoStart = false;
                 simulation.config = matchConfig;
                 view.ShowMatch(); simulation.gameObject.SetActive(true);
                 while (simulation.Model == null) yield return null;
+                yield return transition.Reveal();
+                simulation.StartMatch();
                 Phase = BracketPhase.PlayingMatch;
                 while (simulation.Model.phase != MatchPhase.Finished) yield return null;
                 if (matchConfig.celebration.enableVictoryCard)
@@ -105,10 +113,13 @@ namespace MultiplyOrRelease
                 // Count from actual card visibility, not from the winning hit.
                 if (config.winnerCardHoldDuration > 0)
                     yield return new WaitForSecondsRealtime(config.winnerCardHoldDuration);
+                Phase = BracketPhase.TransitioningToBracket;
+                yield return transition.Cover(config.transitionStyle, config.transitionDuration, config.transitionColor);
                 int winner = simulation.Model.winner;
                 if (winner >= 0) State.RecordWinner(ActiveMatch, winner);
                 EndMatch();
                 view.ShowBracket(); view.Refresh(State);
+                yield return transition.Reveal();
                 yield return null;
                 // Draws replay the same group with a fresh seed.
             }
@@ -146,6 +157,7 @@ namespace MultiplyOrRelease
         void Cleanup()
         {
             StopAllCoroutines();
+            transition?.Dispose(); transition = null;
             if (championCelebration != null)
             {
                 championCelebration.Clear(); championCelebration.gameObject.SetActive(false);

@@ -268,3 +268,6 @@ MonoBehaviour:
   flagMoveDuration: 1
   matchStartDelay: 2
   winnerCardHoldDuration: 5
+  transitionStyle: 6
+  transitionDuration: 0.8
+  transitionColor: {r: 0, g: 0, b: 0, a: 1}

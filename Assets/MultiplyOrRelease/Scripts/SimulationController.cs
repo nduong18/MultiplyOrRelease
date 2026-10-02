@@ -171,8 +171,9 @@ namespace MultiplyOrRelease
             celebration = host.AddComponent<SimulationCelebration>();
             celebration.Initialize(this, sessionConfig);
         }
-        void StartMatch()
+        public void StartMatch()
         {
+            if (Model == null || Model.phase != MatchPhase.Ready || CountdownActive) return;
             if (Application.isPlaying && sessionConfig.celebration.enableStartCountdown)
             {
                 EnsureCelebration();

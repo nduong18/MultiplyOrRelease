@@ -4,6 +4,8 @@
 
 ## Tournament Bracket
 
+Chuyển giữa bracket và trận đấu dùng `DefaultBracket > Scene Transition`: `Fade` (mặc định), `Wipe Left/Right/Up/Down` (quét màn hình), `Curtain` (đóng/mở rèm), hoặc `None` (chuyển ngay). `Transition Duration` là tổng thời gian che và mở màn hình, mặc định 0,8 giây thực; `Transition Color` chỉnh màu che. Transition chạy sau thời gian chờ cờ/winner card, rồi mới bắt đầu countdown 321 GO hoặc thời gian chờ bracket tiếp theo. Không bị ảnh hưởng bởi Simulation Speed. Khi sửa roster hoặc khởi động lại giải, cover được dọn ngay.
+
 `DefaultBracket > Randomize Match Seed` mặc định bật: mỗi trận, lượt đấu lại khi hòa và lần khởi động lại giải nhận seed ngẫu nhiên mới. Seed giữ cố định trong suốt một trận; xem seed đang dùng ở Inspector của `Tournament Match`. Config simulation gốc không bị thay đổi. Tắt tùy chọn này để dùng `Simulation > Random Seed` cộng số lượt đã chạy trong giải, giúp tái hiện cùng chuỗi trận khi debug. Seed chỉ đổi ngẫu nhiên của gameplay, không đổi đội hay thứ tự bracket.
 
 Mở scene `Assets/MultiplyOrRelease/Scenes/Bracket.unity` hoặc menu `Tools > Multiply or Release > Create or Open Bracket`. Bracket gồm 16 đội: M1/M2 bên trái, M3/M4 bên phải, mỗi trận 4 đội; W1–W4 vào chung kết M5. Bố cục tự thu theo màn hình, chỉ hiển thị cờ và đường nối, không hiện tên đội.

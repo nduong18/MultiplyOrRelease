@@ -34,5 +34,10 @@ namespace MultiplyOrRelease
         [Min(0)] public float matchStartDelay = 2;
         [Tooltip("Real seconds to show the winner card before returning to the bracket.")]
         [Min(0)] public float winnerCardHoldDuration = 5;
+        [Header("Scene Transition")]
+        public SceneTransitionStyle transitionStyle = SceneTransitionStyle.Fade;
+        [Tooltip("Total real seconds for covering the old scene and revealing the new scene. Zero switches immediately.")]
+        [Min(0)] public float transitionDuration = .8f;
+        public Color transitionColor = Color.black;
     }
 }

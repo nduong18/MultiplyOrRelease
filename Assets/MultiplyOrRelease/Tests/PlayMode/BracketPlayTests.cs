@@ -35,6 +35,7 @@ public class BracketPlayTests
             simulationConfig.celebration.victoryCardDelay = .1f;
         }
         simulationConfig.celebration.enableSounds = false;
+        config.transitionStyle = SceneTransitionStyle.None;
         simulationConfig.celebration.enableVictoryConfetti = true;
         bracket.config = config; bracket.Rebuild();
         yield return null;
@@ -245,6 +246,59 @@ public class BracketPlayTests
         bracket.Rebuild(); yield return null;
         yield return WaitForPhase(BracketPhase.PlayingMatch);
         Assert.AreEqual(simulationConfig.randomSeed, bracket.simulation.CurrentSeed);
+    }
+    [UnityTest] public IEnumerator TransitionStylesCoverTheSwitchAndCountdownWaitsForReveal()
+    {
+        yield return Load(true);
+        foreach (SceneTransitionStyle style in System.Enum.GetValues(typeof(SceneTransitionStyle)))
+        {
+            config.transitionStyle = style;
+            config.transitionDuration = .6f;
+            bracket.Rebuild(); yield return null;
+            var overlay = bracket.transform.Find("Scene Transition");
+            Assert.IsFalse(overlay.gameObject.activeSelf);
+            if (style != SceneTransitionStyle.None)
+            {
+                yield return WaitForPhase(BracketPhase.TransitioningToMatch);
+                Assert.IsFalse(bracket.simulation.gameObject.activeSelf, "Old bracket stays visible while the cover closes.");
+                yield return new WaitForSecondsRealtime(.4f);
+                Assert.AreEqual(BracketPhase.TransitioningToMatch, bracket.Phase);
+                Assert.IsTrue(overlay.gameObject.activeSelf);
+                Assert.IsNotNull(bracket.simulation.Model);
+                Assert.AreEqual(MatchPhase.Ready, bracket.simulation.Model.phase);
+                Assert.IsFalse(bracket.simulation.CountdownActive, "321 GO must wait for the reveal.");
+                var cover = overlay.Find("Cover").GetComponent<Image>();
+                Assert.Greater(cover.rectTransform.rect.width * cover.rectTransform.rect.height, 0);
+                Assert.Greater(cover.color.a, 0);
+                Assert.AreEqual(style == SceneTransitionStyle.Curtain, overlay.Find("Second Cover").gameObject.activeSelf);
+            }
+            yield return WaitForPhase(BracketPhase.PlayingMatch);
+            Assert.IsFalse(overlay.gameObject.activeSelf);
+            Assert.IsTrue(bracket.simulation.CountdownActive);
+            FinishWithWinner(0);
+            yield return WaitForPhase(BracketPhase.ShowingResult);
+            if (style != SceneTransitionStyle.None)
+            {
+                yield return WaitForPhase(BracketPhase.TransitioningToBracket);
+                Assert.IsTrue(bracket.simulation.gameObject.activeSelf, "Winner card stays until the scene is covered.");
+                yield return new WaitForSecondsRealtime(.4f);
+                Assert.IsFalse(bracket.simulation.gameObject.activeSelf);
+                Assert.IsTrue(overlay.gameObject.activeSelf);
+                Assert.IsTrue(bracket.transform.Find("Bracket Presentation/Bracket Board").gameObject.activeInHierarchy);
+            }
+            yield return WaitForPhase(BracketPhase.PreparingMatch);
+            Assert.AreEqual(2, bracket.ActiveMatch);
+            Assert.IsFalse(overlay.gameObject.activeSelf);
+        }
+        // Interrupt a transition by clearing the roster; the cover must disappear.
+        config.transitionStyle = SceneTransitionStyle.Fade;
+        bracket.Rebuild(); yield return null;
+        yield return WaitForPhase(BracketPhase.TransitioningToMatch);
+        config.teams = new TeamPreset[0];
+        yield return null; yield return null;
+        Assert.AreEqual(BracketPhase.Ready, bracket.Phase);
+        Assert.IsFalse(bracket.transform.Find("Scene Transition").gameObject.activeSelf);
+        Assert.IsFalse(bracket.simulation.gameObject.activeSelf);
     }
     [UnityTest] public IEnumerator DrawAutomaticallyReplaysSameGroupWithNewSeed()
     {
