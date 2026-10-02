@@ -22,6 +22,8 @@ namespace MultiplyOrRelease
         [Range(48, 90)] public float flagSize = 76;
         [Range(1, 6)] public float lineWidth = 3;
         [Header("Automatic Tournament")]
+        [Tooltip("Generate a fresh seed for every match and draw replay. Disable to use Simulation Random Seed plus the match attempt index.")]
+        public bool randomizeMatchSeed = true;
         [Tooltip("Real seconds to show the bracket before the flags begin moving.")]
         [Min(0)] public float flagMoveDelay = 3;
         [Tooltip("Real seconds for the four flags to slide into their numbered positions.")]

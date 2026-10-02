@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MultiplyOrRelease
@@ -20,29 +21,61 @@ namespace MultiplyOrRelease
         SimulationCelebration championCelebration;
         bool rebuildRequested;
         int attempts;
+        readonly HashSet<int> usedRandomSeeds = new HashSet<int>();
+        BracketConfig builtConfig;
+        TeamPreset[] configuredTeams;
 
         void OnEnable()
         {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.update -= UpdateEditorPreview;
+            UnityEditor.EditorApplication.update += UpdateEditorPreview;
+#endif
             if (!Application.isPlaying && config != null) Rebuild();
             else rebuildRequested = true;
         }
         void OnValidate() { rebuildRequested = true; }
-        void OnDisable() { Cleanup(); }
+        void OnDisable()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.update -= UpdateEditorPreview;
+#endif
+            Cleanup();
+        }
         void OnDestroy() { Cleanup(); }
+#if UNITY_EDITOR
+        void UpdateEditorPreview()
+        {
+            // Asset Inspector changes do not always tick ExecuteAlways.Update.
+            if (!Application.isPlaying && !UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode &&
+                !UnityEditor.EditorApplication.isCompiling && !UnityEditor.EditorApplication.isUpdating)
+                Update();
+        }
+#endif
         void Update()
         {
-            if (rebuildRequested) { rebuildRequested = false; Rebuild(); }
+            if (rebuildRequested || RosterChanged()) { rebuildRequested = false; Rebuild(); }
+        }
+        bool RosterChanged()
+        {
+            if (config != builtConfig) return true;
+            var teams = config != null ? config.teams : null;
+            if (teams == null || configuredTeams == null) return teams != configuredTeams;
+            if (teams.Length != configuredTeams.Length) return true;
+            for (int i = 0; i < teams.Length; i++) if (teams[i] != configuredTeams[i]) return true;
+            return false;
         }
         public void Rebuild()
         {
             rebuildRequested = false; Cleanup();
+            builtConfig = config;
+            configuredTeams = config != null && config.teams != null ? (TeamPreset[])config.teams.Clone() : null;
             if (config == null) return;
-            try { State = new BracketState(config.teams); }
-            catch (ArgumentException ex) { Debug.LogError("Bracket: " + ex.Message, this); return; }
+            State = new BracketState(config.teams);
             view = new BracketView(transform, config, bracketCamera);
             view.Refresh(State); attempts = 0;
             Phase = BracketPhase.Ready;
-            if (Application.isPlaying && simulation != null && config.simulation != null)
+            if (Application.isPlaying && State.IsReady && simulation != null && config.simulation != null)
                 StartCoroutine(RunTournament());
         }
         IEnumerator RunTournament()
@@ -59,7 +92,7 @@ namespace MultiplyOrRelease
                 if (config.matchStartDelay > 0)
                     yield return new WaitForSecondsRealtime(config.matchStartDelay);
                 matchConfig = State.CreateMatchConfig(config.simulation, ActiveMatch);
-                matchConfig.randomSeed = unchecked(matchConfig.randomSeed + attempts++);
+                matchConfig.randomSeed = NextMatchSeed(matchConfig.randomSeed);
                 simulation.config = matchConfig;
                 view.ShowMatch(); simulation.gameObject.SetActive(true);
                 while (simulation.Model == null) yield return null;
@@ -83,6 +116,17 @@ namespace MultiplyOrRelease
             host.transform.SetParent(transform, false);
             championCelebration = host.AddComponent<SimulationCelebration>();
             championCelebration.CelebrateChampion(bracketCamera, config.simulation);
+        }
+        int NextMatchSeed(int configuredSeed)
+        {
+            int attempt = attempts++;
+            if (!config.randomizeMatchSeed) return unchecked(configuredSeed + attempt);
+            int seed;
+            // Keep seeds distinct across matches, draw replays and tournament rebuilds.
+            // A new GUID also avoids repeating a sequence on the next Play session.
+            do { seed = Guid.NewGuid().GetHashCode() & int.MaxValue; }
+            while (!usedRandomSeeds.Add(seed));
+            return seed;
         }
         void EndMatch()
         {

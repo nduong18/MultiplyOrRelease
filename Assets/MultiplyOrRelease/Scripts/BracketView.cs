@@ -86,7 +86,8 @@ namespace MultiplyOrRelease
         {
             for (int i = 0; i < 16; i++)
             {
-                flags[i].sprite = state.TeamAt(i).team.cannonSprite;
+                var team = state.TeamAt(i);
+                flags[i].sprite = team != null && team.team != null ? team.team.cannonSprite : null;
                 flags[i].enabled = flags[i].sprite != null;
                 slots[i].anchoredPosition = slotPositions[i]; numbers[i].SetActive(false);
             }

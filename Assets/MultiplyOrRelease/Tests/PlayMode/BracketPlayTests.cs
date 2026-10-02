@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using MultiplyOrRelease;
 using NUnit.Framework;
 using UnityEngine;
@@ -13,11 +14,16 @@ public class BracketPlayTests
     SimulationConfig simulationConfig;
     IEnumerator Load(bool quick = false)
     {
+        var savedConfig = UnityEditor.AssetDatabase.LoadAssetAtPath<BracketConfig>("Assets/MultiplyOrRelease/Config/DefaultBracket.asset");
+        bool incompleteRoster = !new BracketState(savedConfig.teams).IsReady;
         SceneManager.LoadScene("Bracket");
         yield return null;
         bracket = Object.FindFirstObjectByType<BracketController>();
         Assert.IsNotNull(bracket);
         config = Object.Instantiate(bracket.config);
+        // Test a complete tournament even while the user is editing the saved roster.
+        // Only the test clone changes; the user's chosen teams remain untouched.
+        if (incompleteRoster) config.teams = config.teamCatalog.Where(t => t != null).Distinct().Take(16).ToArray();
         simulationConfig = Object.Instantiate(config.simulation);
         config.simulation = simulationConfig;
         if (quick)
@@ -120,10 +126,13 @@ public class BracketPlayTests
     {
         yield return Load(true);
         string originalName = simulationConfig.teams[0].name;
+        int sourceSeed = simulationConfig.randomSeed;
+        var matchSeeds = new System.Collections.Generic.HashSet<int>();
         foreach (int match in new[] { 0, 2, 1, 3, 4 })
         {
             yield return WaitForPhase(BracketPhase.PlayingMatch);
             Assert.AreEqual(match, bracket.ActiveMatch);
+            Assert.IsTrue(matchSeeds.Add(bracket.simulation.CurrentSeed), "Each match gets a distinct random seed.");
             Assert.IsTrue(bracket.simulation.CountdownActive, "Countdown runs for group matches and the final.");
             var participants = bracket.State.Participants(match);
             for (int i = 0; i < 4; i++) Assert.AreEqual(participants[i].team.name, bracket.simulation.Model.config.teams[i].name);
@@ -138,6 +147,7 @@ public class BracketPlayTests
         Assert.AreEqual(-1, bracket.ActiveMatch); Assert.AreEqual(-1, bracket.State.NextMatch);
         Assert.IsFalse(bracket.simulation.gameObject.activeSelf);
         Assert.AreEqual(originalName, simulationConfig.teams[0].name);
+        Assert.AreEqual(sourceSeed, simulationConfig.randomSeed);
         var board = bracket.transform.Find("Bracket Presentation/Bracket Board");
         Assert.IsTrue(board.gameObject.activeInHierarchy);
         Assert.AreEqual(bracket.State.Champion.team.cannonSprite, board.Find("Champion/Champion Flag").GetComponent<Image>().sprite);
@@ -152,6 +162,73 @@ public class BracketPlayTests
         Assert.IsNull(bracket.State.Champion);
         Assert.IsFalse(bracket.transform.Find("Bracket Presentation/Bracket Board/Champion Name").gameObject.activeSelf);
         Assert.IsNull(bracket.transform.Find("Bracket Champion Celebration"));
+    }
+    [UnityTest] public IEnumerator EmptyBracketShowsSlotsAndFlagsUpdateAsTeamsAreAddedAndRemoved()
+    {
+        yield return Load(true);
+        var entrants = (TeamPreset[])config.teams.Clone();
+        config.teams = new TeamPreset[0];
+        yield return null; yield return null;
+        Assert.AreEqual(BracketPhase.Ready, bracket.Phase);
+        Assert.IsFalse(bracket.simulation.gameObject.activeSelf);
+        var board = bracket.transform.Find("Bracket Presentation/Bracket Board");
+        Assert.IsTrue(board.gameObject.activeInHierarchy);
+        for (int i = 0; i < 16; i++)
+        {
+            Assert.IsNotNull(board.Find("Team Slot " + i));
+            Assert.IsFalse(board.Find("Team Slot " + i + "/Flag").GetComponent<Image>().enabled);
+        }
+        Assert.IsTrue(board.Find("Champion Cup").GetComponent<Image>().enabled);
+        config.teams = new[] { entrants[0] };
+        yield return null; yield return null;
+        board = bracket.transform.Find("Bracket Presentation/Bracket Board");
+        Assert.AreEqual(entrants[0].team.cannonSprite, board.Find("Team Slot 0/Flag").GetComponent<Image>().sprite);
+        Assert.IsFalse(board.Find("Team Slot 1/Flag").GetComponent<Image>().enabled);
+        Assert.AreEqual(BracketPhase.Ready, bracket.Phase);
+
+        config.teams = new TeamPreset[16]; config.teams[0] = entrants[0]; config.teams[15] = entrants[15];
+        yield return null; yield return null;
+        board = bracket.transform.Find("Bracket Presentation/Bracket Board");
+        Assert.IsTrue(board.Find("Team Slot 15/Flag").GetComponent<Image>().enabled);
+        Assert.IsFalse(board.Find("Team Slot 14/Flag").GetComponent<Image>().enabled);
+        Assert.AreEqual(BracketPhase.Ready, bracket.Phase);
+        // A duplicated last entrant keeps the bracket ready for editing.
+        config.teams = (TeamPreset[])entrants.Clone(); config.teams[15] = entrants[0];
+        yield return null; yield return null;
+        Assert.AreEqual(BracketPhase.Ready, bracket.Phase);
+        config.teams[15] = entrants[15];
+        yield return null; yield return null;
+        yield return WaitForPhase(BracketPhase.PlayingMatch);
+        config.teams[0] = null;
+        yield return null; yield return null;
+        Assert.AreEqual(BracketPhase.Ready, bracket.Phase);
+        Assert.IsFalse(bracket.simulation.gameObject.activeSelf);
+        board = bracket.transform.Find("Bracket Presentation/Bracket Board");
+        Assert.IsFalse(board.Find("Team Slot 0/Flag").GetComponent<Image>().enabled);
+        Assert.IsTrue(board.Find("Team Slot 15/Flag").GetComponent<Image>().enabled);
+    }
+    [UnityTest] public IEnumerator RandomSeedChangesOnTournamentRebuildAndConfiguredSeedRemainsRepeatable()
+    {
+        yield return Load(true);
+        Assert.IsTrue(config.randomizeMatchSeed);
+        yield return WaitForPhase(BracketPhase.PlayingMatch);
+        int firstSeed = bracket.simulation.CurrentSeed;
+        bracket.Rebuild(); yield return null;
+        yield return WaitForPhase(BracketPhase.PlayingMatch);
+        Assert.AreNotEqual(firstSeed, bracket.simulation.CurrentSeed);
+
+        config.randomizeMatchSeed = false;
+        bracket.Rebuild(); yield return null;
+        yield return WaitForPhase(BracketPhase.PlayingMatch);
+        Assert.AreEqual(simulationConfig.randomSeed, bracket.simulation.CurrentSeed);
+        FinishWithWinner(0);
+        yield return WaitForPhase(BracketPhase.ShowingResult);
+        yield return WaitForPhase(BracketPhase.PreparingMatch);
+        yield return WaitForPhase(BracketPhase.PlayingMatch);
+        Assert.AreEqual(unchecked(simulationConfig.randomSeed + 1), bracket.simulation.CurrentSeed);
+        bracket.Rebuild(); yield return null;
+        yield return WaitForPhase(BracketPhase.PlayingMatch);
+        Assert.AreEqual(simulationConfig.randomSeed, bracket.simulation.CurrentSeed);
     }
     [UnityTest] public IEnumerator DrawAutomaticallyReplaysSameGroupWithNewSeed()
     {

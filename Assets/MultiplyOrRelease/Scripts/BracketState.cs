@@ -7,18 +7,28 @@ namespace MultiplyOrRelease
     public sealed class BracketState
     {
         readonly TeamPreset[] entrants;
+        readonly bool withinCapacity;
         readonly int[] winners = { -1, -1, -1, -1 };
         public int ChampionSlot { get; private set; } = -1;
         public TeamPreset Champion => ChampionSlot < 0 ? null : entrants[ChampionSlot];
         public BracketState(TeamPreset[] teams)
         {
-            if (teams == null || teams.Length != 16) throw new ArgumentException("Choose exactly 16 teams.");
-            entrants = (TeamPreset[])teams.Clone();
-            for (int i = 0; i < 16; i++)
+            entrants = new TeamPreset[16];
+            withinCapacity = teams == null || teams.Length <= 16;
+            if (teams != null) Array.Copy(teams, entrants, Mathf.Min(teams.Length, entrants.Length));
+        }
+        public bool IsReady
+        {
+            get
             {
-                if (teams[i] == null || teams[i].team == null) throw new ArgumentException("Fill every team slot.");
-                for (int j = 0; j < i; j++)
-                    if (teams[j] == teams[i]) throw new ArgumentException("Each team can enter only once.");
+                if (!withinCapacity) return false;
+                for (int i = 0; i < 16; i++)
+                {
+                    if (entrants[i] == null || entrants[i].team == null) return false;
+                    for (int j = 0; j < i; j++)
+                        if (entrants[j] == entrants[i]) return false;
+                }
+                return true;
             }
         }
         public TeamPreset TeamAt(int slot) => entrants[slot];
@@ -27,6 +37,7 @@ namespace MultiplyOrRelease
         {
             get
             {
+                if (!IsReady) return -1;
                 // Read the bracket left to right, then top to bottom.
                 foreach (int g in new[] { 0, 2, 1, 3 }) if (winners[g] < 0) return g;
                 return ChampionSlot < 0 ? 4 : -1;
@@ -34,14 +45,14 @@ namespace MultiplyOrRelease
         }
         public bool CanPlay(int match)
         {
-            if (match < 0 || match > 4) return false;
+            if (!IsReady || match < 0 || match > 4) return false;
             if (match < 4) return true;
             foreach (int winner in winners) if (winner < 0) return false;
             return true;
         }
         public TeamPreset[] Participants(int match)
         {
-            if (!CanPlay(match)) throw new InvalidOperationException("Complete all four group matches first.");
+            if (!CanPlay(match)) throw new InvalidOperationException("Choose 16 distinct teams and complete the group matches before the final.");
             var result = new TeamPreset[4];
             for (int i = 0; i < 4; i++) result[i] = entrants[match == 4 ? winners[i] : match * 4 + i];
             return result;
@@ -55,9 +66,9 @@ namespace MultiplyOrRelease
         }
         public void SetTeam(int slot, TeamPreset team)
         {
-            if (slot < 0 || slot >= 16 || team == null || team.team == null) throw new ArgumentException("Invalid team slot.");
+            if (slot < 0 || slot >= 16 || (team != null && team.team == null)) throw new ArgumentException("Invalid team slot.");
             if (entrants[slot] == team) return;
-            int other = Array.IndexOf(entrants, team);
+            int other = team != null ? Array.IndexOf(entrants, team) : -1;
             if (other >= 0) entrants[other] = entrants[slot]; // Move an existing entrant by swapping.
             entrants[slot] = team;
             ResetResults();

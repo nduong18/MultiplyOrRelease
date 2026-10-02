@@ -4,9 +4,11 @@
 
 ## Tournament Bracket
 
+`DefaultBracket > Randomize Match Seed` mặc định bật: mỗi trận, lượt đấu lại khi hòa và lần khởi động lại giải nhận seed ngẫu nhiên mới. Seed giữ cố định trong suốt một trận; xem seed đang dùng ở Inspector của `Tournament Match`. Config simulation gốc không bị thay đổi. Tắt tùy chọn này để dùng `Simulation > Random Seed` cộng số lượt đã chạy trong giải, giúp tái hiện cùng chuỗi trận khi debug. Seed chỉ đổi ngẫu nhiên của gameplay, không đổi đội hay thứ tự bracket.
+
 Mở scene `Assets/MultiplyOrRelease/Scenes/Bracket.unity` hoặc menu `Tools > Multiply or Release > Create or Open Bracket`. Bracket gồm 16 đội: M1/M2 bên trái, M3/M4 bên phải, mỗi trận 4 đội; W1–W4 vào chung kết M5. Bố cục tự thu theo màn hình, chỉ hiển thị cờ và đường nối, không hiện tên đội.
 
-Scene bracket không có nút điều khiển. Nhấn Play để giải tự chạy theo hướng trái sang phải, trên xuống dưới: M1 (trên trái) → M3 (trên phải) → M2 (dưới trái) → M4 (dưới phải) → chung kết M5. Chọn đội trước Play tại `Config/DefaultBracket.asset > Teams`: 0–3 là M1, 4–7 là M2, 8–11 là M3, 12–15 là M4. Mỗi vị trí nhận một Team Preset; 16 đội phải khác nhau.
+Scene bracket không có nút điều khiển. Nhấn Play để giải tự chạy theo hướng trái sang phải, trên xuống dưới: M1 (trên trái) → M3 (trên phải) → M2 (dưới trái) → M4 (dưới phải) → chung kết M5. Chọn đội tại `Config/DefaultBracket.asset > Teams`: 0–3 là M1, 4–7 là M2, 8–11 là M3, 12–15 là M4. Bracket luôn hiện đủ 16 ô kể cả khi danh sách Teams trống hoặc chưa hoàn tất; thêm đội đến đâu hiện cờ đến đó, xóa đội thì ô đó trở lại trống. Giải chỉ tự chạy khi đã chọn đủ 16 đội khác nhau. Chỉnh danh sách trong Play sẽ làm mới bracket và bắt đầu lại giải khi đủ đội; không sửa preset gốc.
 
 Trước mỗi trận, hiện bracket và chờ **3 giây thực**, rồi cờ di chuyển trong **1 giây**. Trận nhóm đưa bốn cờ vào đường dọc và để lại các ô số 1–4 bên ngoài; chung kết đưa bốn cờ W1–W4 vào hàng có số 1–4 ở giữa. Sau khi di chuyển xong, chờ **2 giây thực** rồi chuyển vào gameplay. Mỗi trận trong giải giữ countdown 321 GO và âm thanh theo cấu hình `Celebration`, chỉ bắt đầu simulation sau khi GO kết thúc. Gameplay dùng bản sao config và team, không sửa preset/config gốc.
 

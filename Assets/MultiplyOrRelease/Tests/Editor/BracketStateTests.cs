@@ -2,6 +2,8 @@ using System.Linq;
 using MultiplyOrRelease;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UI;
 
 public class BracketStateTests
 {
@@ -68,11 +70,66 @@ public class BracketStateTests
         }
         finally { Object.DestroyImmediate(session); Object.DestroyImmediate(config); }
     }
-    [Test] public void DuplicateAndEmptyEntrantsAreRejected()
+    [Test] public void EmptyAndPartialRostersKeepSixteenSlotsAndCannotStartMatches()
+    {
+        foreach (var roster in new[] { null, new TeamPreset[0], new TeamPreset[16] })
+        {
+            var empty = new BracketState(roster);
+            Assert.IsFalse(empty.IsReady);
+            Assert.AreEqual(-1, empty.NextMatch);
+            for (int i = 0; i < 16; i++) Assert.IsNull(empty.TeamAt(i));
+            Assert.IsFalse(empty.CanPlay(0));
+            Assert.Throws<System.InvalidOperationException>(() => empty.Participants(0));
+        }
+        var partial = new BracketState(new[] { teams[0], null, teams[2] });
+        Assert.AreSame(teams[0], partial.TeamAt(0));
+        Assert.IsNull(partial.TeamAt(1));
+        Assert.AreSame(teams[2], partial.TeamAt(2));
+        Assert.IsNull(partial.TeamAt(15));
+        Assert.IsFalse(partial.IsReady);
+        for (int i = 0; i < 16; i++) partial.SetTeam(i, teams[i]);
+        Assert.IsTrue(partial.IsReady);
+        Assert.AreEqual(0, partial.NextMatch);
+        partial.SetTeam(15, null);
+        Assert.IsFalse(partial.IsReady);
+        Assert.IsNull(partial.TeamAt(15));
+        Assert.AreSame(teams[0], partial.TeamAt(0), "Clearing one slot preserves the others.");
+    }
+    [Test] public void DuplicatesAndExcessTeamsStayVisibleButCannotStartTournament()
     {
         var invalid = (TeamPreset[])teams.Clone(); invalid[15] = teams[0];
-        Assert.Throws<System.ArgumentException>(() => new BracketState(invalid));
-        invalid[15] = null;
-        Assert.Throws<System.ArgumentException>(() => new BracketState(invalid));
+        var duplicate = new BracketState(invalid);
+        Assert.AreSame(teams[0], duplicate.TeamAt(15));
+        Assert.IsFalse(duplicate.IsReady);
+        Assert.AreEqual(-1, duplicate.NextMatch);
+        var excess = new BracketState(teams.Concat(new[] { teams[0] }).ToArray());
+        Assert.AreSame(teams[15], excess.TeamAt(15));
+        Assert.IsFalse(excess.IsReady);
+    }
+    [UnityTest] public System.Collections.IEnumerator EditorPreviewUpdatesWhileTeamsAreAddedAndRemoved()
+    {
+        var config = Object.Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<BracketConfig>("Assets/MultiplyOrRelease/Config/DefaultBracket.asset"));
+        config.teams = new TeamPreset[0];
+        teams[0].team.cannonSprite = config.circleSprite;
+        var host = new GameObject("Bracket editor preview test"); host.SetActive(false);
+        var controller = host.AddComponent<BracketController>(); controller.config = config;
+        try
+        {
+            host.SetActive(true);
+            yield return null;
+            Assert.IsNotNull(host.transform.Find("Bracket Presentation/Bracket Board/Team Slot 15"));
+            Assert.IsNull(controller.State.TeamAt(0));
+            config.teams = new[] { teams[0] };
+            yield return null; yield return null;
+            Assert.AreSame(teams[0], controller.State.TeamAt(0));
+            var flag = host.transform.Find("Bracket Presentation/Bracket Board/Team Slot 0/Flag").GetComponent<Image>();
+            Assert.IsTrue(flag.enabled); Assert.AreEqual(config.circleSprite, flag.sprite);
+            config.teams[0] = null;
+            yield return null; yield return null;
+            Assert.IsNull(controller.State.TeamAt(0));
+            Assert.IsFalse(host.transform.Find("Bracket Presentation/Bracket Board/Team Slot 0/Flag").GetComponent<Image>().enabled);
+            Assert.IsNotNull(host.transform.Find("Bracket Presentation/Bracket Board/Champion Cup"));
+        }
+        finally { Object.DestroyImmediate(host); Object.DestroyImmediate(config); }
     }
 }
