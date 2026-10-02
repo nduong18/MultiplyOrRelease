@@ -17,6 +17,60 @@ public class SimulationControlsTests
     {
         yield return VerifyFrameFiring(1, 8);
     }
+    [UnityTest] public IEnumerator ConfigSpeedAppliesLivePreservesMatchAndAllowsPlaybackOverrides()
+    {
+        SceneManager.LoadScene("MultiplyOrRelease");
+        for (int frame = 0; frame < 8; frame++) yield return null;
+        var controller = Object.FindFirstObjectByType<SimulationController>();
+        frameTestConfig = Object.Instantiate(controller.config);
+        frameTestConfig.autoStart = false;
+        frameTestConfig.celebration.enableStartCountdown = false;
+        frameTestConfig.boosts.enabled = false;
+        frameTestConfig.simulationSpeed = 1;
+        controller.config = frameTestConfig; controller.Rebuild(); controller.Step();
+        var model = controller.Model;
+        foreach (var team in model.teams) foreach (var ball in team.balls) ball.delay = 9999;
+        model.teams[0].ammo = 37;
+        float frozen = model.elapsed;
+        int seed = controller.CurrentSeed;
+
+        frameTestConfig.simulationSpeed = 4;
+        yield return null;
+        Assert.AreEqual(4, controller.Speed);
+        Assert.AreSame(model, controller.Model);
+        Assert.AreEqual(seed, controller.CurrentSeed);
+        Assert.AreEqual(37, model.teams[0].ammo);
+        Assert.IsTrue(controller.Paused);
+        Assert.AreEqual(frozen, model.elapsed);
+        controller.SetSpeed(2);
+        for (int frame = 0; frame < 3; frame++) yield return null;
+        Assert.AreEqual(2, controller.Speed, "Unchanged config must not overwrite Playback Speed.");
+        Assert.AreEqual(4, frameTestConfig.simulationSpeed);
+
+        frameTestConfig.simulationSpeed = .5f;
+        yield return null;
+        Assert.AreEqual(.5f, controller.Speed);
+        frameTestConfig.simulationSpeed = 100;
+        yield return null;
+        Assert.AreEqual(8, controller.Speed);
+        frameTestConfig.simulationSpeed = -1;
+        yield return null;
+        Assert.AreEqual(.1f, controller.Speed);
+
+        controller.TogglePause();
+        frameTestConfig.simulationSpeed = 2;
+        float expectedAdvance = 0;
+        for (int frame = 0; frame < 8; frame++)
+        {
+            yield return null;
+            expectedAdvance += Mathf.Min(Time.unscaledDeltaTime, .25f) * 2;
+            Assert.AreEqual(2, controller.Speed);
+        }
+        controller.TogglePause();
+        Assert.AreSame(model, controller.Model);
+        Assert.AreEqual(expectedAdvance, model.elapsed - frozen, 2f / frameTestConfig.ticksPerSecond);
+        Assert.AreEqual(37, model.teams[0].ammo);
+    }
     [UnityTest] public IEnumerator EliminatedCannonsLeaveNoRimOrMarbleAndRestartRestoresThem()
     {
         SceneManager.LoadScene("MultiplyOrRelease");

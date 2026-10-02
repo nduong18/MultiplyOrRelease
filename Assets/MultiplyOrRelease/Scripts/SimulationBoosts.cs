@@ -29,6 +29,8 @@ namespace MultiplyOrRelease
         public event Action<BoostState, int> BoostCollected;
         System.Random boostRandom;
         float nextBoostSpawn;
+        float boostSpawnIntervalScale = 1;
+        readonly List<int>[] boostSpawnCells = { new List<int>(), new List<int>(), new List<int>(), new List<int>() };
         int nextBoostId;
 
         void InitializeBoosts(int seed)
@@ -44,6 +46,7 @@ namespace MultiplyOrRelease
         void StepBoosts()
         {
             StepBoostCollections();
+            UpdateBoostSpawnRate();
             for (int t = 0; t < 4; t++)
             {
                 var team = teams[t];
@@ -63,7 +66,8 @@ namespace MultiplyOrRelease
             var s = config.boosts;
             if (!s.enabled) { boosts.Clear(); return; }
             if (elapsed < nextBoostSpawn) return;
-            nextBoostSpawn = elapsed + s.spawnIntervalMin + (float)boostRandom.NextDouble() * (s.spawnIntervalMax - s.spawnIntervalMin);
+            nextBoostSpawn = elapsed + (s.spawnIntervalMin + (float)boostRandom.NextDouble() *
+                (s.spawnIntervalMax - s.spawnIntervalMin)) * boostSpawnIntervalScale;
             if (boosts.Count >= s.maxActive) return;
             float fireRateWeight = s.fireRate.EffectiveSpawnWeight;
             float doubleAmmoWeight = s.doubleAmmo.EffectiveSpawnWeight;
@@ -72,6 +76,7 @@ namespace MultiplyOrRelease
             float choice = (float)boostRandom.NextDouble() * weight;
             var kind = choice < fireRateWeight ? BoostKind.FireRate
                 : choice < fireRateWeight + doubleAmmoWeight ? BoostKind.DoubleAmmo : BoostKind.ExtraMarble;
+            if (s.preferSmallerTerritories && SpawnInSmallerTerritory(kind)) return;
             float extent = Mathf.Max(0, config.board.size * .5f - s.radius - s.edgeInset);
             for (int attempt = 0; attempt < 40; attempt++)
             {
@@ -81,20 +86,82 @@ namespace MultiplyOrRelease
             }
         }
 
+        void UpdateBoostSpawnRate()
+        {
+            float scale = AliveCount == 2 ? config.boosts.twoTeamSpawnIntervalMultiplier : 1;
+            if (Mathf.Approximately(scale, boostSpawnIntervalScale)) return;
+            // Shorten an already scheduled wait at the elimination itself, rather
+            // than waiting for one full normal interval before the faster cadence.
+            nextBoostSpawn = elapsed + Mathf.Max(0, nextBoostSpawn - elapsed) * scale / boostSpawnIntervalScale;
+            boostSpawnIntervalScale = scale;
+        }
+
+        bool SpawnInSmallerTerritory(BoostKind kind)
+        {
+            foreach (var cells in boostSpawnCells) cells.Clear();
+            for (int i = 0; i < owners.Length; i++)
+            {
+                int owner = owners[i];
+                if (teams[owner].alive && CanPlaceBoost(BoostCellCenter(i))) boostSpawnCells[owner].Add(i);
+            }
+            int minTerritory = int.MaxValue, eligibleMask = 0, eligibleCount = 0;
+            for (int t = 0; t < 4; t++)
+            {
+                if (!teams[t].alive || boostSpawnCells[t].Count == 0) continue;
+                if (territoryCounts[t] < minTerritory)
+                {
+                    minTerritory = territoryCounts[t]; eligibleMask = 0; eligibleCount = 0;
+                }
+                if (territoryCounts[t] != minTerritory) continue;
+                eligibleMask |= 1 << t; eligibleCount++;
+            }
+            if (eligibleCount == 0) return false; // No usable living territory: retain a whole-arena fallback.
+            int selection = boostRandom.Next(eligibleCount), selectedTeam = 0;
+            for (int t = 0; t < 4; t++)
+                if ((eligibleMask & (1 << t)) != 0 && selection-- == 0) { selectedTeam = t; break; }
+            var candidates = boostSpawnCells[selectedTeam];
+            int cell = candidates[boostRandom.Next(candidates.Count)];
+            Vector2 center = BoostCellCenter(cell);
+            float extent = config.board.size * .5f - config.boosts.radius - config.boosts.edgeInset;
+            Vector2 low = Vector2.Max(center - new Vector2(CellWidth, CellHeight) * .5f, Vector2.one * -extent);
+            Vector2 high = Vector2.Min(center + new Vector2(CellWidth, CellHeight) * .5f, Vector2.one * extent);
+            // Keep the pickup centre inside the actual owned cell, even when the
+            // team's territory is a small island far from its original quadrant.
+            for (int attempt = 0; attempt < 8; attempt++)
+            {
+                var point = new Vector2(Mathf.Lerp(low.x, high.x, (float)boostRandom.NextDouble()),
+                    Mathf.Lerp(low.y, high.y, (float)boostRandom.NextDouble()));
+                if (SpawnBoost(kind, point) != null) return true;
+            }
+            return SpawnBoost(kind, center) != null; // The candidate centre already passed placement checks.
+        }
+
+        Vector2 BoostCellCenter(int index)
+            => new Vector2((index % config.board.columns + .5f) * CellWidth - config.board.size * .5f,
+                (index / config.board.columns + .5f) * CellHeight - config.board.size * .5f);
+
+        bool CanPlaceBoost(Vector2 position)
+        {
+            var s = config.boosts;
+            if (!float.IsFinite(position.x) || !float.IsFinite(position.y)) return false;
+            float extent = config.board.size * .5f - s.radius - s.edgeInset;
+            if (Mathf.Abs(position.x) > extent || Mathf.Abs(position.y) > extent) return false;
+            float clearance = s.radius + config.cannon.hitRadius + s.cannonClearance;
+            foreach (var team in teams)
+                if ((position - team.cannonPosition).sqrMagnitude < clearance * clearance) return false;
+            foreach (var boost in boosts)
+                if ((position - boost.position).sqrMagnitude < 4 * s.radius * s.radius) return false;
+            return true;
+        }
+
         // Also useful for controlled simulation previews; normal gameplay uses StepBoosts.
         public BoostState SpawnBoost(BoostKind kind, Vector2 position)
         {
             var s = config.boosts;
             if (!s.enabled || phase != MatchPhase.Running || boosts.Count >= s.maxActive ||
-                (int)kind < 0 || (int)kind > 2 || !float.IsFinite(position.x) || !float.IsFinite(position.y)) return null;
+                (int)kind < 0 || (int)kind > 2) return null;
             if (!s.Appearance(kind).enabled) return null;
-            float extent = config.board.size * .5f - s.radius - s.edgeInset;
-            if (Mathf.Abs(position.x) > extent || Mathf.Abs(position.y) > extent) return null;
-            float clearance = s.radius + config.cannon.hitRadius + s.cannonClearance;
-            foreach (var team in teams)
-                if ((position - team.cannonPosition).sqrMagnitude < clearance * clearance) return null;
-            foreach (var boost in boosts)
-                if ((position - boost.position).sqrMagnitude < 4 * s.radius * s.radius) return null;
+            if (!CanPlaceBoost(position)) return null;
             var item = new BoostState { id = ++nextBoostId, kind = kind, position = position, expiresAt = elapsed + s.pickupLifetime };
             boosts.Add(item); return item;
         }

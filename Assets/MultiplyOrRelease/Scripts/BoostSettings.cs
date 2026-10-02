@@ -27,6 +27,10 @@ namespace MultiplyOrRelease
         [Min(0)] public float firstSpawnDelay = 3;
         [Min(.1f)] public float spawnIntervalMin = 5;
         [Min(.1f)] public float spawnIntervalMax = 10;
+        [Tooltip("Prefer valid grid cells owned by the living team with the least territory. Equal teams are chosen randomly.")]
+        public bool preferSmallerTerritories = true;
+        [Tooltip("Scale spawn intervals and the remaining spawn wait when exactly two teams are alive. 0.5 halves the wait; 1 keeps normal timing.")]
+        [Range(.1f, 1)] public float twoTeamSpawnIntervalMultiplier = .5f;
         [Range(1, 30)] public int maxActive = 3;
         [Min(.1f)] public float pickupLifetime = 20;
         [Min(.03f)] public float radius = .22f;
@@ -69,6 +73,7 @@ namespace MultiplyOrRelease
             firstSpawnDelay = Mathf.Max(0, firstSpawnDelay);
             spawnIntervalMin = Mathf.Max(.1f, spawnIntervalMin);
             spawnIntervalMax = Mathf.Max(spawnIntervalMin, spawnIntervalMax);
+            twoTeamSpawnIntervalMultiplier = Mathf.Clamp(twoTeamSpawnIntervalMultiplier, .1f, 1);
             maxActive = Mathf.Clamp(maxActive, 1, 30);
             pickupLifetime = Mathf.Max(.1f, pickupLifetime);
             radius = Mathf.Clamp(radius, .03f, Mathf.Max(.03f, boardSize * .1f));

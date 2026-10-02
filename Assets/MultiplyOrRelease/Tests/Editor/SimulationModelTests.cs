@@ -300,6 +300,12 @@ public class SimulationModelTests
             copy.cannon.shotsPerSecond = 180;
             copy.projectile.speed = 6.5f;
             copy.plinko.pauseWhileReleasing = true;
+            // Keep the reference match's original permanent-marble lineup.
+            // Optional temporary marbles alter the seeded gates and completion time.
+            copy.boosts.extraMarble.enabled = false;
+            // Keep the original random spawn policy for this firing-rate baseline.
+            copy.boosts.preferSmallerTerritories = false;
+            copy.boosts.twoTeamSpawnIntervalMultiplier = 1;
             foreach (var team in copy.teams) team.sweepSpeed = 38;
             var m = new SimulationModel(copy, copy.randomSeed); m.Start();
             for (int i = 0; i < 144000 && m.phase != MatchPhase.Finished; i++)

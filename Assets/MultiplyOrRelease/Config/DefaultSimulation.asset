@@ -123,6 +123,8 @@ MonoBehaviour:
     firstSpawnDelay: 3
     spawnIntervalMin: 15
     spawnIntervalMax: 15
+    preferSmallerTerritories: 1
+    twoTeamSpawnIntervalMultiplier: 0.5
     maxActive: 3
     pickupLifetime: 20
     radius: 0.22
@@ -173,6 +175,19 @@ MonoBehaviour:
     haloOpacity: 0.16
     sortingOrder: 30
     maxParticles: 512
+  cannonImpact:
+    enabled: 1
+    duration: 0.7
+    sizeMultiplier: 1.8
+    destructionMultiplier: 1.35
+    sparkCount: 16
+    sparkSpread: 1.25
+    fireColor: {r: 1, g: 0.45, b: 0.06, a: 1}
+    useTeamColor: 1
+    smokeColor: {r: 0.22, g: 0.25, b: 0.3, a: 1}
+    smokeOpacity: 0.32
+    maxBursts: 12
+    sortingOrder: 40
   presentation:
     backgroundColor: {r: 0.018, g: 0.026, b: 0.045, a: 1}
     frameColor: {r: 0.14, g: 0.18, b: 0.24, a: 1}

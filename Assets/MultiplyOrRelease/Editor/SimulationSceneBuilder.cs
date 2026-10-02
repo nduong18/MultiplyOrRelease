@@ -131,7 +131,7 @@ public sealed class SimulationControllerEditor : Editor
         var simulation = (SimulationController)target;
         if (GUILayout.Button("Team Manager — Save / Load / Arrange")) TeamManagerWindow.OpenFor(simulation.config);
         EditorGUILayout.Space();
-        EditorGUILayout.HelpBox("Config asset edits persist. Use Apply / Restart to rebuild with them. Playback controls affect the current run. Restart repeats the same seed; New seed uses the next seed.", MessageType.Info);
+        EditorGUILayout.HelpBox("Config asset edits persist. Simulation Speed applies immediately during Play mode. Use Apply / Restart for other config edits. Playback controls affect the current run. Restart repeats the same seed; New seed uses the next seed.", MessageType.Info);
         using (new EditorGUILayout.HorizontalScope())
         {
             if (GUILayout.Button("Apply / Restart")) simulation.Rebuild();

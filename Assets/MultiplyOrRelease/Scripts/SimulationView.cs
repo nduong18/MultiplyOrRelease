@@ -39,6 +39,7 @@ namespace MultiplyOrRelease
         FlagMapping lastMapping;
         readonly bool preview;
         readonly GridImpactVfx gridImpacts;
+        readonly CannonImpactVfx cannonImpacts;
         float clockSpeed = 1;
         bool clockPaused;
         sealed class ShotVisual
@@ -74,6 +75,7 @@ namespace MultiplyOrRelease
             Square("Grid Background", Vector2.zero, Vector2.one * c.board.size, c.board.gridColor, -1);
             for (int t = 0; t < 4; t++) BuildTeam(t);
             gridImpacts = new GridImpactVfx(root, model);
+            cannonImpacts = new CannonImpactVfx(root, model);
             model.ShotFired += PopCannon;
             model.BoostCollected += FlyBoostToCannon;
             Render(true);
@@ -547,6 +549,7 @@ namespace MultiplyOrRelease
         public void AdvanceEffects(float deltaTime)
         {
             gridImpacts.Advance(deltaTime);
+            cannonImpacts.Advance(deltaTime);
             if (deltaTime <= 0) return;
             for (int team = 0; team < 4; team++)
             {
@@ -561,6 +564,7 @@ namespace MultiplyOrRelease
             model.BoostCollected -= FlyBoostToCannon;
             collectedBoosts.Clear(); boostViews.Clear(); freeBoosts.Clear();
             gridImpacts.Dispose();
+            cannonImpacts.Dispose();
             root.gameObject.SetActive(false);
             Destroy(root.gameObject); Destroy(gridMesh); Destroy(borderMesh); Destroy(gridMaterial); Destroy(atlas);
         }

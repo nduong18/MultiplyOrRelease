@@ -55,6 +55,7 @@ namespace MultiplyOrRelease
         // Fired once per projectile/grid contact, not for every cell in a capture radius.
         public event Action<Vector2, int> GridHit;
         public event Action<int> ShotFired;
+        public event Action<int, int, bool> CannonHit;
         readonly System.Random random;
         readonly Stack<ShotState> shotPool = new Stack<ShotState>();
         readonly float[] firingFrameCooldown = new float[4];
@@ -390,6 +391,7 @@ namespace MultiplyOrRelease
                         {
                             teams[t].health--;
                             if (config.cannon.destroyOnEnemyHit || teams[t].health <= 0) Eliminate(t);
+                            CannonHit?.Invoke(t, shot.team, !teams[t].alive);
                             remove = true; break;
                         }
                     }
@@ -469,6 +471,7 @@ namespace MultiplyOrRelease
             teams[t].lastEvent = "ELIMINATED"; teams[t].eventTime = elapsed;
             teams[t].fireRateBoostUntil = 0;
             foreach (var b in teams[t].balls) b.active = false;
+            UpdateBoostSpawnRate();
         }
     }
 }

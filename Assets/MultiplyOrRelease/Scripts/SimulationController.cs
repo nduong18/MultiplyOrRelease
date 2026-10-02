@@ -20,6 +20,7 @@ namespace MultiplyOrRelease
         int celebrationPreview; // Editor-only preview selection; never serialized into the scene.
         public bool CountdownActive => celebration != null && celebration.IsCountingDown;
         float accumulator;
+        float lastConfiguredSpeed;
         bool rebuildRequested;
 
         void OnEnable() { rebuildRequested = true; }
@@ -30,6 +31,13 @@ namespace MultiplyOrRelease
         {
             if (rebuildRequested) { rebuildRequested = false; Rebuild(); }
             if (Model == null) return;
+            // Observe asset edits without rebuilding the current match. Playback
+            // overrides remain active until the configured speed actually changes.
+            if (Application.isPlaying && config != null && !Mathf.Approximately(config.simulationSpeed, lastConfiguredSpeed))
+            {
+                lastConfiguredSpeed = config.simulationSpeed;
+                SetSpeed(lastConfiguredSpeed);
+            }
             FitCamera();
             if (!Application.isPlaying) return;
             // Let the last impacts fade after Finished; hold them during Inspector Pause.
@@ -73,6 +81,7 @@ namespace MultiplyOrRelease
             CurrentSeed = sessionConfig.randomSeed + restartIndex;
             Model = new SimulationModel(sessionConfig, CurrentSeed);
             Speed = sessionConfig.simulationSpeed; Paused = false; accumulator = 0; PerformanceMessage = "";
+            lastConfiguredSpeed = config.simulationSpeed;
             view = new SimulationView(transform, Model, !Application.isPlaying);
             if (sessionConfig.presentation.showHud) hud = new SimulationHud(transform, this, sessionConfig);
             // Transient meshes/atlases and preview objects regenerate on load. The

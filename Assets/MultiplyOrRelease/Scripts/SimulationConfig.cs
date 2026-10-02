@@ -16,6 +16,7 @@ namespace MultiplyOrRelease
         [Header("Simulation")]
         public bool autoStart = true;
         public int randomSeed = 1207;
+        [Tooltip("Applies immediately during Play mode, including while paused. No Apply / Restart needed.")]
         [Range(0.1f, 8f)] public float simulationSpeed = 1f;
         [Range(30, 240)] public int ticksPerSecond = 120;
         [Range(16, 512)] public int maxTicksPerFrame = 128;
@@ -28,6 +29,7 @@ namespace MultiplyOrRelease
         public ProjectileSettings projectile = new ProjectileSettings();
         public BoostSettings boosts = new BoostSettings();
         public GridImpactSettings gridImpact = new GridImpactSettings();
+        public CannonImpactSettings cannonImpact = new CannonImpactSettings();
         public PresentationSettings presentation = new PresentationSettings();
         public CelebrationSettings celebration = new CelebrationSettings();
         [Tooltip("Order: upper left, upper right, lower left, lower right. Exactly four teams.")]
@@ -43,6 +45,8 @@ namespace MultiplyOrRelease
             if (boosts == null) boosts = new BoostSettings();
             if (gridImpact == null) gridImpact = new GridImpactSettings();
             gridImpact.Validate();
+            if (cannonImpact == null) cannonImpact = new CannonImpactSettings();
+            cannonImpact.Validate();
             if (celebration == null) celebration = new CelebrationSettings();
             celebration.Validate();
             ticksPerSecond = Mathf.Clamp(ticksPerSecond, 30, 240);

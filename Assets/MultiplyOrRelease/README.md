@@ -1,10 +1,22 @@
 # Multiply or Release
 
+`Simulation > Simulation Speed` áp dụng ngay trong Play mode, kể cả khi đang Pause; không cần Apply / Restart. Giá trị mới điều khiển mô phỏng, boost, VFX và trails của lượt chơi hiện tại. Chỉnh tốc độ không khởi động lại trận hoặc đổi seed. Thanh Playback > Speed vẫn điều khiển lượt hiện tại cho đến khi Simulation Speed trong config được chỉnh tiếp.
+
+## Hiệu ứng nổ cannon
+
+Đạn đối phương trúng cannon tạo chớp sáng, vòng xung kích, tia lửa/debris màu đội bị trúng và khói nhẹ tại tâm lá cờ. Trúng đạn gây sát thương vẫn có hiệu ứng; phát phá hủy cannon nổ lớn hơn. Hiệu ứng tiếp tục sau khi lá cờ bị ẩn, kể cả khi trận kết thúc. Đạn đội nhà, va chạm grid và thao tác loại đội thủ công không tạo vụ nổ.
+
+Chỉnh `DefaultSimulation > Cannon Impact`: **Enabled**, **Duration**, **Size Multiplier**, **Destruction Multiplier**, **Spark Count / Spark Spread**, **Fire Color**, **Use Team Color**, **Smoke Color / Smoke Opacity**, **Sorting Order** và **Max Bursts**. Pause/Speed/Step điều khiển hiệu ứng; Restart dọn hết vụ nổ. Các đối tượng được tái sử dụng và giới hạn số lượng; ngẫu nhiên hình ảnh không thay đổi seed gameplay. Trong Play mode bấm Apply / Restart sau khi chỉnh.
+
 ## Giới hạn va chạm border của đạn
 
 `DefaultSimulation > Projectile > Max Border Collisions` mặc định **10**: từng viên đạn bật lại tối đa 10 lần ở border và biến mất ở lần chạm border thứ **11**. `0` tắt giới hạn. Chạm góc đồng thời ở hai trục tính một lần. Bộ đếm riêng cho mỗi viên và được đặt lại khi đạn mới dùng lại pool. Chạm grid/cannon/boost không tăng bộ đếm border; Despawn On Capture vẫn bật mặc định, nên chạm grid đối phương vẫn chiếm ô rồi biến mất ngay. Lifetime và Consume Projectile vẫn áp dụng. Bấm Apply / Restart sau khi chỉnh trong Play mode.
 
 ## Boost ngẫu nhiên
+
+Boost ưu tiên ô thuộc **đội còn sống có ít grid nhất**, dựa trên quyền sở hữu hiện tại. Các đội bằng số ô được chọn ngẫu nhiên, sau đó chọn vị trí ngẫu nhiên trong ô của đội đó. Nếu lãnh thổ đội ít ô nhất bị chặn bởi cannon, mép arena hoặc boost khác, xét đội còn sống tiếp theo; nếu không có lãnh thổ hợp lệ của đội còn sống, quay về spawn ngẫu nhiên trong arena. Đội có 0 ô không có vùng riêng để spawn. Bỏ chọn `Boosts > Prefer Smaller Territories` để dùng spawn ngẫu nhiên toàn arena.
+
+Khi còn đúng **2 đội**, khoảng spawn nhân **0,5**: ví dụ 15 giây thành 7,5 giây. Thời gian đang chờ cũng giảm một nửa ngay khi đội thứ ba bị loại, kể cả đang chờ lần spawn đầu tiên. Chỉnh hệ số ở `Boosts > Two Team Spawn Interval Multiplier`; đặt `1` để giữ nhịp cũ. Các giá trị Spawn Interval Min/Max gốc được giữ để dùng khi có 3–4 đội. Pause/Speed/Step vẫn áp dụng; Restart khôi phục lịch và vị trí theo seed. Apply / Restart sau khi chỉnh cấu hình trong Play mode.
 
 Khi đạn bắn trúng, boost bay mượt về cannon đội bắn trong **1,2 giây mô phỏng**, thu nhỏ và mờ dần lúc tới nơi rồi biến mất. Sprite và nhãn bay cùng nhau. **Đội chỉ nhận boost khi vật phẩm tới cannon**; thời hạn tốc độ bắn/bi thêm bắt đầu lúc tới, còn x2 đạn áp dụng số đạn và hàng đợi Release còn lại lúc tới. Vật phẩm đang bay không thể được nhặt lần hai. Chuyến bay và hiệu lực dùng cùng thời gian mô phỏng, theo Pause/Speed/Step; Restart dọn toàn bộ vật phẩm đang bay. Cannon bị loại trước lúc tới không nhận thưởng; trận kết thúc hủy chuyến bay chưa hoàn tất. Trong `Boosts > Collection Flight`, chỉnh **Collection Flight Duration** để thay tốc độ bay, **Collection End Scale** để thay kích thước lúc tới, **Fade On Arrival** để bật/tắt mờ dần; tắt **Animate Collection** để vật phẩm biến mất và nhận boost ngay khi trúng. Apply / Restart sau khi chỉnh.
 
